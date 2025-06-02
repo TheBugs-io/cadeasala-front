@@ -1,14 +1,14 @@
-import './App.css'
+import "./App.css";
+import LandingHome from "../App/Features/Landing/Landing";
 
 function App() {
-
   return (
     <>
       <div>
-        <h1>Arquivo <code>App.jsx</code></h1>
+        <LandingHome />
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
