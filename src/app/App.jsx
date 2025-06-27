@@ -1,11 +1,12 @@
 import "./App.css";
-import LandingHome from "../App/Features/Landing/Landing";
+import LandingHome from "../app/Features/Landing/Landing";
+import LoginPage from "./Features/AuthPage/login";
 
 function App() {
   return (
     <>
       <div>
-        <LandingHome />
+        <LoginPage />
       </div>
     </>
   );
