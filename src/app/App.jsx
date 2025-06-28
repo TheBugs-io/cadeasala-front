@@ -1,15 +1,14 @@
-import "./App.css";
-import LandingHome from "../app/Features/Landing/Landing";
-import LoginPage from "./Features/AuthPage/login";
+import React from "react";
+import PrivateRoute from "./components/PrivateRoute";
+import { RouterProvider } from "react-router-dom";
+import { router } from "../app/routes/Routes";
 
-function App() {
+const App = () => {
   return (
-    <>
-      <div>
-        <LoginPage />
-      </div>
-    </>
+    <PrivateRoute>
+      <RouterProvider router={router} />
+    </PrivateRoute>
   );
-}
+};
 
 export default App;
