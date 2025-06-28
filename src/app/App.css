@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 :root {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Albert Sans", "Outfit", Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -19,6 +20,7 @@
 * {
   --bg-color: #ffffff;
   --text-color: #000000;
+  font-family: "Albert Sans", "Outfit", Helvetica, Arial, sans-serif;
 }
 
 @media (prefers-color-scheme: light) {
@@ -26,89 +28,4 @@
     --bg-color: #ffffff;
     --text-color: #000000;
   }
-}
-
-.form-container {
-  max-width: 370px;
-  margin: 80px auto;
-  padding: 32px 28px;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.08);
-  border: 1px solid #e0e0e0;
-}
-
-.form-title {
-  text-align: center;
-  margin-bottom: 24px;
-  font-size: 1.7rem;
-  font-weight: 700;
-  color: #000000;
-  letter-spacing: 1px;
-}
-
-.form-group {
-  margin-bottom: 18px;
-  display: flex;
-  flex-direction: column;
-}
-
-.form-label {
-  margin-bottom: 6px;
-  font-size: 1rem;
-  color: #333;
-}
-
-.form-input {
-  padding: 10px 12px;
-  border: 1px solid #bdbdbd;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: border 0.2s;
-  outline: none;
-  background: #fafbfc;
-}
-
-.form-input:focus {
-  border: 1.5px solid #000000;
-  background: #fff;
-}
-
-.form-button {
-  width: 100%;
-  padding: 12px;
-  background: #000000;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 1.1rem;
-  cursor: pointer;
-  margin-top: 8px;
-  transition: background 0.2s;
-}
-
-.form-button:hover {
-  background: #000000;
-}
-
-.form-link-group {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 18px;
-}
-
-.form-link {
-  background: none;
-  border: none;
-  color: #000000;
-  cursor: pointer;
-  font-size: 1rem;
-  text-decoration: underline;
-  padding: 0;
-  transition: color 0.2s;
-}
-
-.form-link:hover {
-  color: #000000;
 }
