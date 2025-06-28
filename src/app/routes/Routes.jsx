@@ -4,6 +4,7 @@ import LandingHome from "../features/Landing/Landing";
 import RegisterForm from "../Features/RegisterPage/RegisterForm";
 import LoginPage from "../Features/AuthPage/Login";
 import ForgotPasswordForm from "../Features/ForgotPassword/ForgotPasswordForm";
+import ConfirmEmail from "../features/ConfirmEmail/ConfirmEmail";
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       {
         path: "/forgot-password",
         element: <ForgotPasswordForm />,
+      },
+      {
+        path: "/confirmar",
+        element: <ConfirmEmail />,
       },
     ],
   },
