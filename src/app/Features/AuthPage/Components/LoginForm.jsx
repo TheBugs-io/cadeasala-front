@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import banner1 from "../../../assets/banner/banner1.png";
+import loginImage from "../../../assets/login/Login-rafiki.svg";
 import "../../../styles/Login.css";
 
 const LoginForm = () => {
@@ -19,13 +20,19 @@ const LoginForm = () => {
   return (
     <div className="login-container">
       <img src={banner1} alt="Banner de login" />
-      <form onSubmit={handleSubmit} className="form-container">
+      <form
+        onSubmit={handleSubmit}
+        className="form-container"
+        autoComplete="on"
+      >
+        <img src={loginImage} className="image-forms-container"></img>
         <div className="form-title">Login</div>
         <div className="form-group">
           <label htmlFor="email" className="form-label">
             E-mail
           </label>
           <input
+            autoComplete="email"
             className="form-input"
             type="email"
             id="email"
@@ -40,6 +47,7 @@ const LoginForm = () => {
             Senha
           </label>
           <input
+            autocomplete="current-password"
             className="form-input"
             type="password"
             id="senha"
