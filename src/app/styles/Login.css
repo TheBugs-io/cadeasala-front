@@ -3,6 +3,12 @@
   flex-direction: row;
   gap: 1rem;
   justify-content: center;
+  margin-top: 2rem;
+}
+
+.image-forms-container{
+  width: 300px;
+  height: auto;
 }
 
 .form-container {
@@ -15,12 +21,17 @@
 }
 
 .form-title {
-  text-align: center;
+  text-align: start;
   margin-bottom: 24px;
   font-size: 2.2rem;
   font-weight: 800;
   color: #000000;
   letter-spacing: 1px;
+}
+
+.form-paragraph{
+  font-size: 1.2rem;
+  word-wrap: break-word;
 }
 
 .form-group {
