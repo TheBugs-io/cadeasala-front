@@ -1,26 +1,25 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import banner1 from "../../../assets/banner/banner1.png";
 import "../../../styles/Login.css";
 
-const LoginForm = ({ onRegister, onForgot }) => {
+const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  //TODO: Alterar pra requisição a API
   const handleSubmit = (e) => {
     e.preventDefault();
     alert("Login enviado!");
-  };
-
-  //TODO: Alterar para tela inicial -> A definir (mapa ou outra tela.)
-  const handleLoginSuccess = () => {
-    navigate("/dashboard");
+    // TODO: Implementar lógica de autenticação com API
+    // Após autenticação bem-sucedida:
+    //TODO: Alterar para tela inicial -> A definir (mapa ou outra tela.)
+    // navigate("/dashboard");
   };
 
   return (
     <div className="login-container">
-      <img src={banner1}></img>
-      <form onSubmit={handleSubmit} onSucess={handleLoginSuccess} className="form-container">
+      <img src={banner1} alt="Banner de login" />
+      <form onSubmit={handleSubmit} className="form-container">
         <div className="form-title">Login</div>
         <div className="form-group">
           <label htmlFor="email" className="form-label">
@@ -54,18 +53,18 @@ const LoginForm = ({ onRegister, onForgot }) => {
           Entrar
         </button>
 
-      <div className="divider"></div>
+        <div className="divider"></div>
 
         <div className="form-link-group">
-          <button type="button" onClick={onRegister} className="form-link">
+          <Link to="/register" className="form-link">
             Criar conta
-          </button>
-          <button type="button" onClick={onForgot} className="form-link">
+          </Link>
+          <Link to="/forgot-password" className="form-link">
             Esqueci a senha
-          </button>
+          </Link>
         </div>
       </form>
-      <img src={banner1}></img>
+      <img src={banner1} alt="Banner de login" />
     </div>
   );
 };
