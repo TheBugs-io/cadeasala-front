@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "../../styles/Login.css";
+import { Link } from "react-router-dom";
+import forgotPassword from "../../assets/forgot/Forgot password-rafiki.svg";
 
 const ForgotPasswordForm = ({ onLogin }) => {
   const [email, setEmail] = useState("");
@@ -10,11 +12,14 @@ const ForgotPasswordForm = ({ onLogin }) => {
   };
 
   return (
+    <div className="login-container">
     <form onSubmit={handleSubmit} className="form-container">
-      <div className="form-title">Esqueci a Senha</div>
+      <img src={forgotPassword} className="image-forms-container"></img>
+      <div className="form-title">Esqueceu sua senha?</div>
+      <p className="form-paragraph"><b>Não se preocupe!</b> Enviaremos um e-mail para redefinir sua senha na plataforma.</p>
       <div className="form-group">
         <label htmlFor="email" className="form-label">
-          E-mail
+          E-mail <span>*</span>
         </label>
         <input
           className="form-input"
@@ -30,11 +35,12 @@ const ForgotPasswordForm = ({ onLogin }) => {
         Enviar
       </button>
       <div className="form-link-group">
-        <button type="button" onClick={onLogin} className="form-link">
+        <Link to="/login" className="form-link">
           Voltar ao login
-        </button>
+        </Link>
       </div>
     </form>
+    </div>
   );
 };
 

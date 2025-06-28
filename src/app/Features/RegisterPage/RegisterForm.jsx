@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../../styles/Login.css";
+import { Link } from "react-router-dom";
 
 const RegisterForm = ({ onLogin }) => {
   const [email, setEmail] = useState("");
@@ -11,6 +12,7 @@ const RegisterForm = ({ onLogin }) => {
   };
 
   return (
+    <div className="login-container">
     <form onSubmit={handleSubmit} className="form-container">
       <div className="form-title">Registro</div>
       <div className="form-group">
@@ -45,11 +47,12 @@ const RegisterForm = ({ onLogin }) => {
         Registrar
       </button>
       <div className="form-link-group">
-        <button type="button" onClick={onLogin} className="form-link">
+        <Link to="/login" className="form-link">
           Já tenho conta
-        </button>
+        </Link>
       </div>
     </form>
+    </div>
   );
 };
 
