@@ -1,20 +1,44 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import banner1 from "../../../assets/banner/banner1.png";
 import loginImage from "../../../assets/login/Login-rafiki.svg";
 import "../../../styles/Login.css";
+import { login } from "../../../service/auth/authService.js";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
+  const location = useLocation();
+  const [email, setEmail] = useState(location.state?.registeredEmail || "");
   const [senha, setSenha] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Login enviado!");
-    // TODO: Implementar lógica de autenticação com API
-    // Após autenticação bem-sucedida:
-    //TODO: Alterar para tela inicial -> A definir (mapa ou outra tela.)
-    // navigate("/dashboard");
+    if (!email || !senha) {
+      alert("Preencha todos os campos!");
+      return;
+    }
+    if (loading) return;
+
+    setLoading(true);
+
+    try {
+      const emailFormatado = email.trim().toLowerCase();
+      const usuario = await login(emailFormatado, senha);
+
+      localStorage.setItem("token", usuario.token);
+
+      if (usuario.tipo === "SECRETARIO") {
+        navigate("/admin/dashboard");
+      } else if (usuario.tipo === "DISCENTE" || usuario.tipo === "DOCENTE") {
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      console.error("Erro no login:", error);
+      alert(error.response?.data?.erro || "Credenciais inválidas");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -25,7 +49,7 @@ const LoginForm = () => {
         className="form-container"
         autoComplete="on"
       >
-        <img src={loginImage} className="image-forms-container"></img>
+        <img src={loginImage} className="image-forms-container" alt="Login" />
         <div className="form-title">Login</div>
         <div className="form-group">
           <label htmlFor="email" className="form-label">
@@ -47,7 +71,7 @@ const LoginForm = () => {
             Senha
           </label>
           <input
-            autocomplete="current-password"
+            autoComplete="current-password"
             className="form-input"
             type="password"
             id="senha"
@@ -57,8 +81,8 @@ const LoginForm = () => {
             required
           />
         </div>
-        <button type="submit" className="form-button">
-          Entrar
+        <button className="login-button" disabled={loading}>
+          {loading ? "CARREGANDO..." : "ENTRAR"}
         </button>
 
         <div className="divider"></div>
