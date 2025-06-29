@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "../components/Layout";
 import LandingHome from "../features/Landing/Landing";
 import LoginPage from "../Features/AuthPage/Login";
-import ForgotPasswordForm from "../Features/ForgotPassword/ForgotPasswordForm";
+import ForgotPasswordForm from "../features/ForgotPassword/ForgotPasswordForm";
 import ConfirmEmail from "../features/ConfirmEmail/ConfirmEmail";
 import ChooseType from "../features/RegisterPage/ChooseType";
 import RegisterFormDiscente from "../features/RegisterPage/RegisterFormDiscente";

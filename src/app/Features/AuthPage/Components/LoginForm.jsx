@@ -81,8 +81,8 @@ const LoginForm = () => {
             required
           />
         </div>
-        <button className="login-button" disabled={loading}>
-          {loading ? "CARREGANDO..." : "ENTRAR"}
+        <button className="form-button" disabled={loading}>
+          {loading ? "CARREGANDO..." : "Entrar"}
         </button>
 
         <div className="divider"></div>
