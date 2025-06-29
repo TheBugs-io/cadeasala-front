@@ -1,10 +1,12 @@
-import { Routes, createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Layout from "../components/Layout";
 import LandingHome from "../features/Landing/Landing";
-import RegisterForm from "../Features/RegisterPage/RegisterForm";
 import LoginPage from "../Features/AuthPage/Login";
 import ForgotPasswordForm from "../Features/ForgotPassword/ForgotPasswordForm";
 import ConfirmEmail from "../features/ConfirmEmail/ConfirmEmail";
+import ChooseType from "../features/RegisterPage/ChooseType";
+import RegisterFormDiscente from "../features/RegisterPage/RegisterFormDiscente";
+import RegisterDocenteForm from "../features/RegisterPage/RegisterDocenteForm";
 
 export const router = createBrowserRouter([
   {
@@ -17,7 +19,20 @@ export const router = createBrowserRouter([
       },
       {
         path: "/register",
-        element: <RegisterForm />,
+        children: [
+          {
+            index: true,
+            element: <ChooseType />,
+          },
+          {
+            path: "form-discente",
+            element: <RegisterFormDiscente />
+          },
+          {
+            path: "form-docente",
+            element: <RegisterDocenteForm />
+          }
+        ],
       },
       {
         path: "/login",
@@ -35,4 +50,4 @@ export const router = createBrowserRouter([
   },
 ]);
 
-export default Routes;
+export default router;
