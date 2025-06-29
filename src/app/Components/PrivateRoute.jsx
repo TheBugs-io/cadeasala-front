@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 
 //Rotas que precisam estar autenticados dependendo do tipo
 //Uso: Você passa esse elemento dentro das rotas junto com o tipo permitido, mas antes das páginas filhas, tipo:
