@@ -1,14 +1,13 @@
-import React from "react";
-import PrivateRoute from "./components/PrivateRoute";
 import { RouterProvider } from "react-router-dom";
 import { router } from "../app/routes/Routes";
 import "./App.css"
+import { AuthProvider } from "./contexts/AuthContext";
 
 const App = () => {
   return (
-    <PrivateRoute>
+    <AuthProvider>
       <RouterProvider router={router} />
-    </PrivateRoute>
+    </AuthProvider>
   );
 };
 
