@@ -74,7 +74,7 @@ const RegisterDocenteForm = () => {
 
         <div className="form-group">
           <label htmlFor="vinculo" className="form-label">
-            Vínculo com a universidade
+            Vínculo com a universidade <span>*</span>
           </label>
           <select
             id="vinculo"
@@ -94,7 +94,7 @@ const RegisterDocenteForm = () => {
 
         <div className="form-group">
           <label htmlFor="nivelSuperior" className="form-label">
-            Nível superior
+            Nível superior <span>*</span>
           </label>
           <select
             id="nivelSuperior"
