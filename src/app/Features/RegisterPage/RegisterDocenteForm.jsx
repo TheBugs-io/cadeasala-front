@@ -147,7 +147,7 @@ const RegisterDocenteForm = () => {
         </div>
 
         <button type="submit" className="form-button">
-          Registrar
+          Solicitar registro
         </button>
       </form>
     </div>
