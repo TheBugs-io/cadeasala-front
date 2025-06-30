@@ -7,6 +7,7 @@ import ConfirmEmail from "../features/ConfirmEmail/ConfirmEmail";
 import ChooseType from "../features/RegisterPage/ChooseType";
 import RegisterFormDiscente from "../features/RegisterPage/RegisterFormDiscente";
 import RegisterDocenteForm from "../features/RegisterPage/RegisterDocenteForm";
+import AccountPage from "../Features/AccountPage/AccountPage";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
         path: "/confirmar",
         element: <ConfirmEmail />,
       },
+      {
+        path: "/conta",
+        element: <AccountPage/>,
+      }
     ],
   },
 ]);
