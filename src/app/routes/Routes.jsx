@@ -7,6 +7,8 @@ import ConfirmEmail from "../features/ConfirmEmail/ConfirmEmail";
 import ChooseType from "../features/RegisterPage/ChooseType";
 import RegisterFormDiscente from "../features/RegisterPage/RegisterFormDiscente";
 import RegisterDocenteForm from "../features/RegisterPage/RegisterDocenteForm";
+import DashboardRegistro from "../features/AdminDashboard/Dashboard";
+import { AuthProvider } from "../contexts/AuthContext";
 
 export const router = createBrowserRouter([
   {
@@ -26,11 +28,29 @@ export const router = createBrowserRouter([
           },
           {
             path: "form-discente",
-            element: <RegisterFormDiscente />
+            element: <RegisterFormDiscente />,
           },
           {
             path: "form-docente",
-            element: <RegisterDocenteForm />
+            element: <RegisterDocenteForm />,
+          },
+        ],
+      },
+      {
+        path: "/admin",
+        element: (
+          <AuthProvider allowedTypes={["SECRETARIO"]}>
+            <Layout />
+          </AuthProvider>
+        ),
+        children: [
+          {
+            index: true,
+            element:"",
+          },
+          {
+            path: "dashboard",
+            element: <DashboardRegistro />
           }
         ],
       },

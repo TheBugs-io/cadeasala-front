@@ -1,42 +1,62 @@
 import { useState } from "react";
 import "../../styles/Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import api from '../../service/api.js'
 
 const RegisterFormDiscente = () => {
-  const [email, setEmail] = useState("");
-  const [matricula, setMatricula] = useState("");
-  const [completeName, setCompleteName] = useState("");
-  const [nivelSuperior, setNivelSuperior] = useState("");
-  const [isSMDStudent, setIsSMDStudent] = useState(true);
-  const [curso, setCurso] = useState("");
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const [formData, setFormData] = useState({
+    nomeCompleto: "",
+    email: "",
+    matricula: "",
+    nivelSuperior: "",
+    smd: false,
+    curso: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value, type } = e.target;
+
+    if (name === "smd") {
+      setFormData({
+        ...formData,
+        smd: value === "sim",
+        curso: value === "sim" ? "Sistemas e Mídias Digitais" : "",
+      });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = {
-      nome: completeName,
-      email,
-      matricula,
-      nivelSuperior,
-      smd: isSMDStudent,
-      curso: isSMDStudent ? "Sistemas e Mídias Digitais" : curso,
-    };
-    console.log("Dados enviados:", data);
-    alert("Registro enviado!");
+    setLoading(true);
+
+    try {
+      await api.post("/api/auth/register/solicitar", {
+        ...formData,
+        tipoUsuario: "DISCENTE",
+      });
+      navigate("/login", { state: { registeredEmail: formData.email } });
+    } catch (error) {
+      alert(error.response?.data?.error || "Falha ao cadastrar!");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="login-container">
-      <form
-        onSubmit={handleSubmit}
-        className="form-container"
-        autoComplete="on"
-      >
+      <form onSubmit={handleSubmit} className="form-container" autoComplete="on">
         <div className="form-link-group">
           <Link to="/login" className="form-link">
             Já tenho conta
           </Link>
         </div>
-        <h1 className="form-title">Registro</h1>
+
+        <h1 className="form-title">Registro de Discente</h1>
 
         <div className="form-group">
           <label htmlFor="nomeCompleto" className="form-label">
@@ -48,8 +68,8 @@ const RegisterFormDiscente = () => {
             id="nomeCompleto"
             name="nomeCompleto"
             placeholder="Digite seu nome completo"
-            value={completeName}
-            onChange={(e) => setCompleteName(e.target.value)}
+            value={formData.nomeCompleto}
+            onChange={handleChange}
             required
             autoComplete="name"
           />
@@ -65,8 +85,8 @@ const RegisterFormDiscente = () => {
             id="email"
             name="email"
             placeholder="exemplo@alu.ufc.br"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={handleChange}
             required
             autoComplete="email"
           />
@@ -83,8 +103,8 @@ const RegisterFormDiscente = () => {
             id="matricula"
             name="matricula"
             placeholder="Digite sua matrícula UFC"
-            value={matricula}
-            onChange={(e) => setMatricula(e.target.value)}
+            value={formData.matricula}
+            onChange={handleChange}
             required
             autoComplete="off"
           />
@@ -98,8 +118,8 @@ const RegisterFormDiscente = () => {
             id="nivelSuperior"
             name="nivelSuperior"
             className="form-input"
-            value={nivelSuperior}
-            onChange={(e) => setNivelSuperior(e.target.value)}
+            value={formData.nivelSuperior}
+            onChange={handleChange}
             required
           >
             <option value="">Selecione um nível</option>
@@ -111,11 +131,7 @@ const RegisterFormDiscente = () => {
           </select>
         </div>
 
-        <fieldset
-          className="form-group"
-          role="group"
-          aria-labelledby="smdGroup"
-        >
+        <fieldset className="form-group" role="group" aria-labelledby="smdGroup">
           <legend id="smdGroup" className="form-label">
             Você é aluno de Sistemas e Mídias Digitais?
           </legend>
@@ -125,8 +141,8 @@ const RegisterFormDiscente = () => {
                 type="radio"
                 name="smd"
                 value="sim"
-                checked={isSMDStudent}
-                onChange={() => setIsSMDStudent(true)}
+                checked={formData.smd === true}
+                onChange={handleChange}
               />{" "}
               Sim
             </label>
@@ -137,15 +153,15 @@ const RegisterFormDiscente = () => {
                 type="radio"
                 name="smd"
                 value="não"
-                checked={!isSMDStudent}
-                onChange={() => setIsSMDStudent(false)}
+                checked={formData.smd === false}
+                onChange={handleChange}
               />{" "}
               Não
             </label>
           </div>
         </fieldset>
 
-        {!isSMDStudent && (
+        {!formData.smd && (
           <div className="form-group">
             <label htmlFor="curso" className="form-label">
               Qual seu curso?
@@ -156,15 +172,15 @@ const RegisterFormDiscente = () => {
               id="curso"
               name="curso"
               placeholder="Digite o nome do seu curso"
-              value={curso}
-              onChange={(e) => setCurso(e.target.value)}
+              value={formData.curso}
+              onChange={handleChange}
               required
             />
           </div>
         )}
 
-        <button type="submit" className="form-button">
-          Solicitar registro
+        <button type="submit" disabled={loading} className="form-button">
+          {loading ? "Enviando..." : "Solicitar registro"}
         </button>
       </form>
     </div>

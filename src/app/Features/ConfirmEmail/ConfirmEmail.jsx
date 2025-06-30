@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import axios from "axios";
+import api from "../../service/api.js";
 
 const ConfirmEmail = () => {
   const [searchParams] = useSearchParams();
@@ -15,11 +15,11 @@ const ConfirmEmail = () => {
       return;
     }
 
-    axios
-      .get(`${API_URL}/api/auth/register/confirmar/${token}`)
+    api
+      .get(`/api/auth/register/confirmar/${token}`)
       .then(() => setStatus("sucesso"))
       .catch(() => setStatus("erro"));
-  }, [token, API_URL]);
+  }, [token]);
 
   const renderMensagem = () => {
     switch (status) {
