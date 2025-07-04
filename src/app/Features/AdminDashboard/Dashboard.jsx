@@ -6,8 +6,8 @@ const DashboardRegistro = () => {
   const [registros, setRegistros] = useState([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState(null);
-  const [filtroSelecionado, setFiltroSelecionado] = useState("PENDENTES");
-  const opcoesFiltro = ["PENDENTES", "APROVADOS", "EXPIRADOS", "TODOS"];
+  const [filtroSelecionado, setFiltroSelecionado] = useState("TODOS");
+  const opcoesFiltro = ["DISCENTE", "DOCENTE", "TODOS"];
 
   useEffect(() => {
     const buscarRegistrosPendentes = async () => {
@@ -26,12 +26,10 @@ const DashboardRegistro = () => {
 
   const aplicarFiltro = () => {
     switch (filtroSelecionado) {
-      case "PENDENTES":
-        return registros.filter((r) => r.status === "PENDENTE");
-      case "EXPIRADOS":
-        return registros.filter((r) => r.status === "EXPIRADO");
-      case "APROVADOS":
-        return registros.filter((r) => r.status === "APROVADO");
+      case "DISCENTE":
+        return registros.filter((r) => r.tipoUsuario === "DISCENTE");
+      case "DOCENTE":
+        return registros.filter((r) => r.tipoUsuario === "DOCENTE");
       case "TODOS":
       default:
         return registros;
@@ -41,7 +39,7 @@ const DashboardRegistro = () => {
 
   return (
     <div className="dashboard-register-container">
-      <h1>Solicitações de registro</h1>
+      <h1>Relatório de cadastros</h1>
       <div className="docs-filter-tabs">
         {opcoesFiltro.map((opcao) => (
           <button
