@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Outlet, createBrowserRouter } from "react-router-dom";
 import Layout from "../components/Layout";
 import LandingHome from "../features/Landing/Landing";
 import LoginPage from "../Features/AuthPage/Login";
@@ -40,18 +40,14 @@ export const router = createBrowserRouter([
         path: "/admin",
         element: (
           <AuthProvider allowedTypes={["SECRETARIO"]}>
-            <Layout />
+            <Outlet />
           </AuthProvider>
         ),
         children: [
           {
-            index: true,
-            element:"",
-          },
-          {
             path: "dashboard",
-            element: <DashboardRegistro />
-          }
+            element: <DashboardRegistro />,
+          },
         ],
       },
       {
