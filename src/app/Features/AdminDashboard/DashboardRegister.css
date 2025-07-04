@@ -23,9 +23,11 @@
 }
 
 .docs-filter-tabs button.ativo {
-    background-color: #155724;
-    color: white;
-    border-color: #bbe0c4;
+    background-color: #EDFAFF;
+    color: #024D6C;
+    border-color: #024D6C;
+    font-weight: 800;
+    border: 2px solid;
 }
 
 .dashboard-register-container {
