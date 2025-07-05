@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../../service/api";
 import "./DashboardRegister.css";
+import doneJob from "../../assets/illustrations/doneJob.svg";
 
 const DashboardRegistro = () => {
   const [registros, setRegistros] = useState([]);
@@ -71,18 +72,31 @@ const DashboardRegistro = () => {
               </tr>
             </thead>
             <tbody>
-              {registrosFiltrados.map((registro) => (
-                <tr key={registro.id}>
-                  <td>{registro.id}</td>
-                  <td>{registro.nomeCompleto}</td>
-                  <td>{registro.email}</td>
-                  <td>{registro.tipoUsuario}</td>
-                  <td className={`status ${registro.status.toLowerCase()}`}>
-                    {registro.status}
+              {registrosFiltrados.length > 0 ? (
+                registrosFiltrados.map((registro) => (
+                  <tr key={registro.id}>
+                    <td>{registro.id}</td>
+                    <td>{registro.nomeCompleto}</td>
+                    <td>{registro.email}</td>
+                    <td>{registro.tipoUsuario}</td>
+                    <td className={`status ${registro.status.toLowerCase()}`}>
+                      {registro.status}
+                    </td>
+                    <td>{new Date(registro.criadoEm).toLocaleString()}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" style={{ textAlign: "center" }}>
+                    <img
+                      src={doneJob}
+                      alt="Tudo concluído para este filtro. Nenhum registro pendente"
+                      style={{ width: "200px", marginTop: "20px" }}
+                    />
+                    <p>Nenhum registro pendente.</p>
                   </td>
-                  <td>{new Date(registro.criadoEm).toLocaleString()}</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         )}
