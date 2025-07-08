@@ -1,15 +1,14 @@
-import "./App.css";
-import LandingHome from "../app/Features/Landing/Landing";
-import LoginPage from "./Features/AuthPage/login";
+import { RouterProvider } from "react-router-dom";
+import { router } from "../app/routes/Routes";
+import "./App.css"
+import { AuthProvider } from "./contexts/AuthContext";
 
-function App() {
+const App = () => {
   return (
-    <>
-      <div>
-        <LoginPage />
-      </div>
-    </>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   );
-}
+};
 
 export default App;

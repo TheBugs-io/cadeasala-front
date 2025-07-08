@@ -1,5 +1,5 @@
-import AuthContainer from "../../Components/AuthContainer";
+import LoginForm from "./Components/LoginForm";
 
-const LoginPage = () => <AuthContainer />;
+const LoginPage = () => <LoginForm />;
 
 export default LoginPage;

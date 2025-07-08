@@ -1,0 +1,100 @@
+.selector-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+}
+
+#selector-title {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+#selector {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.selector-box,
+.box-contrast {
+  width: 220px;
+  height: 260px;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.selector-box:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.box-contrast {
+  background-color: #2a9d8f;
+  color: white;
+  transform: scale(1.05);
+}
+
+.selector-box-blur {
+  opacity: 0.4;
+}
+
+.selector-img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+.selector-subtitle,
+.subtitle-contrast {
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.selector-subtitle {
+  color: #333;
+}
+
+.subtitle-contrast {
+  color: white;
+}
+
+#selector-btn-side {
+  margin-top: 20px;
+}
+
+#btn-selector {
+  padding: 12px 24px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #E05105;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#btn-selector:hover {
+  background-color: #373a38;
+}
+
+.btn-disabled {
+  background-color: #ccc !important;
+  cursor: not-allowed !important;
+}

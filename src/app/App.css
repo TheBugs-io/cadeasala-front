@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 :root {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Albert Sans", "Outfit", Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -19,6 +20,11 @@
 * {
   --bg-color: #ffffff;
   --text-color: #000000;
+  font-family: "Albert Sans", "Outfit", Helvetica, Arial, sans-serif;
+}
+
+span {
+  color: red;
 }
 
 @media (prefers-color-scheme: light) {
@@ -111,4 +117,8 @@
 
 .form-link:hover {
   color: #000000;
+}
+
+    --text-color: #000000;
+  }
 }
