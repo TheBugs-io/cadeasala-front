@@ -23,6 +23,33 @@
   background-color: #e0e0e0;
 }
 
+.acessibility-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.acessibility-container hr {
+  border: 1px solid #dbdbdb;
+  margin: 0.1rem 0;
+  height: 2rem;
+}
+
+.acessibility-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.acessibility-options {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .high-contrast {
   background-color: #000 !important;
   color: #fff !important;
@@ -33,4 +60,10 @@
   color: #ffff00 !important;
   background-color: #000 !important;
   border-color: #fff !important;
+}
+
+@media (max-width: 768px) {
+  .accessibility-bar {
+    display: none;
+  }
 }

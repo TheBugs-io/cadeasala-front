@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../styles/AcessibilityBar.css";
 import { IoAccessibilitySharp, IoContrastOutline } from "react-icons/io5";
-
+import brazilIcon from "../assets/icons/brazilVector.svg";
 
 const AccessibilityBar = () => {
   const [fontSize, setFontSize] = useState(100);
@@ -22,13 +22,27 @@ const AccessibilityBar = () => {
 
   return (
     <div className="accessibility-bar">
-      <button onClick={increaseFont}>A+</button>
-      <button onClick={decreaseFont}>A-</button>
-      <button onClick={toggleContrast}>
-        <IoContrastOutline />
-        {highContrast ? "Modo Claro" : "Alto Contraste"}
-      </button>
-      <button onClick={resetAccessibility}>Resetar</button>
+      <div className="acessibility-container">
+      <div className="acessibility-actions">
+      <a accessKey="1" href="#mainContent" title="Ir para o conteúdo">
+        <b style={{ fontWeight: "bold", textDecoration: "underline" }} lang="pt-br">Ir para o conteúdo</b> <b style={{ fontWeight: "bold" }}>[1]</b>
+      </a>
+      {/* Mudar depois para o ID do conteudo / botão */}
+      <a accessKey="2" href="#footer" title="Ir para o mapa">
+        <b style={{ fontWeight: "bold", textDecoration: "underline" }} lang="pt-br">Ir para o mapa</b> <b style={{ fontWeight: "bold" }}>[2]</b>
+      </a>
+      </div>
+      <div className="acessibility-options">
+        <button onClick={increaseFont}>A+</button>
+        <button onClick={decreaseFont}>A-</button>
+        <button onClick={toggleContrast}>
+          <IoContrastOutline />
+          {highContrast ? "Modo Claro" : "Alto Contraste"}
+        </button>
+        <hr />
+        <img src={brazilIcon} alt="Bandeira do Brasil representa a linguagem do site." />
+      </div>
+      </div>
     </div>
   );
 };
