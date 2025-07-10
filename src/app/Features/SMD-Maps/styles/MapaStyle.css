@@ -1,0 +1,60 @@
+.map-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.hallway-map {
+  background-color: #deccdc;
+  width: 100%;
+  padding: 3rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.hallway-map img {
+  width: 150px;
+  height: auto;
+}
+
+.hallway-map p {
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .map-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0.5rem;
+    width: 100%;
+  }
+
+  .hallway-map {
+    height: 100%;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 10px;
+  }
+
+  .hallway-map p {
+    font-size: 1em;
+  }
+}
