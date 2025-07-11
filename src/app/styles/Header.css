@@ -1,0 +1,44 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #025259;
+  border-bottom: 1px solid #eee;
+  width: 100vw;
+  box-sizing: border-box;
+  min-height: 60px;
+}
+
+.header-logo {
+  height: 50px;
+  margin-left: 18px;
+}
+
+.header-account-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 16px; /* Adiciona espaçamento à direita */
+}
+
+.header-account-icon {
+  font-size: 1.5rem;
+}
+
+.header-search {
+  flex: 1;
+  max-width: 767px;
+  margin: 0 18px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
