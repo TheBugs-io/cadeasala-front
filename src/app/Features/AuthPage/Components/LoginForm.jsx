@@ -29,7 +29,7 @@ const LoginForm = () => {
       localStorage.setItem("token", usuario.token);
 
       if (usuario.tipo === "SECRETARIO") {
-        navigate("/admin/dashboard");
+        navigate("/admin");
       } else if (usuario.tipo === "DISCENTE" || usuario.tipo === "DOCENTE") {
         navigate("/dashboard");
       }
