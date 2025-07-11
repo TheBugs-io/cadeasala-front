@@ -26,13 +26,18 @@
     --bg-color: #1F2029;
     --text-color: #ffffff;
     --container-card: #EDFAFF;
+    --bg-mapa: #D8DBE2;
+    --bg-card-mapa: #F0F0F0;
+    --selected-button-c: #0E7AC9;
   }
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    --bg-color: #ffffff;
+    --bg-color: #F8FDFF;
     --text-color: #000000;
+    --bg-mapa: #D8DBE2;
+    --bg-card-mapa: #f0f0f0;
   }
 }
 

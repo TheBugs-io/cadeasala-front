@@ -9,6 +9,7 @@ import RegisterFormDiscente from "../features/RegisterPage/RegisterFormDiscente"
 import RegisterDocenteForm from "../features/RegisterPage/RegisterDocenteForm";
 import DashboardRegistro from "../features/AdminDashboard/Dashboard";
 import { AuthProvider } from "../contexts/AuthContext";
+import MapaSalas from "../features/SMD-Maps/MapaSalas";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <LandingHome />,
+      },
+      {
+        path: "/mapa-salas",
+        element: <MapaSalas />,
       },
       {
         path: "/register",
