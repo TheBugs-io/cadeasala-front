@@ -1,20 +1,7 @@
-// src/app/Features/RoomDetails/RoomDetails.jsx
-
 import React from "react";
 
-export default function RoomDetails() {
-  // Exemplo de dados mockados - depois você pode receber via props ou API
-  const room = {
-    name: "SALA 01",
-    description: "Sala com macbooks",
-    capacity: 30,
-    status: "Reservada",
-    image: "/sala01.jpg", // ou algum placeholder
-    reservations: [
-      { id: 1, title: "Design de Interfaces Gráficas", time: "14h-16h (Ter)", status: "ativo" },
-      { id: 2, title: "Design de Interfaces Gráficas", time: "14h-16h (Qui)", status: "inativo" },
-    ],
-  };
+export default function RoomDetails({ sala, status, dados, onClose }) {
+  const image = dados?.imagem || "https://via.placeholder.com/150"
 
   return (
     <div style={styles.overlay}>
@@ -22,38 +9,40 @@ export default function RoomDetails() {
         {/* Cabeçalho */}
         <div style={styles.header}>
           <button style={styles.favoriteButton}>❤️ Favoritar sala</button>
-          <button style={styles.closeButton}>✖</button>
+          <button style={styles.closeButton} onClick={onClose}>✖</button>
         </div>
 
         {/* Conteúdo */}
         <div style={styles.content}>
           <div style={styles.imageBox}>
-            <img src={room.image} alt={room.name} style={styles.image} />
+            <img src={image} alt={sala} style={styles.image} />
           </div>
           <div style={styles.info}>
-            <h2>{room.name}</h2>
-            <p>{room.description}</p>
-            <p><strong>Capacidade:</strong> {room.capacity}</p>
-            <p><strong>Estado atual:</strong> 
-              <span style={room.status === "Reservada" ? styles.reserved : styles.available}>
-                {room.status}
+            <h2>{sala}</h2>
+            <p>{dados?.descricao || "Sem descrição disponível."}</p>
+            <p><strong>Capacidade:</strong> {dados?.capacidade || "Indefinida"}</p>
+            <p><strong>Estado atual:</strong>
+              <span style={status === "RESERVADA" ? styles.reserved : styles.available}>
+                {status}
               </span>
             </p>
           </div>
         </div>
 
         {/* Próximas reservas */}
-        <div style={styles.reservations}>
-          <h3>Próximas reservas</h3>
-          {room.reservations.map((res) => (
-            <div
-              key={res.id}
-              style={res.status === "ativo" ? styles.reservationActive : styles.reservationInactive}
-            >
-              {res.title} - {res.time}
-            </div>
-          ))}
-        </div>
+        {dados?.reservas && dados.reservas.length > 0 && (
+          <div style={styles.reservations}>
+            <h3>Próximas reservas</h3>
+            {dados.reservas.map((res) => (
+              <div
+                key={res.id}
+                style={res.status === "ativo" ? styles.reservationActive : styles.reservationInactive}
+              >
+                {res.title} - {res.time}
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* Botão de agendar */}
         <div style={styles.footer}>
@@ -64,9 +53,7 @@ export default function RoomDetails() {
   );
 }
 
-// Exemplo de estilos simples inline
 const styles = {
-    
   overlay: {
     position: "fixed",
     top: 0, left: 0, right: 0, bottom: 0,
