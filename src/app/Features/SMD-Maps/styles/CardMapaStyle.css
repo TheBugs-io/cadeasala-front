@@ -32,7 +32,7 @@
 }
 
 .card .small {
-  font-size: 0.8em;
+  font-size: 0.9em;
   color: black;
 }
 
@@ -40,6 +40,40 @@
   font-weight: bold;
   font-size: 0.9em;
 }
+
+/* MARK: - Cores dos cards com base nos STATUS */
+.status-EM_MANUTENCAO {
+  border: 2px solid #c81616;
+}
+
+.manutencao {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #c81616;
+}
+
+.status-EM_MANUTENCAO h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.status-LIVRE {
+  border: 2px solid #0a9a8c;
+}
+
+.status-LIVRE h2 {
+  color: #0a9a8c;
+}
+
+.livre {
+  display: flex;
+  align-items: center;
+  color: #0a9a8c;
+  gap: 0.5rem;
+}
+
 
 @media (max-width: 768px) {
   .card {

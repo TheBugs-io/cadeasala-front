@@ -1,7 +1,8 @@
 import React from "react";
+import { FaTools, FaDoorOpen } from "react-icons/fa"; // ícone de construção
 import "../styles/CardMapaStyle.css";
 
-function Card({ status = "vazia", sala = "Sala 01", dados = {} }) {
+function Card({ status = "LIVRE", sala = "Sala 01", dados = {} }) {
   const renderContent = () => {
     switch (status) {
       case "DISCIPLINA":
@@ -20,9 +21,22 @@ function Card({ status = "vazia", sala = "Sala 01", dados = {} }) {
             <p className="bold">{dados.horario}</p>
           </>
         );
+      case "EM_MANUTENCAO":
+        return (
+          <div className="manutencao">
+            <h2>MANUTENÇÃO</h2>
+            <FaTools size={24} />
+          </div>
+        );
       case "LIVRE":
+        return (
+          <div className="livre">
+            <h2>LIVRE</h2>
+            <FaDoorOpen size={24} />
+          </div>
+        );
       default:
-        return <h2>Livre</h2>;
+        return <h2>LIVRE</h2>;
     }
   };
 

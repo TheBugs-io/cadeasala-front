@@ -1,7 +1,7 @@
 export const salas = [
   {
     id: 1,
-    status: "ocupada",
+    status: "DISCIPLINA",
     sala: "Sala 01",
     dados: {
       disciplina: "Design de Interfaces Gráficas",
@@ -11,12 +11,12 @@ export const salas = [
   },
   {
     id: 2,
-    status: "vazia",
+    status: "LIVRE",
     sala: "Sala 02",
   },
   {
     id: 3,
-    status: "reservada",
+    status: "RESERVADA",
     sala: "Sala 03",
     dados: {
       autor: "Lucas Braga",
@@ -25,7 +25,7 @@ export const salas = [
   },
   {
     id: 4,
-    status: "ocupada",
+    status: "DISCIPLINA",
     sala: "Sala 04",
     dados: {
       disciplina: "Banco de Dados",
@@ -35,22 +35,22 @@ export const salas = [
   },
   {
     id: 5,
-    status: "intervalo",
+    status: "LIVRE",
     sala: "Sala 05",
   },
   {
     id: 6,
-    status: "vazia",
+    status: "LIVRE",
     sala: "Sala 06",
   },
   {
     id: 7,
-    status: "vazia",
+    status: "EM_MANUTENCAO",
     sala: "Sala 07",
   },
   {
     id: 8,
-    status: "ocupada",
+    status: "DISCIPLINA",
     sala: "Sala 08",
     dados: {
       disciplina: "Estrutura de Dados",
@@ -60,7 +60,7 @@ export const salas = [
   },
   {
     id: 9,
-    status: "reservada",
+    status: "RESERVADA",
     sala: "Sala 09",
     dados: {
       autor: "Juliana Costa",
@@ -69,17 +69,17 @@ export const salas = [
   },
   {
     id: 10,
-    status: "intervalo",
+    status: "LIVRE",
     sala: "Sala 10",
   },
   {
     id: 11,
-    status: "vazia",
+    status: "LIVRE",
     sala: "Sala 11",
   },
   {
     id: 12,
-    status: "ocupada",
+    status: "DISCIPLINA",
     sala: "Sala 12",
     dados: {
       disciplina: "Engenharia de Software",
