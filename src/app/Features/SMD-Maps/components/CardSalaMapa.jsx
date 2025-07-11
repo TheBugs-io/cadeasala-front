@@ -1,8 +1,11 @@
-import React from "react";
-import { FaTools, FaDoorOpen } from "react-icons/fa"; // ícone de construção
+import { FaTools, FaDoorOpen } from "react-icons/fa";
 import "../styles/CardMapaStyle.css";
 
-function Card({ status = "LIVRE", sala = "Sala 01", dados = {} }) {
+function Card({ status = "LIVRE", sala = "Sala 01", dados = {}, aoClicar }) {
+  const handleClick = () => {
+    if (aoClicar) aoClicar(sala, status, dados);
+  };
+
   const renderContent = () => {
     switch (status) {
       case "DISCIPLINA":
@@ -41,7 +44,7 @@ function Card({ status = "LIVRE", sala = "Sala 01", dados = {} }) {
   };
 
   return (
-    <div className={`card status-${status}`}>
+    <div className={`card status-${status}`} onClick={handleClick} style={{ cursor: "pointer" }}>
       <p className="small">{sala}</p>
       {renderContent()}
     </div>
