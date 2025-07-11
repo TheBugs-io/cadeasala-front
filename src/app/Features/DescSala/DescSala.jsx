@@ -1,11 +1,12 @@
 import { FaRegHeart } from "react-icons/fa";
 import TagStatus from "./components/TagStatus";
 import "./styles/RoomDetailsPage.css";
+import photoSMD from '../../assets/photos/portalUFC.png';
 
 export default function RoomDetails({ sala, status, dados, onClose }) {
   const image =
     dados?.imagem ||
-    "https://conceito.de/wp-content/uploads/2019/04/sala-de-aula.jpg";
+    photoSMD;
 
   return (
     <div className="room-overlay">
