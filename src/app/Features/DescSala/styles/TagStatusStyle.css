@@ -3,7 +3,6 @@
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     font-weight: bold;
-    color: white;
 }
 
 .tag-status .status {
@@ -11,17 +10,19 @@
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     font-weight: bold;
-    color: white;
 }
 
 .tag-status .status.RESERVADA {
     background-color: #0E7AC9;
+    color: #0E7AC9;
 }
 
 .tag-status .status.LIVRE {
     background-color: #0A9A8C;
+    color: #0A9A8C;
 }
 
 .tag-status .status.EM_MANUTENCAO {
-    background-color: #C81616;
+    background-color: #0A9A8C;
+    color: #0A9A8C;
 }
