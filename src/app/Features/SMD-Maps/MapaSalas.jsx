@@ -5,7 +5,7 @@ import "./styles/MapaStyle.css";
 import FloorSelector from "./components/AndarSelector";
 import { salas } from "../../../models/SalasModel";
 import Modal from "../../Components/Modal";
-import RoomDetails from "../../Features/DescSala/RoomDetails";
+import RoomDetails from "../DescSala/DescSala";
 
 function MapaSalas() {
   const [modalAberto, setModalAberto] = useState(false);
