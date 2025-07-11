@@ -1,0 +1,75 @@
+.mapa-salas-container{
+  display: flex;
+  flex-direction: column;
+  padding: 0 3rem;
+  width: 100%;
+  margin-top: 1rem;
+  background-color: var(--bg-color);
+}
+.map-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  border-radius: 5px;
+  padding: 1rem 0;
+  background-color: var(--bg-color);
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.hallway-map {
+  background-color: var(--bg-mapa);
+  width: 100%;
+  padding: 1rem 3rem;
+  display: flex;
+  align-items: center;
+}
+
+.hallway-map img {
+  width: 150px;
+  height: auto;
+  transform: translateX(-4rem) scaleX(-1);
+  background-color: var(--bg-mapa);
+  border-radius: 10px;
+}
+
+.hallway-map p {
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .map-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0.5rem;
+    width: 100%;
+  }
+
+  .hallway-map {
+    height: 100%;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 10px;
+  }
+
+  .hallway-map p {
+    font-size: 1em;
+  }
+
+  .hallway-map img {
+    width: 60%;
+    transform: none;
+  }
+}

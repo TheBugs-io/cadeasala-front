@@ -1,0 +1,95 @@
+.card {
+  background-color: var(--bg-card-mapa);
+  color: black;
+  padding: 2rem 1.5rem;
+  width: 100%;
+  height: auto;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  word-break: break-word;
+  transition: transform 0.2s;
+  border: 1px solid #dbdbdb;
+  box-sizing: border-box;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status-rect {
+  width: 100%;
+  height: 8px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.card h2 {
+  font-size: clamp(1.35rem, 2.5vw, 1.2rem);
+}
+
+.card .small {
+  font-size: 0.9em;
+  color: black;
+}
+
+.card .bold {
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+/* MARK: - Cores dos cards com base nos STATUS */
+.status-EM_MANUTENCAO {
+  border: 2px solid #c81616;
+}
+
+.manutencao {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #c81616;
+}
+
+.status-EM_MANUTENCAO h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.status-LIVRE {
+  border: 2px solid #0a9a8c;
+}
+
+.status-LIVRE h2 {
+  color: #0a9a8c;
+}
+
+.livre {
+  display: flex;
+  align-items: center;
+  color: #0a9a8c;
+  gap: 0.5rem;
+}
+
+
+@media (max-width: 768px) {
+  .card {
+    padding: 1rem;
+    min-height: auto;
+  }
+
+  .card h2 {
+    font-size: 1rem;
+  }
+
+  .card .small {
+    font-size: 0.7em;
+  }
+
+  .card .bold {
+    font-size: 0.8em;
+  }
+}

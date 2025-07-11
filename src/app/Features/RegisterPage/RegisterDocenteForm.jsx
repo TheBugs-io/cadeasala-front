@@ -1,27 +1,40 @@
 import { useState } from "react";
 import "../../styles/Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const RegisterDocenteForm = () => {
-  const [completeName, setCompleteName] = useState("");
-  const [email, setEmail] = useState("");
-  const [vinculo, setVinculo] = useState("");
-  const [nivelSuperior, setNivelSuperior] = useState("");
-  const [lotacao, setLotacao] = useState("");
-  const [siape, setSiape] = useState("");
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const [formData, setFormData] = useState({
+    nomeCompleto: "",
+    email: "",
+    siape: "",
+    vinculo: "",
+    nivelSuperior: "",
+    lotacao: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = {
-      nome: completeName,
-      email,
-      siape,
-      vinculo,
-      nivelSuperior,
-      lotacao,
-    };
-    console.log("Dados do docente:", data);
-    alert("Registro do docente enviado!");
+    setLoading(true);
+    try {
+      await api.post("/api/auth/register/solicitar", {
+        ...formData,
+        tipoUsuario: "DOCENTE",
+      });
+      navigate("/login", {
+        state: { registeredEmail: formData.email },
+      });
+    } catch (error) {
+      alert(error.response?.data?.error || "Falha ao cadastrar!");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -36,7 +49,7 @@ const RegisterDocenteForm = () => {
             Já tenho conta
           </Link>
         </div>
-        <h1 className="form-title">Registro de Docente</h1>
+        <h1 className="form-title">Registro como docente</h1>
 
         <div className="form-group">
           <label htmlFor="nomeCompleto" className="form-label">
@@ -48,10 +61,9 @@ const RegisterDocenteForm = () => {
             id="nomeCompleto"
             name="nomeCompleto"
             placeholder="Digite seu nome completo"
-            value={completeName}
-            onChange={(e) => setCompleteName(e.target.value)}
+            value={formData.nomeCompleto}
+            onChange={handleChange}
             required
-            autoComplete="name"
           />
         </div>
 
@@ -65,8 +77,8 @@ const RegisterDocenteForm = () => {
             id="email"
             name="email"
             placeholder="exemplo@ufc.br"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={handleChange}
             required
             autoComplete="email"
           />
@@ -80,8 +92,8 @@ const RegisterDocenteForm = () => {
             id="vinculo"
             name="vinculo"
             className="form-input"
-            value={vinculo}
-            onChange={(e) => setVinculo(e.target.value)}
+            value={formData.siape}
+            onChange={handleChange}
             required
           >
             <option value="">Selecione o vínculo</option>
@@ -100,8 +112,8 @@ const RegisterDocenteForm = () => {
             id="nivelSuperior"
             name="nivelSuperior"
             className="form-input"
-            value={nivelSuperior}
-            onChange={(e) => setNivelSuperior(e.target.value)}
+            value={formData.nivelSuperior}
+            onChange={handleChange}
             required
           >
             <option value="">Selecione um nível</option>
@@ -123,8 +135,8 @@ const RegisterDocenteForm = () => {
             id="lotacao"
             name="lotacao"
             placeholder="Ex: Sistemas e Mídias Digitais"
-            value={lotacao}
-            onChange={(e) => setLotacao(e.target.value)}
+            value={formData.lotacao}
+            onChange={handleChange}
             required
           />
         </div>
@@ -140,14 +152,14 @@ const RegisterDocenteForm = () => {
             inputMode="numeric"
             pattern="\d*"
             placeholder="Digite o número do SIAPE"
-            value={siape}
-            onChange={(e) => setSiape(e.target.value)}
+            value={formData.siape}
+            onChange={handleChange}
             required
           />
         </div>
 
-        <button type="submit" className="form-button">
-          Solicitar registro
+        <button type="submit" disabled={loading} className="form-button">
+          {loading ? "Carregando..." : "Solicitar registro"}
         </button>
       </form>
     </div>
