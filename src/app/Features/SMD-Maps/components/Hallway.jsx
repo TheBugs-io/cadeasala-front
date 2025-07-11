@@ -1,4 +1,4 @@
-import placeholderIcon from "../../../assets/placeholder/placeholder.png";
+import placeholderIcon from "../../../assets/illustrations/skateIndo.svg";
 const HallwayMap = () => {
   return (
     <div className="hallway-map">

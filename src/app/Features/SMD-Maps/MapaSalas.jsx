@@ -1,26 +1,37 @@
 import Card from "./Components/CardSalaMapa";
 import HallwayMap from "./components/Hallway";
 import "./styles/MapaStyle.css";
+import FloorSelector from "./components/AndarSelector";
+import { salas } from "../../../models/SalasModel";
 
 const MapaSalas = () => {
   return (
     <div className="mapa-salas-container">
-      {/* TODO: Linha com filtro de andar e horário */}
-      {/* TODO: Botão com popup dos filtros */}
-      {/* TODO: Mapa - componentes dentro dele */}
-      {/* Linha de cima */}
+      <FloorSelector />
       <div className="map-container">
+        {/* Linha de cima */}
         <div className="row">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <Card key={i} highlight={i === 0} />
+          {salas.slice(0, 6).map((sala) => (
+            <Card
+              key={sala.id}
+              status={sala.status}
+              sala={sala.sala}
+              dados={sala.dados}
+            />
           ))}
         </div>
 
         <HallwayMap />
+
         {/* Linha de baixo */}
         <div className="row">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <Card key={i + 6} />
+          {salas.slice(6, 12).map((sala) => (
+            <Card
+              key={sala.id}
+              status={sala.status}
+              sala={sala.sala}
+              dados={sala.dados}
+            />
           ))}
         </div>
       </div>
