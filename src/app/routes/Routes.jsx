@@ -14,7 +14,11 @@ import MapaSalas from "../features/SMD-Maps/MapaSalas";
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <AuthProvider>
+        <Layout />
+      </AuthProvider>
+    ),
     children: [
       {
         index: true,
