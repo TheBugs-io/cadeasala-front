@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Card from "./Components/CardSalaMapa";
-import HallwayMap from "./components/Hallway";
+import HallwayMap from "./Components/Hallway";
 import "./styles/MapaStyle.css";
-import FloorSelector from "./components/AndarSelector";
+import FloorSelector from "./Components/AndarSelector";
 import { salas } from "../../../models/SalasModel";
 import Modal from "../../Components/Modal";
 import RoomDetails from "../DescSala/DescSala";
