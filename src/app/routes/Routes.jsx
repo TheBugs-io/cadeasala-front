@@ -15,7 +15,11 @@ import AdminMainPage from "../features/AdminAccountPage/AdminMainPage";
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <AuthProvider>
+        <Layout />
+      </AuthProvider>
+    ),
     children: [
       {
         index: true,
