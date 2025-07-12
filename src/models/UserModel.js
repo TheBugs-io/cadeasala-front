@@ -20,3 +20,11 @@ export default class UserModel {
     this.email = email;
   }
 }
+
+export const usuario = [
+  {
+    nome: "Monalisa Menezes",
+    email: "monalisa.menezes@example.com",
+    tipo: "SECRETARIO"
+  }
+];
