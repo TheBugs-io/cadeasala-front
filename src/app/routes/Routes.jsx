@@ -11,6 +11,7 @@ import DashboardRegistro from "../features/AdminDashboard/Dashboard";
 import { AuthProvider } from "../contexts/AuthContext";
 import MapaSalas from "../features/SMD-Maps/MapaSalas";
 import AdminMainPage from "../features/AdminAccountPage/AdminMainPage";
+//APAGA ESSE IMPORT AQUI EMBAIXO
 import ConfigSala from "../Features/ConfigSala/ConfigSala";
 
 export const router = createBrowserRouter([
@@ -30,10 +31,13 @@ export const router = createBrowserRouter([
         path: "/mapa-salas",
         element: <MapaSalas />,
       },
-          {
-        path: "/configurar-sala/:id",
+
+      //APAGA ISSO AQUI 
+      {
+        path: "/configurar-sala",
         element: <ConfigSala />,
       },
+      //ATE AQUI
       {
         path: "/register",
         children: [
