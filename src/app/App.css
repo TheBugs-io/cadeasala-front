@@ -29,6 +29,7 @@
     --bg-mapa: #D8DBE2;
     --bg-card-mapa: #F0F0F0;
     --selected-button-c: #0E7AC9;
+    --status-navigate: #0E7AC9;
   }
 }
 
@@ -50,4 +51,9 @@
 
 span {
   color: red;
+}
+
+.status-navigate{
+  color: var(--status-navigate);
+  font-weight: bold;
 }
