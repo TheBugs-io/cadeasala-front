@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import banner1 from "../../../assets/banner/banner1.png";
 import loginImage from "../../../assets/login/Login-rafiki.svg";
 import "../../../styles/Login.css";
+import { useAuth } from "../../../contexts/AuthContext";
 import { login } from "../../../service/auth/authService.js";
 
 const LoginForm = () => {
@@ -11,6 +12,7 @@ const LoginForm = () => {
   const [senha, setSenha] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login: authLogin } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +28,7 @@ const LoginForm = () => {
       const emailFormatado = email.trim().toLowerCase();
       const usuario = await login(emailFormatado, senha);
 
-      localStorage.setItem("token", usuario.token);
+      authLogin(usuario, usuario.token);
 
       if (usuario.tipo === "SECRETARIO") {
         navigate("/admin");
