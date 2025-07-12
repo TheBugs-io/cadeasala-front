@@ -1,3 +1,10 @@
+.admin-main-page {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 1rem;
+}
+
 .admin-header {
   display: flex;
   flex-direction: column;
@@ -14,6 +21,11 @@
 .admin-header h1 {
   font-size: 2rem;
   color: var(--text-color);
+}
+
+.admin-functions {
+  display: flex;
+  gap: 1rem;
 }
 
 @media screen and (max-width: 768px) {
