@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Outlet, createBrowserRouter } from "react-router-dom";
 import Layout from "../components/Layout";
 import LandingHome from "../features/Landing/Landing";
 import LoginPage from "../Features/AuthPage/Login";
@@ -7,6 +7,9 @@ import ConfirmEmail from "../features/ConfirmEmail/ConfirmEmail";
 import ChooseType from "../features/RegisterPage/ChooseType";
 import RegisterFormDiscente from "../features/RegisterPage/RegisterFormDiscente";
 import RegisterDocenteForm from "../features/RegisterPage/RegisterDocenteForm";
+import DashboardRegistro from "../features/AdminDashboard/Dashboard";
+import { AuthProvider } from "../contexts/AuthContext";
+import MapaSalas from "../features/SMD-Maps/MapaSalas";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +21,10 @@ export const router = createBrowserRouter([
         element: <LandingHome />,
       },
       {
+        path: "/mapa-salas",
+        element: <MapaSalas />,
+      },
+      {
         path: "/register",
         children: [
           {
@@ -26,12 +33,26 @@ export const router = createBrowserRouter([
           },
           {
             path: "form-discente",
-            element: <RegisterFormDiscente />
+            element: <RegisterFormDiscente />,
           },
           {
             path: "form-docente",
-            element: <RegisterDocenteForm />
-          }
+            element: <RegisterDocenteForm />,
+          },
+        ],
+      },
+      {
+        path: "/admin",
+        element: (
+          <AuthProvider allowedTypes={["SECRETARIO"]}>
+            <Outlet />
+          </AuthProvider>
+        ),
+        children: [
+          {
+            path: "dashboard",
+            element: <DashboardRegistro />,
+          },
         ],
       },
       {

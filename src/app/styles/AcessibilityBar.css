@@ -1,0 +1,69 @@
+.accessibility-bar {
+  background-color: #f1f1f1;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.accessibility-bar button {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.9rem;
+  border: 1px solid #999;
+  border-radius: 4px;
+  gap: 0.2rem;
+  cursor: pointer;
+  background-color: #fff;
+  transition: background-color 0.2s ease;
+}
+
+.accessibility-bar button:hover {
+  background-color: #e0e0e0;
+}
+
+.acessibility-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.acessibility-container hr {
+  border: 1px solid #dbdbdb;
+  margin: 0.1rem 0;
+  height: 2rem;
+}
+
+.acessibility-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.acessibility-options {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.high-contrast {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+.high-contrast a,
+.high-contrast button {
+  color: #ffff00 !important;
+  background-color: #000 !important;
+  border-color: #fff !important;
+}
+
+@media (max-width: 768px) {
+  .accessibility-bar {
+    display: none;
+  }
+}
