@@ -19,7 +19,7 @@ export default function AdminMainPage() {
         <CardFuncionality
           icon={<i className="fas fa-calendar-alt"><FaCalendar size={24} /></i>}
           title="Controle de reservas"
-          description="Gerencie as reservas de salas."
+          description="Gerencie as reservas e pedidos."
           onClick={() => console.log("Controle de reservas")}
         />
         <CardFuncionality
@@ -31,13 +31,13 @@ export default function AdminMainPage() {
         <CardFuncionality
           icon={<i className="fas fa-door-open"><BsFillDoorOpenFill size={24} /></i>}
           title="Controle de salas"
-          description="Gerencie as salas disponíveis."
+          description="Gerencie as salas do bloco IUVI."
           onClick={() => console.log("Controle de salas")}
         />
         <CardFuncionality
           icon={<i className="fas fa-users"><FaUserGear size={24} /></i>}
           title="Usuários na plataforma"
-          description="Visualize e gerencie usuários."
+          description="Visualize e gerencie usuários dentro da plataforma."
           onClick={() => console.log("Usuários na plataforma")}
         />
       </section>
