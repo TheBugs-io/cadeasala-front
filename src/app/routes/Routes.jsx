@@ -9,6 +9,7 @@ import RegisterFormDiscente from "../features/RegisterPage/RegisterFormDiscente"
 import RegisterDocenteForm from "../features/RegisterPage/RegisterDocenteForm";
 import DashboardRegistro from "../features/AdminDashboard/Dashboard";
 import { AuthProvider } from "../contexts/AuthContext";
+import PrivateRoute from "../Components/PrivateRoute";
 import MapaSalas from "../features/SMD-Maps/MapaSalas";
 import AdminMainPage from "../features/AdminAccountPage/AdminMainPage";
 
@@ -49,9 +50,9 @@ export const router = createBrowserRouter([
       {
         path: "/admin",
         element: (
-          <AuthProvider allowedTypes={["SECRETARIO"]}>
+          <PrivateRoute allowedTypes={["SECRETARIO"]}>
             <Outlet />
-          </AuthProvider>
+          </PrivateRoute>
         ),
         children: [
           {
