@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../../service/api";
 import "./DashboardRegister.css";
 import doneJob from "../../assets/illustrations/doneJob.svg";
+import TrilhaNavegacao from "../../Components/TrilhaNavegacao";
 
 const DashboardRegistro = () => {
   const [registros, setRegistros] = useState([]);
@@ -40,6 +41,12 @@ const DashboardRegistro = () => {
 
   return (
     <div className="dashboard-register-container">
+      <TrilhaNavegacao
+        paths={[
+          { label: "Página inicial", to: "/admin" },
+          { label: "Relatório de cadastros" },
+        ]}
+      />
       <h1>Relatório de cadastros</h1>
       <div className="docs-filter-tabs">
         {opcoesFiltro.map((opcao) => (
