@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../../styles/Login.css";
 import { Link, useNavigate } from "react-router-dom";
+import api from "../../service/api";
 
 const RegisterDocenteForm = () => {
   const navigate = useNavigate();
@@ -16,7 +17,12 @@ const RegisterDocenteForm = () => {
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    console.log(`Campo: ${name} | Valor: ${value}`);
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -92,9 +98,9 @@ const RegisterDocenteForm = () => {
             id="vinculo"
             name="vinculo"
             className="form-input"
-            value={formData.siape}
+            value={formData.vinculo}
             onChange={handleChange}
-            required
+            autoComplete="vinculo"
           >
             <option value="">Selecione o vínculo</option>
             <option value="EFETIVO">Efetivo</option>
@@ -137,7 +143,6 @@ const RegisterDocenteForm = () => {
             placeholder="Ex: Sistemas e Mídias Digitais"
             value={formData.lotacao}
             onChange={handleChange}
-            required
           />
         </div>
         <div className="form-group">
@@ -150,7 +155,6 @@ const RegisterDocenteForm = () => {
             id="siape"
             name="siape"
             inputMode="numeric"
-            pattern="\d*"
             placeholder="Digite o número do SIAPE"
             value={formData.siape}
             onChange={handleChange}
