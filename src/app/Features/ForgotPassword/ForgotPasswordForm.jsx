@@ -3,7 +3,7 @@ import "../../styles/Login.css";
 import { Link } from "react-router-dom";
 import forgotPassword from "../../assets/forgot/Forgot password-rafiki.svg";
 
-const ForgotPasswordForm = ({ onLogin }) => {
+const ForgotPasswordForm = () => {
   const [email, setEmail] = useState("");
 
   const handleSubmit = (e) => {
