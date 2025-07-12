@@ -7,9 +7,12 @@ import ConfirmEmail from "../features/ConfirmEmail/ConfirmEmail";
 import ChooseType from "../features/RegisterPage/ChooseType";
 import RegisterFormDiscente from "../features/RegisterPage/RegisterFormDiscente";
 import RegisterDocenteForm from "../features/RegisterPage/RegisterDocenteForm";
-import DashboardRegistro from "../features/AdminDashboard/Dashboard";
-import { AuthProvider } from "../contexts/AuthContext";
 import MapaSalas from "../features/SMD-Maps/MapaSalas";
+{/* Rotas que precisam de autenticação, mas pra qualquer tipo */}
+import { AuthProvider } from "../contexts/AuthContext";
+{/* Rotas privadas / ADMIN */}
+import PrivateRoute from "../Components/PrivateRoute";
+import DashboardRegistro from "../features/AdminDashboard/Dashboard";
 import AdminMainPage from "../features/AdminAccountPage/AdminMainPage";
 
 export const router = createBrowserRouter([
@@ -49,9 +52,9 @@ export const router = createBrowserRouter([
       {
         path: "/admin",
         element: (
-          <AuthProvider allowedTypes={["SECRETARIO"]}>
+          <PrivateRoute allowedTypes={["SECRETARIO"]}>
             <Outlet />
-          </AuthProvider>
+          </PrivateRoute>
         ),
         children: [
           {
