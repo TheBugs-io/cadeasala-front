@@ -10,6 +10,7 @@ import RegisterDocenteForm from "../features/RegisterPage/RegisterDocenteForm";
 import DashboardRegistro from "../features/AdminDashboard/Dashboard";
 import { AuthProvider } from "../contexts/AuthContext";
 import MapaSalas from "../features/SMD-Maps/MapaSalas";
+import AdminMainPage from "../features/AdminAccountPage/AdminMainPage";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ export const router = createBrowserRouter([
           </AuthProvider>
         ),
         children: [
+          {
+            index: true,
+            element: <AdminMainPage />,
+          },
           {
             path: "dashboard",
             element: <DashboardRegistro />,
