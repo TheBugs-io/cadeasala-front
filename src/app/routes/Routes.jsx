@@ -34,7 +34,7 @@ export const router = createBrowserRouter([
 
       //APAGA ISSO AQUI 
       {
-        path: "/configurar-sala",
+        path: "/configurar-sala/:id",
         element: <ConfigSala />,
       },
       //ATE AQUI
