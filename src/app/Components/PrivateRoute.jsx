@@ -18,18 +18,20 @@ import { useAuth } from "../contexts/AuthContext";
 }
 */
 function PrivateRoute({ children, allowedTypes }) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
 
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
   if (!allowedTypes.includes(user.tipo)) {
-    // Usuário logado, mas tipo não permitido
     return <Navigate to="/unauthorized" replace />;
   }
 
-  // Usuário autorizado
   return children;
 }
 
