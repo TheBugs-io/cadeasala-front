@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
-import '../styles/FloorSelector.css';
 import { PiElevatorFill } from "react-icons/pi";
+import '../styles/FloorSelector.css';
 
-const FloorSelector = () => {
-  const [andarSelecionado, setAndarSelecionado] = useState(1);
+const andares = [
+  { id: 'PRIMEIRO_ANDAR', label: '1' },
+  { id: 'SEGUNDO_ANDAR', label: '2' },
+];
 
+const FloorSelector = ({ value, onChange }) => {
   return (
     <div className="floor-selector">
-      <div className="floor-header" aria-description='Seleção de Andar'>
-      <PiElevatorFill className="elevator-icon" size={32} />
-      <h1 className="label">Andar</h1>
+      <div className="floor-header" aria-label="Seleção de Andar">
+        <PiElevatorFill className="elevator-icon" size={32} />
+        <h1 className="label">Andar</h1>
       </div>
       <div className="options">
-        {[1, 2].map((andar) => (
+        {andares.map((andar) => (
           <button
-            key={andar}
-            className={`option ${andarSelecionado === andar ? 'active' : ''}`}
-            onClick={() => setAndarSelecionado(andar)}
+            key={andar.id}
+            className={`option ${value === andar.id ? 'active' : ''}`}
+            onClick={() => onChange(andar.id)}
           >
-            {andar}
+            {andar.label}
           </button>
         ))}
       </div>
