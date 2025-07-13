@@ -67,7 +67,7 @@
 .form-button {
   width: 100%;
   padding: 0.8rem;
-  background: #da530c;
+  background: var(--primary-btn);
   color: #fff;
   border: none;
   border-radius: 6px;
