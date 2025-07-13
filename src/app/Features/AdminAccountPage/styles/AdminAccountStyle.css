@@ -10,7 +10,7 @@
   width: 100%;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2rem 3rem;
+  margin-top: 2rem;
 }
 
 .user-account-header {
@@ -27,6 +27,24 @@
 .admin-functions {
   display: flex;
   gap: 1rem;
+}
+
+@media (min-width: 769px) and (max-width: 1280px) {
+  .admin-main-page {
+    flex-direction: column;
+    padding: 2rem 4rem;
+  }
+
+  .admin-header {
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .admin-functions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
 }
 
 @media screen and (max-width: 768px) {
