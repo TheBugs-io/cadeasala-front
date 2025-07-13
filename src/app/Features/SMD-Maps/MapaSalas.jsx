@@ -10,23 +10,29 @@ import RoomDetails from "../DescSala/DescSala";
 function MapaSalas() {
   const [modalAberto, setModalAberto] = useState(false);
   const [dadosSelecionados, setDadosSelecionados] = useState(null);
+  const [andarSelecionado, setAndarSelecionado] = useState("PRIMEIRO_ANDAR");
 
   const handleAbrirModal = (sala, status, dados) => {
     setDadosSelecionados({ sala, status, dados });
     setModalAberto(true);
   };
 
+  const salasFiltradas = salas.filter(
+    (sala) => sala.localizacao === andarSelecionado
+  );
+
   return (
     <div className="mapa-salas-container">
-      <FloorSelector />
+      <FloorSelector value={andarSelecionado} onChange={setAndarSelecionado} />
+
       <div className="map-container">
         <div className="row">
-          {salas.slice(0, 6).map((sala) => (
+          {salasFiltradas.slice(0, 5).map((sala) => (
             <Card
               key={sala.id}
               status={sala.status}
-              sala={sala.sala}
-              dados={sala.dados}
+              sala={sala.nome}
+              dados={sala}
               aoClicar={handleAbrirModal}
             />
           ))}
@@ -35,12 +41,12 @@ function MapaSalas() {
         <HallwayMap />
 
         <div className="row">
-          {salas.slice(6, 12).map((sala) => (
+          {salasFiltradas.slice(6, 12).map((sala) => (
             <Card
               key={sala.id}
               status={sala.status}
-              sala={sala.sala}
-              dados={sala.dados}
+              sala={sala.nome}
+              dados={sala}
               aoClicar={handleAbrirModal}
             />
           ))}
