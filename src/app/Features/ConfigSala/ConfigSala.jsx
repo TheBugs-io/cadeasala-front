@@ -30,21 +30,38 @@ const ConfigSala = () => {
 
         <div className="config-sala-info">
           <div className="config-sala-title">
-            <input
-              type="text"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-              className="title-input"
-            />
-            <span>{andar}</span>
-          </div>
+      <input
+        type="text"
+        value={nome}
+        onChange={(e) => setNome(e.target.value)}
+        className="title-input"
+      />
+      <input
+        type="text"
+        value={andar}
+        onChange={(e) => setAndar(e.target.value)}
+        className="title-input"
+      />
+    </div>
 
-          <p>
-            <strong>Descrição:</strong> <span>{descricao}</span>
-          </p>
-          <p>
-            <strong>Capacidade:</strong> <span>{capacidade}</span>
-          </p>
+<p>
+  <strong>Descrição:</strong>
+  <textarea
+    value={descricao}
+    onChange={(e) => setDescricao(e.target.value)}
+    className="text-area"
+  />
+</p>
+
+<p>
+  <strong>Capacidade:</strong>
+  <input
+    type="number"
+    value={capacidade}
+    onChange={(e) => setCapacidade(Number(e.target.value))}
+    className="sub-input"
+  />
+</p>
           <p>
             <strong>Estado atual:</strong>{" "}
             <span
