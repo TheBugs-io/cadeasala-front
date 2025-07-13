@@ -1,28 +1,26 @@
 .tag-status {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    font-weight: bold;
+  display: inline-block;
+  padding: 0.5rem 0.5rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  text-transform: capitalize;
 }
 
-.tag-status .status {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    font-weight: bold;
+.tag-status.Manutenção {
+  background-color: #D70F49;
+  color: white;
 }
 
-.tag-status .status.RESERVADA {
-    background-color: #0E7AC9;
-    color: #0E7AC9;
+.tag-status.Livre {
+  background-color: #0A9A8C;
+  color: white;
 }
 
-.tag-status .status.LIVRE {
-    background-color: #0A9A8C;
-    color: #0A9A8C;
+.tag-status.Reservada {
+  background-color: #0E7AC9;
+  color: white;
 }
 
-.tag-status .status.EM_MANUTENCAO {
-    background-color: #0A9A8C;
-    color: #0A9A8C;
+.tag-status.Indisponível {
+  background-color: #dbdbdb;
 }

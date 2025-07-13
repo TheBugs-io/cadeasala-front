@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
 
 :root {
   --bg-color: #ffffff;
@@ -23,22 +23,24 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-color: #1F2029;
+    --bg-color: #1f2029;
     --text-color: #ffffff;
-    --container-card: #EDFAFF;
-    --bg-mapa: #D8DBE2;
-    --bg-card-mapa: #F0F0F0;
-    --selected-button-c: #0E7AC9;
-    --status-navigate: #0E7AC9;
+    --container-card: #edfaff;
+    --bg-mapa: #d8dbe2;
+    --bg-card-mapa: #f0f0f0;
+    --selected-button-c: #0e7ac9;
+    --status-navigate: #0e7ac9;
+    --primary-btn: #e5621c;
   }
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    --bg-color: #F8FDFF;
+    --bg-color: #f8fdff;
     --text-color: #000000;
-    --bg-mapa: #D8DBE2;
+    --bg-mapa: #d8dbe2;
     --bg-card-mapa: #f0f0f0;
+    --primary-btn: #e5621c;
   }
 }
 
@@ -53,7 +55,7 @@ span {
   color: red;
 }
 
-.status-navigate{
+.status-navigate {
   color: var(--status-navigate);
   font-weight: bold;
 }

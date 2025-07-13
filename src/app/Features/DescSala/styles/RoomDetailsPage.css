@@ -89,13 +89,12 @@
 
 .room-info h2 {
   font-size: clamp(1.2rem, 2vw, 1.6rem);
-  margin: 0;
   color: #1d3557;
 }
 
 .room-info p {
-  margin: 0;
-  line-height: 1.5;
+  font-size: 1rem;
+  line-height: 1.25;
   color: black;
 }
 

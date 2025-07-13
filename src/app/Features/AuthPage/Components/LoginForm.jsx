@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import banner1 from "../../../assets/banner/banner1.png";
 import loginImage from "../../../assets/login/Login-rafiki.svg";
 import "../../../styles/Login.css";
 import { useAuth } from "../../../contexts/AuthContext";
@@ -45,12 +44,12 @@ const LoginForm = () => {
 
   return (
     <div className="login-container">
-      <img src={banner1} alt="Banner de login" />
       <form
         onSubmit={handleSubmit}
         className="form-container"
         autoComplete="on"
       >
+        {/* TODO: Alterar a imagem do login */}
         <img src={loginImage} className="image-forms-container" alt="Login" />
         <div className="form-title">Login</div>
         <div className="form-group">
@@ -98,7 +97,6 @@ const LoginForm = () => {
           </Link>
         </div>
       </form>
-      <img src={banner1} alt="Banner de login" />
     </div>
   );
 };

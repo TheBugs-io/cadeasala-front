@@ -1,19 +1,19 @@
 import { Outlet, createBrowserRouter } from "react-router-dom";
-import Layout from "../components/Layout";
-import LandingHome from "../features/Landing/Landing";
+import Layout from "../Components/Layout";
+import LandingHome from "../Features/Landing/Landing";
 import LoginPage from "../Features/AuthPage/Login";
-import ForgotPasswordForm from "../features/ForgotPassword/ForgotPasswordForm";
-import ConfirmEmail from "../features/ConfirmEmail/ConfirmEmail";
-import ChooseType from "../features/RegisterPage/ChooseType";
-import RegisterFormDiscente from "../features/RegisterPage/RegisterFormDiscente";
-import RegisterDocenteForm from "../features/RegisterPage/RegisterDocenteForm";
-import MapaSalas from "../features/SMD-Maps/MapaSalas";
+import ForgotPasswordForm from "../Features/ForgotPassword/ForgotPasswordForm";
+import ConfirmEmail from "../Features/ConfirmEmail/ConfirmEmail";
+import ChooseType from "../Features/RegisterPage/ChooseType";
+import RegisterFormDiscente from "../Features/RegisterPage/RegisterFormDiscente";
+import RegisterDocenteForm from "../Features/RegisterPage/RegisterDocenteForm";
+import MapaSalas from "../Features/SMD-Maps/MapaSalas";
 {/* Rotas que precisam de autenticação, mas pra qualquer tipo */}
 import { AuthProvider } from "../contexts/AuthContext";
 {/* Rotas privadas / ADMIN */}
 import PrivateRoute from "../Components/PrivateRoute";
-import DashboardRegistro from "../features/AdminDashboard/Dashboard";
-import AdminMainPage from "../features/AdminAccountPage/AdminMainPage";
+import DashboardRegistro from "../Features/AdminDashboard/Dashboard";
+import AdminMainPage from "../Features/AdminAccountPage/AdminMainPage";
 
 export const router = createBrowserRouter([
   {

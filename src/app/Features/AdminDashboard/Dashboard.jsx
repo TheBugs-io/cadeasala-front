@@ -3,13 +3,18 @@ import api from "../../service/api";
 import "./DashboardRegister.css";
 import doneJob from "../../assets/illustrations/doneJob.svg";
 import TrilhaNavegacao from "../../Components/TrilhaNavegacao";
+import ModalConfirmAction from "../../Components/ModalConfirmAction";
 
 const DashboardRegistro = () => {
   const [registros, setRegistros] = useState([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState(null);
   const [filtroSelecionado, setFiltroSelecionado] = useState("TODOS");
+  const [modalAberto, setModalAberto] = useState(false);
+  const [registroSelecionado, setRegistroSelecionado] = useState(null);
+  const [novoStatus, setNovoStatus] = useState("");
   const opcoesFiltro = ["DISCENTE", "DOCENTE", "TODOS"];
+  const opcoesStatus = ["PENDENTE", "APROVADO", "REPROVADO"]; // Exemplo de status
 
   useEffect(() => {
     const buscarRegistrosPendentes = async () => {
@@ -37,6 +42,35 @@ const DashboardRegistro = () => {
         return registros;
     }
   };
+
+  const handleStatusChange = (registro, statusSelecionado) => {
+    setRegistroSelecionado(registro);
+    setNovoStatus(statusSelecionado);
+    setModalAberto(true);
+  };
+
+  const confirmarAlteracaoStatus = async () => {
+    if (!registroSelecionado) return;
+    try {
+      //Chama a API aqui com o endpoint de atualizar os status, que inclusive, deve ser alterado depois, porque o ID é passado no endpont e no json
+      await api.patch(`/api/auth/register/${registroSelecionado.id}`, {
+        id: registroSelecionado.id,
+        status: novoStatus,
+      });
+
+      //Vai limpar ao atualizar a solicitação de registro (aprovado ou rejeitado, independente, vão sair da tabela e um email é enviado pro usuário.)
+      setRegistros((prev) =>
+        prev.filter((r) => r.id !== registroSelecionado.id)
+      );
+    } catch (err) {
+      alert("Erro ao atualizar o status.");
+    } finally {
+      setModalAberto(false);
+      setRegistroSelecionado(null);
+      setNovoStatus("");
+    }
+  };
+
   const registrosFiltrados = aplicarFiltro();
 
   return (
@@ -87,8 +121,21 @@ const DashboardRegistro = () => {
                     <td>{registro.email}</td>
                     <td>{registro.tipoUsuario}</td>
                     <td className={`status ${registro.status.toLowerCase()}`}>
-                      {registro.status}
+                      <select
+                        value={registro.status}
+                        onChange={(e) =>
+                          handleStatusChange(registro, e.target.value)
+                        }
+                        className="status-select"
+                      >
+                        {opcoesStatus.map((status) => (
+                          <option key={status} value={status}>
+                            {status}
+                          </option>
+                        ))}
+                      </select>
                     </td>
+
                     <td>{new Date(registro.criadoEm).toLocaleString()}</td>
                   </tr>
                 ))
@@ -108,6 +155,18 @@ const DashboardRegistro = () => {
           </table>
         )}
       </div>
+
+      <ModalConfirmAction
+        isOpen={modalAberto}
+        onClose={() => setModalAberto(false)}
+        onConfirm={confirmarAlteracaoStatus}
+        mensagem={
+          <>
+            Tem certeza que deseja alterar o status para{" "}
+            <strong>"{novoStatus}"</strong>?
+          </>
+        }
+      />
     </div>
   );
 };

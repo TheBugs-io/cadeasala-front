@@ -13,11 +13,20 @@
   overflow-y: hidden;
 }
 
-.banner-text-container {
+.banner-content-container{
+  display: flex;
+  flex-direction: column;
   position: absolute;
+  justify-content: flex-start;
   top: 50%;
-  left: 30%;
+  left: 25%;
   transform: translate(-50%, -50%);
+}
+
+.banner-text-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
 }
 
 .icon-placeholder {
@@ -38,6 +47,22 @@
   font-size: 1.5rem;
   color: #84e1e9;
   margin-top: -1.5rem;
+}
+
+.btn-redirect-mapa{
+  padding: 1rem 0.8rem;
+  color: white;
+  border-radius: 5px;
+  font-size: 1.125rem;
+  font-weight: bold;
+  border: none;
+  background-color: #E5621C;
+}
+
+.btn-redirect-mapa:hover{
+  cursor: pointer;
+  background-color: #180a03;
+  transition: background-color 0.2s ease-in-out;
 }
 
 @keyframes rotateIcon {
