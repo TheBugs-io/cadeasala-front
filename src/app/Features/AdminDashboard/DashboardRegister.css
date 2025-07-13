@@ -82,12 +82,22 @@
   color: #000;
 }
 
-td.status {
+
+.status-select {
+  background: transparent;
+  border: none;
   font-weight: bold;
-  padding: 8px;
-  border-radius: 4px;
   text-transform: capitalize;
+  width: 100%;
+  color: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
 }
+
+.status-select:focus {
+  outline: none;
+}
+
 
 .status.pendente {
   background-color: #fff3cd;
