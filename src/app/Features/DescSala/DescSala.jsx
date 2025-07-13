@@ -8,6 +8,27 @@ export default function RoomDetails({ sala, status, dados, onClose }) {
     dados?.imagem ||
     photoSMD;
 
+  let statusFormatado = "";
+  switch (status) {
+    case "EM_MANUTENCAO":
+      statusFormatado = "Manutenção";
+      break;
+    case "LIVRE":
+      statusFormatado = "Livre";
+      break;
+    case "RESERVADA":
+      statusFormatado = "Reservada";
+      break;
+    case "PROBLEMA_TECNICO":
+      statusFormatado = "Indisponível";
+      break;
+    case "DISCIPLINA":
+      statusFormatado = "Em Aula";
+      break;
+    default:
+      statusFormatado = "Status desconhecido";
+  }
+
   return (
     <div className="room-overlay">
       <div className="room-modal">
@@ -19,17 +40,20 @@ export default function RoomDetails({ sala, status, dados, onClose }) {
 
         <div className="room-content">
           <div className="room-image-box">
-            <img src={image} alt={sala} className="room-image" />
+            <img src={dados?.imagem || photoSMD} alt={dados?.nome || sala} className="room-image" />
             <button className="room-favorite-button"><FaRegHeart /> <b>Favoritar sala</b></button>
           </div>
+
           <div className="room-info">
-            <h2>{dados.nome || "SALA"}</h2>
+            <h2>{dados?.nome || "SALA"}</h2>
             <p>{dados?.descricao || "Sem descrição disponível."}</p>
             <p>
               <strong>Capacidade:</strong> {dados?.capacidade || "Indefinida"}
             </p>
+
             <div className="estado-atual">
-              <strong>Estado atual:</strong> <TagStatus status={status} />
+              <strong>Estado atual:</strong>
+              <TagStatus status={statusFormatado} />
             </div>
           </div>
         </div>
