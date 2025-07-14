@@ -6,6 +6,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useState, useRef, useEffect } from "react";
 import { MdLogout } from "react-icons/md";
 import { FiArrowUpRight } from "react-icons/fi";
+import { IoIosPerson } from "react-icons/io";
 
 const Header = ({ onSearch }) => {
   const { user, logout } = useAuth();
@@ -18,7 +19,7 @@ const Header = ({ onSearch }) => {
 
   const handleBackHome = () => {
     navigate("/");
-  }
+  };
 
   const handleRedirect = () => {
     if (user?.tipo === "SECRETARIO") {
@@ -47,7 +48,12 @@ const Header = ({ onSearch }) => {
 
   return (
     <header className="header-container" aria-label="Cabeçalho do site">
-      <img src={logo} alt="Logo da plataforma" className="header-logo" onClick={handleBackHome}/>
+      <img
+        src={logo}
+        alt="Logo da plataforma"
+        className="header-logo"
+        onClick={handleBackHome}
+      />
 
       {!esconderSearch && (
         <>
@@ -65,7 +71,7 @@ const Header = ({ onSearch }) => {
         </>
       )}
 
-      {user && (
+      {user ? (
         <div className="header-account-wrapper" ref={menuRef}>
           <button
             className="header-account-btn"
@@ -87,14 +93,27 @@ const Header = ({ onSearch }) => {
               aria-label="Menu da conta"
             >
               <button role="menuitem" tabIndex={0} onClick={handleRedirect}>
-                Minha página inicial <FiArrowUpRight size={20}/>
+                Minha página inicial <FiArrowUpRight size={20} />
               </button>
-              <button role="menuitem" tabIndex={0} onClick={handleLogout} className="logout-btn">
-                <b>Sair</b> <MdLogout size={20}/>
+              <button
+                role="menuitem"
+                tabIndex={0}
+                onClick={handleLogout}
+                className="logout-btn"
+              >
+                <b>Sair</b> <MdLogout size={20} />
               </button>
             </div>
           )}
         </div>
+      ) : (
+        <button
+          className="header-login-btn"
+          onClick={() => navigate("/login")}
+          aria-label="Ir para a página de login"
+        >
+          <IoIosPerson size={20} /> Entrar na conta
+        </button>
       )}
     </header>
   );
