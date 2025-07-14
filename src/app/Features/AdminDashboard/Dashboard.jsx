@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import api from "../../service/api";
 import "./DashboardRegister.css";
 import doneJob from "../../assets/illustrations/doneJob.svg";
 import TrilhaNavegacao from "../../Components/TrilhaNavegacao";
 import ModalConfirmAction from "../../Components/ModalConfirmAction";
+import { atualizarStatusRegistro } from "../../service/admin/registerService";
 
 const DashboardRegistro = () => {
   const [registros, setRegistros] = useState([]);
@@ -14,13 +14,18 @@ const DashboardRegistro = () => {
   const [registroSelecionado, setRegistroSelecionado] = useState(null);
   const [novoStatus, setNovoStatus] = useState("");
   const opcoesFiltro = ["DISCENTE", "DOCENTE", "TODOS"];
-  const opcoesStatus = ["PENDENTE", "APROVADO", "REPROVADO"]; // Exemplo de status
+  const opcoesStatus = ["PENDENTE", "APROVADO", "REPROVADO"];
 
   useEffect(() => {
     const buscarRegistrosPendentes = async () => {
       try {
-        const response = await api.get("/api/auth/register/pendentes");
-        setRegistros(response.data);
+        const response = await buscarRegistrosPendentes();
+
+        if (response.status !== "success") {
+          throw new Error(response.message || "Erro ao buscar registros.");
+        } else {
+          setRegistros(response.data);
+        }
       } catch (err) {
         setErro("Erro ao carregar registros.");
       } finally {
@@ -52,16 +57,18 @@ const DashboardRegistro = () => {
   const confirmarAlteracaoStatus = async () => {
     if (!registroSelecionado) return;
     try {
-      //Chama a API aqui com o endpoint de atualizar os status, que inclusive, deve ser alterado depois, porque o ID é passado no endpont e no json
-      await api.patch(`/api/auth/register/${registroSelecionado.id}`, {
-        id: registroSelecionado.id,
-        status: novoStatus,
-      });
-
-      //Vai limpar ao atualizar a solicitação de registro (aprovado ou rejeitado, independente, vão sair da tabela e um email é enviado pro usuário.)
-      setRegistros((prev) =>
-        prev.filter((r) => r.id !== registroSelecionado.id)
+      const resposta = await atualizarStatusRegistro(
+        registroSelecionado.id,
+        novoStatus
       );
+
+      if (resposta.status !== "success") {
+        throw new Error(resposta.message || "Erro ao atualizar o status.");
+      } else {
+        setRegistros((prev) =>
+          prev.filter((r) => r.id !== registroSelecionado.id)
+        );
+      }
     } catch (err) {
       alert("Erro ao atualizar o status.");
     } finally {
@@ -86,9 +93,8 @@ const DashboardRegistro = () => {
         {opcoesFiltro.map((opcao) => (
           <button
             key={opcao}
-            className={`filtro-botao ${
-              filtroSelecionado === opcao ? "ativo" : ""
-            }`}
+            className={`filtro-botao ${filtroSelecionado === opcao ? "ativo" : ""
+              }`}
             onClick={() => setFiltroSelecionado(opcao)}
           >
             {opcao}
