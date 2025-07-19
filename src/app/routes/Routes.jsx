@@ -14,6 +14,7 @@ import { AuthProvider } from "../contexts/AuthContext";
 import PrivateRoute from "../Components/PrivateRoute";
 import DashboardRegistro from "../Features/AdminDashboard/Dashboard";
 import AdminMainPage from "../Features/AdminAccountPage/AdminMainPage";
+import AdminReservasPage from "../features/AdminReservasPage/AdminReservasPage";
 
 export const router = createBrowserRouter([
   {
@@ -62,8 +63,12 @@ export const router = createBrowserRouter([
             element: <AdminMainPage />,
           },
           {
-            path: "dashboard",
+            path: "dashboard-solicitacoes",
             element: <DashboardRegistro />,
+          },
+          {
+            path: "dashboard-reservas",
+            element: <AdminReservasPage />,
           },
         ],
       },

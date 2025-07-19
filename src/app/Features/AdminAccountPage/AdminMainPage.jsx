@@ -32,7 +32,7 @@ export default function AdminMainPage() {
           }
           title="Controle de reservas"
           description="Gerencie as reservas e pedidos."
-          onClick={() => console.log("Controle de reservas")}
+          onClick={() => handleCardClick("/admin/dashboard-reservas")}
         />
         <CardFuncionality
           icon={
@@ -42,7 +42,7 @@ export default function AdminMainPage() {
           }
           title="Solicitações de registro"
           description="Aprovar ou rejeitar solicitações de registro."
-          onClick={() => handleCardClick("/admin/dashboard")}
+          onClick={() => handleCardClick("/admin/dashboard-solicitacoes")}
         />
         <CardFuncionality
           icon={
