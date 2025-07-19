@@ -1,20 +1,24 @@
 import { Outlet, createBrowserRouter } from "react-router-dom";
+import { lazy } from "react";
 import Layout from "../Components/Layout";
-import LandingHome from "../Features/Landing/Landing";
-import LoginPage from "../Features/AuthPage/Login";
-import ForgotPasswordForm from "../Features/ForgotPassword/ForgotPasswordForm";
-import ConfirmEmail from "../Features/ConfirmEmail/ConfirmEmail";
-import ChooseType from "../Features/RegisterPage/ChooseType";
-import RegisterFormDiscente from "../Features/RegisterPage/RegisterFormDiscente";
-import RegisterDocenteForm from "../Features/RegisterPage/RegisterDocenteForm";
-import MapaSalas from "../Features/SMD-Maps/MapaSalas";
-{/* Rotas que precisam de autenticação, mas pra qualquer tipo */}
 import { AuthProvider } from "../contexts/AuthContext";
-{/* Rotas privadas / ADMIN */}
 import PrivateRoute from "../Components/PrivateRoute";
-import DashboardRegistro from "../Features/AdminDashboard/Dashboard";
-import AdminMainPage from "../Features/AdminAccountPage/AdminMainPage";
-import AdminReservasPage from "../features/AdminReservasPage/AdminReservasPage";
+
+// Lazy loading dos componentes
+const LandingHome = lazy(() => import("../Features/Landing/Landing"));
+const LoginPage = lazy(() => import("../Features/AuthPage/Login"));
+const ForgotPasswordForm = lazy(() => import("../Features/ForgotPassword/ForgotPasswordForm"));
+const ConfirmEmail = lazy(() => import("../Features/ConfirmEmail/ConfirmEmail"));
+const ChooseType = lazy(() => import("../Features/RegisterPage/ChooseType"));
+const RegisterFormDiscente = lazy(() => import("../Features/RegisterPage/RegisterFormDiscente"));
+const RegisterDocenteForm = lazy(() => import("../Features/RegisterPage/RegisterDocenteForm"));
+const MapaSalas = lazy(() => import("../Features/SMD-Maps/MapaSalas"));
+
+// Componentes Admin
+const DashboardRegistro = lazy(() => import("../Features/Administrador/AdminDashboard/Dashboard"));
+const AdminMainPage = lazy(() => import("../Features/Administrador/AdminAccountPage/AdminMainPage"));
+const AdminReservasPage = lazy(() => import("../Features/Administrador/AdminReservasPage/AdminReservasPage"));
+const PagePedidosReserva = lazy(() => import("../Features/Administrador/AdminAllRequestReserva/PedidosReservas"));
 
 export const router = createBrowserRouter([
   {
@@ -30,11 +34,11 @@ export const router = createBrowserRouter([
         element: <LandingHome />,
       },
       {
-        path: "/mapa-salas",
+        path: "mapa-salas",
         element: <MapaSalas />,
       },
       {
-        path: "/register",
+        path: "register",
         children: [
           {
             index: true,
@@ -51,7 +55,7 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: "/admin",
+        path: "admin",
         element: (
           <PrivateRoute allowedTypes={["SECRETARIO"]}>
             <Outlet />
@@ -70,18 +74,22 @@ export const router = createBrowserRouter([
             path: "dashboard-reservas",
             element: <AdminReservasPage />,
           },
+          {
+            path: "dashboard-reservas/pedidos-reserva",
+            element: <PagePedidosReserva />,
+          },
         ],
       },
       {
-        path: "/login",
+        path: "login",
         element: <LoginPage />,
       },
       {
-        path: "/forgot-password",
+        path: "forgot-password",
         element: <ForgotPasswordForm />,
       },
       {
-        path: "/confirmar",
+        path: "confirmar",
         element: <ConfirmEmail />,
       },
     ],
