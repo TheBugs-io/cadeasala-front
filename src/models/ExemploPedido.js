@@ -6,7 +6,7 @@ export const examples = [
     topLeftLabel: "Renanzinho",
     topRightLabel: "Discente",
     bottomLabel: "Outro",
-    bottomLabelColor: "#8B5CF6",
+    bottomLabelColor: "#9D4DCC",
   },
   {
     title: "Laboratório 03",
@@ -14,8 +14,8 @@ export const examples = [
     dateRange: "15/07/25 - 16/07/25",
     topLeftLabel: "Maria Silva",
     topRightLabel: "Docente",
-    bottomLabel: "Física",
-    bottomLabelColor: "#059669",
+    bottomLabel: "Oficina",
+    bottomLabelColor: "#C71E67",
   },
   {
     title: "Sala 201",
@@ -23,5 +23,46 @@ export const examples = [
     dateRange: "19/07/25 - 20/07/25",
     topLeftLabel: "João Santos",
     topRightLabel: "Monitor",
+    bottomLabel: "Oficina",
+    bottomLabelColor: "#C71E67",
   },
+];
+
+export const reservas = [
+  {
+    title: "Laboratório 04",
+    subtitle: "Quinta (08h-10h)",
+    dateRange: "21/07/25 - 22/07/25",
+    topLeftLabel: "Ana Costa",
+    topRightLabel: "Discente",
+    bottomLabel: "Outro",
+    bottomLabelColor: "#9D4DCC",
+  },
+  {
+    title: "Sala de Reuniões",
+    subtitle: "Sexta (13h-15h)",
+    dateRange: "23/07/25 - 24/07/25",
+    topLeftLabel: "Carlos Pereira",
+    topRightLabel: "Docente",
+    bottomLabel: "Disciplina",
+    bottomLabelColor: "#186DA9",
+  },
+    {
+        title: "Auditório Principal",
+        subtitle: "Sábado (10h-12h)",
+        dateRange: "25/07/25 - 26/07/25",
+        topLeftLabel: "Inga Freire Saboia",
+        topRightLabel: "Discente",
+        bottomLabel: "Evento",
+        bottomLabelColor: "#C71E67",
+    },
+    {
+        title: "Laboratório P&D",
+        subtitle: "Sábado (10h-12h)",
+        dateRange: "25/07/25 - 26/07/25",
+        topLeftLabel: "Ticianne Darin",
+        topRightLabel: "Discente",
+        bottomLabel: "Evento",
+        bottomLabelColor: "#C71E67",
+    },
 ];
