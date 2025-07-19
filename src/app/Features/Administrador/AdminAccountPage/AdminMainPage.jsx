@@ -1,11 +1,10 @@
 import UserAccountHeader from "./components/UserAccountHeader";
-import { usuario } from "../../../models/UserModel";
 import "./styles/AdminAccountStyle.css";
 import { useNavigate } from "react-router-dom";
 import CardFuncionality from "./components/CardFunction";
 import { FaCalendar, FaUserPlus, FaUserGear } from "react-icons/fa6";
 import { BsFillDoorOpenFill } from "react-icons/bs";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../../contexts/AuthContext";
 
 export default function AdminMainPage() {
   const { user } = useAuth();
