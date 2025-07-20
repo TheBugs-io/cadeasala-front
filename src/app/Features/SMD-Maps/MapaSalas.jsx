@@ -1,25 +1,25 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Card from "./Components/CardSalaMapa";
 import HallwayMap from "./Components/Hallway";
 import "./styles/MapaStyle.css";
 import FloorSelector from "./Components/AndarSelector";
-import { salas } from "../../../models/SalasModel";
 import Modal from "../../Components/Modal";
 import RoomDetails from "../DescSala/DescSala";
+import { salas } from "../../../models/SalasModel";
+
+const salasMock = salas;
 
 function MapaSalas() {
   const [modalAberto, setModalAberto] = useState(false);
   const [dadosSelecionados, setDadosSelecionados] = useState(null);
   const [andarSelecionado, setAndarSelecionado] = useState("PRIMEIRO_ANDAR");
 
-  const handleAbrirModal = (sala, status, dados) => {
-    setDadosSelecionados({ sala, status, dados });
+  const salasFiltradas = salasMock;
+
+  const handleAbrirModal = (sala) => {
+    setDadosSelecionados(sala);
     setModalAberto(true);
   };
-
-  const salasFiltradas = salas.filter(
-    (sala) => sala.localizacao === andarSelecionado
-  );
 
   return (
     <div className="mapa-salas-container">
@@ -31,9 +31,9 @@ function MapaSalas() {
             <Card
               key={sala.id}
               status={sala.status}
-              sala={sala.nome}
+              sala={sala.sala}
               dados={sala}
-              aoClicar={handleAbrirModal}
+              aoClicar={() => handleAbrirModal(sala)}
             />
           ))}
         </div>
@@ -45,9 +45,9 @@ function MapaSalas() {
             <Card
               key={sala.id}
               status={sala.status}
-              sala={sala.nome}
+              sala={sala.sala}
               dados={sala}
-              aoClicar={handleAbrirModal}
+              aoClicar={() => handleAbrirModal(sala)}
             />
           ))}
         </div>
@@ -56,9 +56,7 @@ function MapaSalas() {
       <Modal isOpen={modalAberto} onClose={() => setModalAberto(false)}>
         {dadosSelecionados && (
           <RoomDetails
-            sala={dadosSelecionados.sala}
-            status={dadosSelecionados.status}
-            dados={dadosSelecionados.dados}
+            dados={dadosSelecionados}
             onClose={() => setModalAberto(false)}
           />
         )}

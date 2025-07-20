@@ -6,7 +6,19 @@ function Card({ status = "LIVRE", sala = "Sala 01", dados = {}, aoClicar }) {
     if (aoClicar) aoClicar(sala, status, dados);
   };
 
+  const reservaDisciplina = dados.reservas?.find((r) => r.tipo === "DISCIPLINA");
+
   const renderContent = () => {
+    if (status === "RESERVADA" && reservaDisciplina) {
+      return (
+        <>
+          <h2>{reservaDisciplina.nomeDisciplina}</h2>
+          <p className="small">{reservaDisciplina.professor || dados.professor}</p>
+          <p className="bold">{reservaDisciplina.horario || dados.horario}</p>
+        </>
+      );
+    }
+
     switch (status) {
       case "DISCIPLINA":
         return (
@@ -44,7 +56,11 @@ function Card({ status = "LIVRE", sala = "Sala 01", dados = {}, aoClicar }) {
   };
 
   return (
-    <div className={`card status-${status}`} onClick={handleClick} style={{ cursor: "pointer" }}>
+    <div
+      className={`card status-${status}`}
+      onClick={handleClick}
+      style={{ cursor: "pointer" }}
+    >
       <p className="small">{sala}</p>
       {renderContent()}
     </div>
