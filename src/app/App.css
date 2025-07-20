@@ -32,7 +32,11 @@
     --status-navigate: #0e7ac9;
     --primary-btn: #e5621c;
     --border-color: #d1d5db;
-    --generic-card-bg: #2D2E30;
+    --generic-card-bg: #2d2e30;
+    --indisponivel-bg: #ffc7c7;
+    --indisponivel-border: #ff5e5e;
+    --reservada-bg: #f1c5d8;
+    --reservada-border: #C71E67;
   }
 }
 
@@ -43,8 +47,12 @@
     --bg-mapa: #d8dbe2;
     --bg-card-mapa: #f0f0f0;
     --primary-btn: #e5621c;
-    --generic-card-bg: #EAECFD;
+    --generic-card-bg: #eaecfd;
     --border-color: #d1d5db;
+    --indisponivel-bg: #ffc7c7;
+    --indisponivel-border: #ff5e5e;
+    --reservada-bg: #f1c5d8;
+    --reservada-border: #C71E67;
   }
 }
 
