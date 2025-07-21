@@ -14,6 +14,7 @@ import { AuthProvider } from "../contexts/AuthContext";
 import PrivateRoute from "../Components/PrivateRoute";
 import DashboardRegistro from "../Features/AdminDashboard/Dashboard";
 import AdminMainPage from "../Features/AdminAccountPage/AdminMainPage";
+import DetalhesAdmin from "../Features/DetalhesAdmin/DetalhesAdmin";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: "/mapa-salas",
         element: <MapaSalas />,
+      },
+      {
+      path: "/detalhes-teste/:id",
+      element: <DetalhesAdmin />,
       },
       {
         path: "/register",
