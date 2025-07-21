@@ -1,0 +1,229 @@
+.reservas-page {
+  padding: 20px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.reservas-content {
+  color: black;
+}
+
+.reservas-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.reservas-section {
+  width: 100%;
+}
+
+.reservas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.reserva-card {
+  background: #eaecfd;
+  max-width: 22rem;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 16px;
+  transition: box-shadow 0.2s ease;
+}
+
+.reserva-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reserva-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reserva-info {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  justify-content: space-between;
+}
+
+.discente-label,
+.codigo-label,
+.local-label {
+  display: inline-block;
+  margin-left: 0.6rem;
+  font-weight: 500;
+}
+
+.codigo-label {
+  color: #007bff;
+}
+
+.local-label {
+  color: #1b1b1b;
+  font-weight: 600;
+}
+
+.reserva-body {
+  margin-bottom: 16px;
+}
+
+.sala-nome {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1b1b1b;
+  margin: 0 0 8px 0;
+}
+
+.horario-info {
+  font-size: 14px;
+  margin: 0;
+}
+
+.reserva-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.tipo-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.tipo-button.outro {
+  background-color: var(--outro-sts);
+  color: white;
+}
+
+.tipo-button.disciplina {
+  background-color: var(--disciplina-sts);
+  color: white;
+}
+
+.tipo-button.oficina {
+  background-color: var(--oficina-sts);
+  color: white;
+}
+
+.detalhes-button {
+  padding: 6px 12px;
+  background: none;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  color: #007bff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.detalhes-button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.sem-reservas-msg{
+  text-align: center;
+  font-size: 1.2rem;
+  color: #888;
+  margin-top: 20px;
+}
+
+.skeleton-card {
+  max-width: 22rem;
+  height: 180px;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  margin-right: 1rem;
+  animation: pulse 1.5s infinite ease-in-out;
+  flex: 0 0 auto;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #f0f0f0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+
+.horizontal-scroll {
+  display: flex;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+  .reservas-page {
+    padding: 15px;
+  }
+
+  .search-filter-section {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .search-container {
+    max-width: 100%;
+  }
+
+  .reservas-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .reserva-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .reservas-page {
+    padding: 10px;
+  }
+
+  .reservas-content {
+    padding: 15px;
+  }
+
+  .section-title {
+    font-size: 18px;
+  }
+
+  .sala-nome {
+    font-size: 16px;
+  }
+}
