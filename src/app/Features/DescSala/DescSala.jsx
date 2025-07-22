@@ -1,15 +1,13 @@
 import { FaRegHeart } from "react-icons/fa";
 import TagStatus from "./components/TagStatus";
 import "./styles/RoomDetailsPage.css";
-import photoSMD from '../../assets/photos/portalUFC.png';
+import photoSMD from "../../assets/photos/portalUFC.png";
 
-export default function RoomDetails({ sala, status, dados, onClose }) {
-  const image =
-    dados?.imagem ||
-    photoSMD;
+export default function RoomDetails({ dados, onClose }) {
+  const image = dados?.imagem || photoSMD;
 
   let statusFormatado = "";
-  switch (status) {
+  switch (dados?.status) {
     case "EM_MANUTENCAO":
       statusFormatado = "Manutenção";
       break;
@@ -40,12 +38,14 @@ export default function RoomDetails({ sala, status, dados, onClose }) {
 
         <div className="room-content">
           <div className="room-image-box">
-            <img src={dados?.imagem || photoSMD} alt={dados?.nome || sala} className="room-image" />
-            <button className="room-favorite-button"><FaRegHeart /> <b>Favoritar sala</b></button>
+            <img src={image} alt={dados?.sala} className="room-image" />
+            <button className="room-favorite-button">
+              <FaRegHeart /> <b>Favoritar sala</b>
+            </button>
           </div>
 
           <div className="room-info">
-            <h2>{dados?.nome || "SALA"}</h2>
+            <h2>{dados?.sala || "SALA"}</h2>
             <p>{dados?.descricao || "Sem descrição disponível."}</p>
             <p>
               <strong>Capacidade:</strong> {dados?.capacidade || "Indefinida"}
@@ -55,10 +55,33 @@ export default function RoomDetails({ sala, status, dados, onClose }) {
               <strong>Estado atual:</strong>
               <TagStatus status={statusFormatado} />
             </div>
+
+            {dados?.dados && (
+              <div className="room-extra">
+                {dados.dados.disciplina && (
+                  <>
+                    <p>
+                      <strong>Disciplina:</strong> {dados.dados.disciplina}
+                    </p>
+                    <p>
+                      <strong>Professor:</strong> {dados.dados.professor}
+                    </p>
+                  </>
+                )}
+                {dados.dados.autor && (
+                  <p>
+                    <strong>Reservado por:</strong> {dados.dados.autor}
+                  </p>
+                )}
+                <p>
+                  <strong>Horário:</strong> {dados.dados.horario}
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
-        {dados?.reservas && dados.reservas.length > 0 && (
+        {dados?.reservas?.length > 0 && (
           <div className="room-reservations">
             <h3>Próximas reservas</h3>
             {dados.reservas.map((res) => (

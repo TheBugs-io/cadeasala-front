@@ -31,6 +31,8 @@
     --selected-button-c: #0e7ac9;
     --status-navigate: #0e7ac9;
     --primary-btn: #e5621c;
+    --border-color: #d1d5db;
+    --generic-card-bg: #2D2E30;
   }
 }
 
@@ -41,6 +43,8 @@
     --bg-mapa: #d8dbe2;
     --bg-card-mapa: #f0f0f0;
     --primary-btn: #e5621c;
+    --generic-card-bg: #EAECFD;
+    --border-color: #d1d5db;
   }
 }
 

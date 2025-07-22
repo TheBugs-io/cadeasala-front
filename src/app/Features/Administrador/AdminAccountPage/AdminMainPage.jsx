@@ -1,11 +1,10 @@
 import UserAccountHeader from "./components/UserAccountHeader";
-import { usuario } from "../../../models/UserModel";
 import "./styles/AdminAccountStyle.css";
 import { useNavigate } from "react-router-dom";
 import CardFuncionality from "./components/CardFunction";
 import { FaCalendar, FaUserPlus, FaUserGear } from "react-icons/fa6";
 import { BsFillDoorOpenFill } from "react-icons/bs";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../../contexts/AuthContext";
 
 export default function AdminMainPage() {
   const { user } = useAuth();
@@ -32,7 +31,7 @@ export default function AdminMainPage() {
           }
           title="Controle de reservas"
           description="Gerencie as reservas e pedidos."
-          onClick={() => console.log("Controle de reservas")}
+          onClick={() => handleCardClick("/admin/dashboard-reservas")}
         />
         <CardFuncionality
           icon={
@@ -42,7 +41,7 @@ export default function AdminMainPage() {
           }
           title="Solicitações de registro"
           description="Aprovar ou rejeitar solicitações de registro."
-          onClick={() => handleCardClick("/admin/dashboard")}
+          onClick={() => handleCardClick("/admin/dashboard-solicitacoes")}
         />
         <CardFuncionality
           icon={
