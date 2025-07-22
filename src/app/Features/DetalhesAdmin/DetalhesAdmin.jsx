@@ -12,15 +12,33 @@ const DetalhesAdmin = () => {
   const [repetirDias, setRepetirDias] = useState(false);
   const [diasSelecionados, setDiasSelecionados] = useState([]);
 
-  const toggleDia = (dia) => {
+  const handleToggleDia = (valor) => {
     setDiasSelecionados((prev) =>
-      prev.includes(dia) ? prev.filter((d) => d !== dia) : [...prev, dia]
+      prev.includes(valor) ? prev.filter((d) => d !== valor) : [...prev, valor]
     );
   };
 
-  const diasSemana = ["S", "T", "Q", "Q", "S", "S", "D"];
+  const diasDaSemana = [
+    { label: "D", valor: "domingo" },
+    { label: "S", valor: "segunda" }, // S1
+    { label: "T", valor: "terca" },
+    { label: "Q", valor: "quarta" },
+    { label: "Q", valor: "quinta" },  // Q2
+    { label: "S", valor: "sexta" },   // S2
+    { label: "S", valor: "sabado" },  // S3
+  ];
 
-  return ( 
+  const diasInternos = [
+    { label: "D", valor: "D", nome: "Domingo" },
+    { label: "S", valor: "U", nome: "Segunda" },
+    { label: "T", valor: "T", nome: "Terça" },
+    { label: "Q", valor: "Q", nome: "Quarta" },
+    { label: "Q", valor: "X", nome: "Quinta" },
+    { label: "S", valor: "B", nome: "Sexta" },
+    { label: "S", valor: "A", nome: "Sábado" },
+  ];
+
+  return (
     <main className="detalhes-admin-container">
       <TrilhaNavegacao
         paths={[
@@ -65,10 +83,18 @@ const DetalhesAdmin = () => {
           </div>
 
           <div className="linha-flex">
-            <p>
-              <strong>{data}</strong>
-            </p>
-            <p>{horario}</p>
+            <input
+              type="text"
+              value={data}
+              onChange={(e) => setData(e.target.value)}
+              className="sub-input"
+            />
+            <input
+              type="text"
+              value={horario}
+              onChange={(e) => setHorario(e.target.value)}
+              className="sub-input alinhado-direita"
+            />
           </div>
 
           <input
@@ -89,15 +115,16 @@ const DetalhesAdmin = () => {
 
           {repetirDias && (
             <div className="dias-semana">
-              {diasSemana.map((dia, i) => (
+              {diasInternos.map((dia, index) => (
                 <button
-                  key={i}
+                  key={index}
+                  title={dia.nome}
                   className={`dia-botao ${
-                    diasSelecionados.includes(dia) ? "ativo" : ""
+                    diasSelecionados.includes(dia.valor) ? "ativo" : ""
                   }`}
-                  onClick={() => toggleDia(dia)}
+                  onClick={() => handleToggleDia(dia.valor)}
                 >
-                  {dia}
+                  {dia.label}
                 </button>
               ))}
             </div>
