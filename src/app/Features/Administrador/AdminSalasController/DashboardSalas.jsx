@@ -3,10 +3,12 @@ import CardSalaLayout from "./components/CardSalaLayout";
 import "./styles/DashboardSalasStyle.css";
 import { fetchSalas } from "../../../service/admin/salasService";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const DashboardSalas = () => {
   const [salas, setSalas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
 useEffect(() => {
   const loadSalas = async () => {
@@ -23,6 +25,15 @@ useEffect(() => {
   };
   loadSalas();
 }, []);
+
+  const handleSettingsClick = (sala) => {
+    navigate(`/admin/dashboard-salas/salas/${sala.id}`, {
+      state: {
+        isEditable: false,
+        salaData: sala,
+      },
+    });
+  };
 
   return (
     <main className="controle-salas" role="main">
@@ -45,7 +56,7 @@ useEffect(() => {
           ) : salas.length === 0 ? (
             <p>Nenhuma sala encontrada.</p>
           ) : (
-            <CardSalaLayout salas={salas} />
+            <CardSalaLayout salas={salas} onSettingsClick={handleSettingsClick} />
           )}
         </section>
       </div>
