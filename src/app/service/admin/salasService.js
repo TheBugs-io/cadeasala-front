@@ -9,3 +9,16 @@ export const fetchSalas = async () => {
     throw error;
   }
 }
+
+export const atualizarSala = async (salaId, novosDados) => {
+  try {
+    const response = await api.put(`/salas/editar`, {
+      sala_id: Number(salaId),
+      novosDados,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao atualizar sala:", error.response?.data || error.message);
+    throw error;
+  }
+};
