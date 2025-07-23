@@ -1,6 +1,6 @@
 .room-card {
   width: 320px;
-  background-color: #e8e6f2;
+  background-color: var(--card-sala-bg);
   border-radius: 5px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -32,22 +32,20 @@
 
 .settings-icon {
   font-size: 1.25rem;
-  color: #666;
+  color: #030303;
   cursor: pointer;
   padding: 0.5rem;
-  border-radius: 50%;
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .settings-icon:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-  transform: rotate(90deg);
+  background-color: rgba(0, 0, 0, 0.08);
 }
 
 .room-illustration {
   height: 200px;
   margin: 0 20px;
-  border-radius: 15px;
+  border-radius: 0.5rem;
   overflow: hidden;
   position: relative;
   background-color: #f8f9fa;
@@ -61,8 +59,8 @@
   transition: transform 0.3s ease;
 }
 
-.room-card:hover .room-image {
-  transform: scale(1.05);
+.room-card:hover {
+  transform: scale(1.02);
 }
 
 .room-content {
@@ -71,16 +69,15 @@
 }
 
 .room-title {
-  font-size: 28px;
-  font-weight: 700;
-  margin: 0 0 8px 0;
+  font-size: 1.8rem;
+  font-weight: 800;
   color: #1a202c;
 }
 
 .room-subtitle {
-  font-size: 14px;
-  font-weight: 600;
-  color: #4a5568;
+  font-size: 1rem;
+  font-weight: 800;
+  color: black;
   margin: 0 0 12px 0;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -88,38 +85,14 @@
 
 .room-description {
   font-size: 1rem;
-  color: #666;
+  color: black;
   margin: 0;
-  line-height: 1.4;
-  font-style: italic;
 }
 
 .room-badge.primary {
   background-color: #d63384;
 }
 
-.room-badge.secondary {
-  background-color: #6c757d;
-}
-
-.room-badge.success {
-  background-color: #198754;
-}
-
-.room-badge.info {
-  background-color: #0dcaf0;
-}
-
-.room-badge.warning {
-  background-color: #ffc107;
-  color: #000;
-}
-
-.room-badge.danger {
-  background-color: #dc3545;
-}
-
-/* Responsive design */
 @media (max-width: 480px) {
   .room-card {
     width: 100%;
