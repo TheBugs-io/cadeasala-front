@@ -14,8 +14,14 @@ export function AuthProvider({ children }) {
   const [token, setToken] = useState(localStorage.getItem("token"));
 
   const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
+    try {
+      const storedUser = localStorage.getItem("user");
+      return storedUser ? JSON.parse(storedUser) : null;
+    } catch (e) {
+      console.warn("Erro ao fazer parse do usuário:", e);
+      localStorage.removeItem("user");
+      return null;
+    }
   });
 
   const login = (userData, authToken) => {
