@@ -14,7 +14,9 @@ function MapaSalas() {
   const [dadosSelecionados, setDadosSelecionados] = useState(null);
   const [andarSelecionado, setAndarSelecionado] = useState("PRIMEIRO_ANDAR");
 
-  const salasFiltradas = salasMock;
+  const salasFiltradas = salasMock.filter(
+    (sala) => sala.localizacao === andarSelecionado
+  );
 
   const handleAbrirModal = (sala) => {
     setDadosSelecionados(sala);
@@ -27,29 +29,57 @@ function MapaSalas() {
 
       <div className="map-container">
         <div className="row">
-          {salasFiltradas.slice(0, 5).map((sala) => (
-            <Card
-              key={sala.id}
-              status={sala.status}
-              sala={sala.sala}
-              dados={sala}
-              aoClicar={() => handleAbrirModal(sala)}
-            />
-          ))}
+          {andarSelecionado === "SEGUNDO_ANDAR"
+            ? salasFiltradas
+                .slice(0, 5)
+                .map((sala) => (
+                  <Card
+                    key={sala.id}
+                    status={sala.status}
+                    sala={sala.sala}
+                    dados={sala}
+                    aoClicar={() => handleAbrirModal(sala)}
+                  />
+                ))
+            : salasFiltradas
+                .slice(0, 6)
+                .map((sala) => (
+                  <Card
+                    key={sala.id}
+                    status={sala.status}
+                    sala={sala.sala}
+                    dados={sala}
+                    aoClicar={() => handleAbrirModal(sala)}
+                  />
+                ))}
         </div>
 
         <HallwayMap />
 
         <div className="row">
-          {salasFiltradas.slice(6, 12).map((sala) => (
-            <Card
-              key={sala.id}
-              status={sala.status}
-              sala={sala.sala}
-              dados={sala}
-              aoClicar={() => handleAbrirModal(sala)}
-            />
-          ))}
+          {andarSelecionado === "SEGUNDO_ANDAR"
+            ? salasFiltradas
+                .slice(5, 11)
+                .map((sala) => (
+                  <Card
+                    key={sala.id}
+                    status={sala.status}
+                    sala={sala.sala}
+                    dados={sala}
+                    aoClicar={() => handleAbrirModal(sala)}
+                  />
+                ))
+            : salasFiltradas
+                .slice(6, 12)
+                .map((sala) => (
+                  <Card
+                    key={sala.id}
+                    status={sala.status}
+                    sala={sala.sala}
+                    dados={sala}
+                    aoClicar={() => handleAbrirModal(sala)}
+                  />
+                ))}
         </div>
       </div>
 

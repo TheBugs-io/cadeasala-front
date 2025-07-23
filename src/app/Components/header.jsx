@@ -1,5 +1,5 @@
 import "../styles/Header.css";
-import logo from "../assets/logo/logoSMD.png";
+import logo from "../assets/logo/logocadesala.png";
 import usuarioIcone from "../assets/usuario/usuario.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
