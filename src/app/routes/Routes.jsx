@@ -19,6 +19,7 @@ const DashboardRegistro = lazy(() => import("../Features/Administrador/AdminDash
 const AdminMainPage = lazy(() => import("../Features/Administrador/AdminAccountPage/AdminMainPage"));
 const AdminReservasPage = lazy(() => import("../Features/Administrador/AdminReservasPage/AdminReservasPage"));
 const PagePedidosReserva = lazy(() => import("../Features/Administrador/AdminAllRequestReserva/PedidosReservas"));
+const DashboardSalas = lazy(() => import("../Features/Administrador/AdminSalasController/DashboardSalas"));
 
 export const router = createBrowserRouter([
   {
@@ -78,6 +79,10 @@ export const router = createBrowserRouter([
             path: "dashboard-reservas/pedidos-reserva",
             element: <PagePedidosReserva />,
           },
+          {
+            path: "dashboard-salas",
+            element: <DashboardSalas />,
+          }
         ],
       },
       {
