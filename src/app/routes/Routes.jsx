@@ -21,6 +21,8 @@ const AdminReservasPage = lazy(() => import("../Features/Administrador/AdminRese
 const PagePedidosReserva = lazy(() => import("../Features/Administrador/AdminAllRequestReserva/PedidosReservas"));
 const DetalhesAdmin = lazy(() => import("../Features/DetalhesAdmin/DetalhesAdmin"));
 const DashboardSalas = lazy(() => import("../Features/Administrador/AdminSalasController/DashboardSalas"));
+const ConfigSala = lazy(() => import("../Features/Administrador/ConfigSala/ConfigSala"));
+
 
 export const router = createBrowserRouter([
   {
@@ -87,7 +89,11 @@ export const router = createBrowserRouter([
           {
             path: "dashboard-salas",
             element: <DashboardSalas />,
-          }
+          },
+          {
+            path: "dashboard-salas/salas/:id",
+            element: <ConfigSala />,
+          },
         ],
       },
       {
