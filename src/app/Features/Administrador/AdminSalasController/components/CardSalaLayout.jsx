@@ -56,7 +56,7 @@ const CardSalaLayout = ({
             />
           </div>
 
-          <div className="room-content">
+          <div className="room-admin-content">
             <h2 className="room-title">{sala.nome}</h2>
             <p className="room-subtitle">
               {formatterLocalizacao(sala.localizacao)} -{" "}

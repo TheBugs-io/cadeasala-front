@@ -63,9 +63,9 @@
   transform: scale(1.02);
 }
 
-.room-content {
+.room-admin-content {
   padding: 20px;
-  text-align: left;
+  text-align: flex-start;
 }
 
 .room-title {
