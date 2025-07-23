@@ -19,7 +19,8 @@ const DashboardRegistro = lazy(() => import("../Features/Administrador/AdminDash
 const AdminMainPage = lazy(() => import("../Features/Administrador/AdminAccountPage/AdminMainPage"));
 const AdminReservasPage = lazy(() => import("../Features/Administrador/AdminReservasPage/AdminReservasPage"));
 const PagePedidosReserva = lazy(() => import("../Features/Administrador/AdminAllRequestReserva/PedidosReservas"));
-import DetalhesAdmin from "../Features/DetalhesAdmin/DetalhesAdmin";
+const DetalhesAdmin = lazy(() => import("../Features/DetalhesAdmin/DetalhesAdmin"));
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -36,10 +37,6 @@ export const router = createBrowserRouter([
       {
         path: "mapa-salas",
         element: <MapaSalas />,
-      },
-      {
-      path: "/detalhes-teste/:id",
-      element: <DetalhesAdmin />,
       },
       {
         path: "/register",
@@ -81,6 +78,10 @@ export const router = createBrowserRouter([
           {
             path: "dashboard-reservas/pedidos-reserva",
             element: <PagePedidosReserva />,
+          },
+          {
+            path: "dashboard-reservas/reservas/:id",
+            element: <DetalhesAdmin />,
           },
         ],
       },
