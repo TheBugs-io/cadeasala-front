@@ -32,7 +32,7 @@ const LoginForm = () => {
       if (usuario.tipo === "SECRETARIO") {
         navigate("/admin");
       } else if (usuario.tipo === "DISCENTE" || usuario.tipo === "DOCENTE") {
-        navigate("/dashboard");
+        navigate("/user");
       }
     } catch (error) {
       console.error("Erro no login:", error);

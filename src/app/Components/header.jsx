@@ -25,7 +25,7 @@ const Header = ({ onSearch }) => {
     if (user?.tipo === "SECRETARIO") {
       navigate("/admin");
     } else {
-      navigate("/dashboard");
+      navigate("/user");
     }
     setMenuAberto(false);
   };

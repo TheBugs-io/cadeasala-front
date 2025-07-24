@@ -14,6 +14,9 @@ const RegisterFormDiscente = lazy(() => import("../Features/RegisterPage/Registe
 const RegisterDocenteForm = lazy(() => import("../Features/RegisterPage/RegisterDocenteForm"));
 const MapaSalas = lazy(() => import("../Features/SMD-Maps/MapaSalas"));
 
+// Componentes de usuário autenticado
+const AccountPage = lazy(() => import("../Features/AccountPage/AccountPageGeral"));
+
 // Componentes Admin
 const DashboardRegistro = lazy(() => import("../Features/Administrador/AdminDashboard/Dashboard"));
 const AdminMainPage = lazy(() => import("../Features/Administrador/AdminAccountPage/AdminMainPage"));
@@ -57,6 +60,20 @@ export const router = createBrowserRouter([
             element: <RegisterDocenteForm />,
           },
         ],
+      },
+      {
+        path: "user",
+        element: (
+          <PrivateRoute allowedTypes={["DISCENTE", "DOCENTE"]}>
+            <Outlet />
+          </PrivateRoute>
+        ),
+        children: [
+          {
+            index: true,
+            element: <AccountPage />,
+          }
+        ]
       },
       {
         path: "admin",
