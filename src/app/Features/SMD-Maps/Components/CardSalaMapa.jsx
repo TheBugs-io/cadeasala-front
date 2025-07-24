@@ -1,7 +1,7 @@
 import { FaTools, FaDoorOpen } from "react-icons/fa";
 import "../styles/CardMapaStyle.css";
 
-function Card({ status = "LIVRE", sala = "Sala 01", dados = {}, aoClicar }) {
+function Card({ status, sala, dados = {}, aoClicar }) {
   const handleClick = () => {
     if (aoClicar) aoClicar(sala, status, dados);
   };
