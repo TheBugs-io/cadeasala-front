@@ -44,6 +44,9 @@ export default function RoomDetails({ dados, onClose }) {
     case "DISCIPLINA":
       statusFormatado = "Em Aula";
       break;
+    case "FUNCIONAL":
+      statusFormatado = "Funcional";
+      break;
     default:
       statusFormatado = "Status desconhecido";
   }
@@ -59,14 +62,14 @@ export default function RoomDetails({ dados, onClose }) {
 
         <div className="room-content">
           <div className="room-image-box">
-            <img src={image} alt={dados?.sala} className="room-image" />
+            <img src={image} alt={dados?.nome || "Sala"} className="room-image" />
             <button className="room-favorite-button">
               <FaRegHeart /> <b>Favoritar sala</b>
             </button>
           </div>
 
           <div className="room-info">
-            <h2>{dados?.sala || "SALA"}</h2>
+            <h2>{dados?.nome || "SALA"}</h2>
             <p>{dados?.descricao || "Sem descrição disponível."}</p>
             <p>
               <strong>Capacidade:</strong> {dados?.capacidade || "Indefinida"}
@@ -114,7 +117,7 @@ export default function RoomDetails({ dados, onClose }) {
                     : "room-reservation-inactive"
                 }
               >
-                {res.title} - {res.time}
+                {res.nome || res.title} - {res.horario || res.time}
               </div>
             ))}
           </div>

@@ -2,76 +2,65 @@ import { useEffect, useState } from "react";
 import TrilhaNavegacao from "../../../Components/TrilhaNavegacao";
 import "./styles/ReservasPage.css";
 import SkeletonCard from "../../../Components/SkeletonCard";
-import { fetchReservas } from "../../../service/admin/reservasService";
+import { fetchSolicitacoesReservas } from "../../../service/admin/reservasService";
 
 const Card = ({ children, className = "" }) => (
   <div className={`card ${className}`}>{children}</div>
 );
 
+const formatarData = (dataString) => {
+  if (!dataString) return "-";
+  const data = new Date(dataString);
+  return data.toLocaleDateString("pt-BR");
+};
+
 const PagePedidosReserva = () => {
-  const [outrasReservas, setOutrasReservas] = useState([]);
-  const [disciplinas, setDisciplinas] = useState([]);
-  const [oficinas, setOficinas] = useState([]);
+  const [solicitacoes, setSolicitacoes] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
-    const getReservas = async () => {
+    const getSolicitacoes = async () => {
       try {
         setLoading(true);
-        const data = await fetchReservas();
-        setOutrasReservas(data.outras || []);
-        setDisciplinas(data.disciplinas || []);
-        setOficinas(data.oficinas || []);
+        const data = await fetchSolicitacoesReservas();
+        setSolicitacoes(data.solicitacoes || []);
       } catch (error) {
-        console.error("Erro ao buscar reservas:", error);
+        console.error("Erro ao buscar solicitações:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    getReservas();
+    getSolicitacoes();
   }, []);
 
+  const disciplinas = solicitacoes.filter(
+    (sol) => sol.tipo.toUpperCase() === "DISCIPLINA"
+  );
+  const oficinas = solicitacoes.filter(
+    (sol) => sol.tipo.toUpperCase() === "OFICINA"
+  );
+  const outras = solicitacoes.filter(
+    (sol) => sol.tipo.toUpperCase() !== "DISCIPLINA" && sol.tipo.toUpperCase() !== "OFICINA"
+  );
 
-  const renderReservaCard = (reserva) => {
-    const isOficina = reserva.tipo === "Oficina";
-
-    return (
-      <Card key={reserva.id} className="reserva-card">
-        <div className="reserva-header">
-          <div className="reserva-info">
-            <p className="professor-info">
-              {reserva.professor}
-              {reserva.discente && (
-                <p className="discente-label">{reserva.discente}</p>
-              )}
-              {reserva.codigo && (
-                <p className="codigo-label">{reserva.codigo}</p>
-              )}
-              {reserva.local && <p className="local-label">{reserva.local}</p>}
-            </p>
-          </div>
-        </div>
-
-        <div className="reserva-body">
-          <h3 className="sala-nome">{reserva.sala}</h3>
-          <p className="horario-info">
-            {reserva.dia} {reserva.horario}
-          </p>
-        </div>
-
-        <div className="reserva-footer">
-          <button className={`tipo-button ${reserva.tipo.toLowerCase()}`}>
-            {reserva.tipo}
-          </button>
-          {isOficina && (
-            <button className="detalhes-button">Ver detalhes</button>
-          )}
-        </div>
-      </Card>
-    );
-  };
+  const renderSolicitacaoCard = (sol) => (
+    <Card key={sol.id} className="reserva-card">
+      <div className="reserva-body">
+        <h3 className="sala-nome">Sala ID: {sol.localId || "-"}</h3>
+        <p className="horario-info">
+          {formatarData(sol.dataInicio)} - {sol.horarioInicio}h às {sol.horarioFim}h
+        </p>
+        <p className="usuario-info">Usuário ID: {sol.usuarioId || "-"}</p>
+        <p className="status-info">Status: {sol.status}</p>
+      </div>
+      <div className="reserva-footer">
+        <button className={`tipo-button ${sol.tipo.toLowerCase()}`}>
+          {sol.tipo}
+        </button>
+      </div>
+    </Card>
+  );
 
   const renderSkeletons = (count = 4) => (
     <div className="horizontal-scroll">
@@ -79,6 +68,24 @@ const PagePedidosReserva = () => {
         <SkeletonCard key={i} />
       ))}
     </div>
+  );
+
+  const renderSection = (title, items) => (
+    <section className="reservas-section">
+      <h2 className="section-title">{title}</h2>
+      <div
+        className={
+          loading || items.length > 2 ? "horizontal-scroll" : "reservas-grid"
+        }
+      >
+        {loading
+          ? renderSkeletons()
+          : items.length > 0
+          ? items.map(renderSolicitacaoCard)
+          : <p className="sem-reservas-msg">Sem reservas deste tipo</p>
+        }
+      </div>
+    </section>
   );
 
   return (
@@ -93,65 +100,9 @@ const PagePedidosReserva = () => {
 
       <div className="reservas-content">
         <div className="reservas-sections">
-          {/* Outras Reservas */}
-          <section className="reservas-section">
-            <h2 className="section-title">Outras reservas</h2>
-            <div
-              className={
-                loading || outrasReservas.length > 2
-                  ? "horizontal-scroll"
-                  : "reservas-grid"
-              }
-            >
-              {loading ? (
-                renderSkeletons()
-              ) : outrasReservas.length > 0 ? (
-                outrasReservas.map(renderReservaCard)
-              ) : (
-                <p className="sem-reservas-msg">Sem reservas deste tipo</p>
-              )}
-            </div>
-          </section>
-
-          {/* Disciplinas */}
-          <section className="reservas-section">
-            <h2 className="section-title">Disciplina</h2>
-            <div
-              className={
-                loading || disciplinas.length > 2
-                  ? "horizontal-scroll"
-                  : "reservas-grid"
-              }
-            >
-              {loading ? (
-                renderSkeletons()
-              ) : disciplinas.length > 0 ? (
-                disciplinas.map(renderReservaCard)
-              ) : (
-                <p className="sem-reservas-msg">Sem reservas deste tipo</p>
-              )}
-            </div>
-          </section>
-
-          {/* Oficina */}
-          <section className="reservas-section">
-            <h2 className="section-title">Oficina</h2>
-            <div
-              className={
-                loading || oficinas.length > 2
-                  ? "horizontal-scroll"
-                  : "reservas-grid"
-              }
-            >
-              {loading ? (
-                renderSkeletons()
-              ) : oficinas.length > 0 ? (
-                oficinas.map(renderReservaCard)
-              ) : (
-                <p className="sem-reservas-msg">Sem reservas deste tipo</p>
-              )}
-            </div>
-          </section>
+          {renderSection("Disciplinas", disciplinas)}
+          {renderSection("Oficinas", oficinas)}
+          {renderSection("Outras reservas", outras)}
         </div>
       </div>
     </div>
