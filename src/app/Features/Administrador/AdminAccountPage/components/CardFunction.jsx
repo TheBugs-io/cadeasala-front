@@ -6,14 +6,17 @@ const CardFuncionality = ({ icon, title, description, onClick }) => {
       className="card-functionality"
       onClick={onClick}
       style={{ cursor: "pointer" }}
+      role="button"
+      tabIndex={0}
+      aria-label={`${title}: ${description}`}
     >
-        <div className='card-functionality-icon'>
-          <div className="icon-container">
-            {icon}
-          </div>
+      <div className='card-functionality-icon'>
+        <div className="icon-container" aria-hidden="true">
+          {icon}
         </div>
-      <h3 className="functionality-title">{title}</h3>
-      <p className="functionality-description">{description}</p>
+      </div>
+      <h3 className="functionality-title" tabIndex={0}>{title}</h3>
+      <p className="functionality-description" tabIndex={0}>{description}</p>
     </div>
   );
 };
