@@ -1,8 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap");
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  font-family: "Bricolage Grotesque", sans-serif;
+  overflow-x: hidden;
+}
+
 .banner-image {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
   object-fit: cover;
   mix-blend-mode: multiply;
@@ -10,56 +24,59 @@
   opacity: 0.6;
   height: 100vh;
   position: relative;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
-.banner-content-container{
+.banner-content-container {
   display: flex;
   flex-direction: column;
   position: absolute;
-  justify-content: flex-start;
   top: 50%;
-  left: 25%;
-  transform: translate(-50%, -50%);
+  left: 10%;
+  transform: translateY(-50%);
+  align-items: flex-start;
+  text-align: left;
+  padding: 1rem;
+  max-width: 90%;
 }
 
 .banner-text-container {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  gap: 1rem;
+  max-width: 90%;
 }
 
 .icon-placeholder {
-  width: 200px;
-  height: 200px;
+  width: 10rem;
+  height: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   animation: rotateIcon 2s linear infinite;
 }
 
 .banner-title {
-  font-family: "Bricolage Grotesque";
-  font-size: 7rem;
+  font-size: 5vw;
   color: #fafafa;
-  margin-top: 1rem;
 }
 
 .banner-subtitle {
   font-size: 1.5rem;
   color: #84e1e9;
-  margin-top: -1.5rem;
+  margin-top: -1rem;
 }
 
-.btn-redirect-mapa{
-  padding: 1rem 0.8rem;
+.btn-redirect-mapa {
+  padding: 0.8rem 1.2rem;
   color: white;
   border-radius: 5px;
   font-size: 1.125rem;
   font-weight: bold;
   border: none;
   background-color: #E5621C;
+  margin-top: 1rem;
 }
 
-.btn-redirect-mapa:hover{
+.btn-redirect-mapa:hover {
   cursor: pointer;
   background-color: #180a03;
   transition: background-color 0.2s ease-in-out;
@@ -80,26 +97,37 @@
   }
 }
 
-@media (max-width: 768px) {
-  .banner-image {
-    height: 100vh;
-  }
-
-  .banner-text-container {
-    left: 40%;
-    transform: translate(-50%, -50%);
-    text-align: left;
-  }
-
+@media (max-width: 1024px) {
   .icon-placeholder {
     width: 150px;
     height: 150px;
   }
+
+  .banner-title {
+    font-size: 8vw;
+  }
+
+  .banner-subtitle {
+    font-size: 1.2rem;
+  }
 }
 
-@media (min-width: 768px) and (max-width: 1024px) {
-  .banner-text-container {
-    left: 40%;
-    text-align: left;
+@media (max-width: 600px) {
+  .icon-placeholder {
+    width: 120px;
+    height: 120px;
+  }
+
+  .banner-title {
+    font-size: 10vw;
+  }
+
+  .banner-subtitle {
+    font-size: 1rem;
+  }
+
+  .btn-redirect-mapa {
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
   }
 }
