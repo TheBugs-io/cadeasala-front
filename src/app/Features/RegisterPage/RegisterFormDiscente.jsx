@@ -136,7 +136,7 @@ const RegisterFormDiscente = () => {
             Você é aluno de Sistemas e Mídias Digitais?
           </legend>
           <div>
-            <label>
+            <label style={{ color: '#000' }}>
               <input
                 type="radio"
                 name="smd"
@@ -148,7 +148,7 @@ const RegisterFormDiscente = () => {
             </label>
           </div>
           <div>
-            <label>
+            <label style={{ color: '#000' }}>
               <input
                 type="radio"
                 name="smd"
