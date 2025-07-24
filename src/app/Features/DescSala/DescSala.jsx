@@ -2,9 +2,30 @@ import { FaRegHeart } from "react-icons/fa";
 import TagStatus from "./components/TagStatus";
 import "./styles/RoomDetailsPage.css";
 import photoSMD from "../../assets/photos/portalUFC.png";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import { useState } from "react";
+import Snackbar from "../../Components/Snackbar";
 
 export default function RoomDetails({ dados, onClose }) {
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const { user } = useAuth();
   const image = dados?.imagem || photoSMD;
+  const navigate = useNavigate();
+
+  const handleReservarSala = (sala) => {
+    if (!user) {
+      setSnackbarMessage(
+        "Você precisa estar autenticado para solicitar uma reserva."
+      );
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
+      return;
+    }
+    navigate(`/user/solicitar-reserva/${sala.id}`);
+  };
 
   let statusFormatado = "";
   switch (dados?.status) {
@@ -100,9 +121,20 @@ export default function RoomDetails({ dados, onClose }) {
         )}
 
         <div className="room-footer">
-          <button className="room-schedule-button">Agendar reserva</button>
+          <button
+            className="room-schedule-button"
+            onClick={() => handleReservarSala(dados)}
+          >
+            Agendar reserva
+          </button>
         </div>
       </div>
+      <Snackbar
+        open={snackbarOpen}
+        message={snackbarMessage}
+        severity={snackbarSeverity}
+        onClose={() => setSnackbarOpen(false)}
+      />
     </div>
   );
 }

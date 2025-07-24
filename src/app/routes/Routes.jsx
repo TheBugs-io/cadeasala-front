@@ -16,6 +16,7 @@ const MapaSalas = lazy(() => import("../Features/SMD-Maps/MapaSalas"));
 
 // Componentes de usuário autenticado
 const AccountPage = lazy(() => import("../Features/AccountPage/AccountPageGeral"));
+const RequestReserva = lazy(() => import("../Features/RequestReserva/FormsRequestReserva"));
 
 // Componentes Admin
 const DashboardRegistro = lazy(() => import("../Features/Administrador/AdminDashboard/Dashboard"));
@@ -72,6 +73,10 @@ export const router = createBrowserRouter([
           {
             index: true,
             element: <AccountPage />,
+          },
+          {
+            path: "solicitar-reserva/:idSala",
+            element: <RequestReserva />,
           }
         ]
       },
