@@ -5,7 +5,7 @@ import photoSMD from "../../assets/photos/portalUFC.png";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
-//TODO: Passar snackbar aqui
+import Snackbar from "../../Components/Snackbar";
 
 export default function RoomDetails({ dados, onClose }) {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -24,7 +24,7 @@ export default function RoomDetails({ dados, onClose }) {
       setSnackbarOpen(true);
       return;
     }
-    navigate(`/solicitar-reserva/${sala.id}`);
+    navigate(`/user/solicitar-reserva/${sala.id}`);
   };
 
   let statusFormatado = "";
