@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './AdminTodasReservas.css';
-import axios from 'axios';
 import { FaPen, FaTrash, FaCheck, FaTimes, FaCog } from 'react-icons/fa';
 
 function AdminTodasReservas() {
@@ -10,9 +9,7 @@ function AdminTodasReservas() {
   const [mostrarDias, setMostrarDias] = useState(false);
 
   useEffect(() => {
-    axios.get('/api/reservas') // você pode mudar essa rota depois
-      .then(res => setReservas(res.data))
-      .catch(err => console.log(err));
+    //TODO: Integração com reservas (lista - GET)
   }, []);
 
   const toggleDia = (dia) => {

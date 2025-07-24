@@ -117,7 +117,7 @@ export const router = createBrowserRouter([
             element: <ConfigSala />,
           },
           {
-          path: "dashboard-reservas/todas-reservas",
+          path: "reservas",
           element: <AdminTodasReservas />,
           },
         ],
