@@ -51,7 +51,7 @@ export default function AdminMainPage() {
           }
           title="Controle de salas"
           description="Gerencie as salas do bloco IUVI."
-          onClick={() => console.log("Controle de salas")}
+          onClick={() => handleCardClick("/admin/dashboard-salas")}
         />
         <CardFuncionality
           icon={

@@ -2,14 +2,52 @@ import { useNavigate } from "react-router-dom";
 import "./styles/AdminReservasPage.css";
 import TrilhaNavegacao from "../../../Components/TrilhaNavegacao";
 import GenericCard from "./components/CardGeneric";
-import { examples, reservas } from "../../../../models/ExemploPedido";
+import { useEffect, useState } from "react";
+import { fetchSolicitacoesReservas } from "../../../service/admin/reservasService";
 
 const AdminReservasPage = () => {
+  const [examples, setExamples] = useState([]);
+  const [reservas, setReservas] = useState([]);
   const navigate = useNavigate();
+
+  const fetchSolicitacoes = async () => {
+    try {
+      const response = await fetchSolicitacoesReservas();
+      if (response.status === "success") {
+        setExamples(response.data);
+      } else {
+        console.error("Erro ao buscar solicitações:", response.message);
+        setExamples([]);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar solicitações:", error);
+      setExamples([]);
+    }
+  };
+
+  const fetchAllReservas = async () => {
+    try {
+      const response = await fetchSolicitacoesReservas();
+      if (response.status === "success") {
+        setReservas(response.data);
+      } else {
+        console.error("Erro ao buscar reservas:", response.message);
+        setReservas([]);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar reservas:", error);
+      setReservas([]);
+    }
+  };
 
   const handleRedirect = (path) => {
     navigate(path);
   };
+
+  useEffect(() => {
+    fetchSolicitacoes();
+    fetchAllReservas();
+  }, []);
 
   return (
     <div className="admin-reservas-page">
@@ -34,18 +72,20 @@ const AdminReservasPage = () => {
         </div>
         <hr />
         <div className="card-pedidos-container">
-          {examples.map((example, index) => (
-            <GenericCard
-              key={index}
-              title={example.title}
-              subtitle={example.subtitle}
-              dateRange={example.dateRange}
-              topLeftLabel={example.topLeftLabel}
-              topRightLabel={example.topRightLabel}
-              bottomLabel={example.bottomLabel}
-              bottomLabelColor={example.bottomLabelColor}
-            />
-          ))}
+          {examples.length === 0 ? (
+            <p>Nenhum pedido disponível no momento.</p>
+          ) : (
+            [...examples]
+              .sort((a, b) => new Date(b.criadoEm) - new Date(a.criadoEm))
+              .slice(0, 3)
+              .map((solicitacao, index) => (
+                <GenericCard
+                  key={index}
+                  data={solicitacao}
+                  type="solicitacao"
+                />
+              ))
+          )}
         </div>
       </section>
 
@@ -63,21 +103,18 @@ const AdminReservasPage = () => {
         </div>
         <hr />
         <div className="card-reservas-container">
-          {reservas.map((reserva, index) => (
-            <GenericCard
-              key={index}
-              title={reserva.title}
-              subtitle={reserva.subtitle}
-              dateRange={reserva.dateRange}
-              topLeftLabel={reserva.topLeftLabel}
-              topRightLabel={reserva.topRightLabel}
-              bottomLabel={reserva.bottomLabel}
-              bottomLabelColor={reserva.bottomLabelColor}
-            />
-          ))}
+          {reservas.length === 0 ? (
+            <p>Nenhuma reserva vigente no momento.</p>
+          ) : (
+            [...reservas]
+              .sort((a, b) => new Date(b.criadoEm) - new Date(a.criadoEm))
+              .slice(0, 3)
+              .map((reserva, index) => (
+                <GenericCard key={index} data={reserva} type="reserva" />
+              ))
+          )}
         </div>
       </section>
-      
     </div>
   );
 };
