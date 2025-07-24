@@ -4,19 +4,34 @@ import loginImage from "../../../assets/login/Login-rafiki.svg";
 import "../../../styles/Login.css";
 import { useAuth } from "../../../contexts/AuthContext";
 import { login } from "../../../service/auth/authService.js";
+import Snackbar from "../../../Components/Snackbar.jsx";
 
 const LoginForm = () => {
   const location = useLocation();
   const [email, setEmail] = useState(location.state?.registeredEmail || "");
   const [senha, setSenha] = useState("");
   const [loading, setLoading] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
   const navigate = useNavigate();
   const { login: authLogin } = useAuth();
+
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar({ open: true, message, severity });
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !senha) {
-      alert("Preencha todos os campos!");
+      showSnackbar("Preencha todos os campos!", "error");
       return;
     }
     if (loading) return;
@@ -36,7 +51,11 @@ const LoginForm = () => {
       }
     } catch (error) {
       console.error("Erro no login:", error);
-      alert(error.response?.data?.erro || "Credenciais inválidas");
+      showSnackbar(
+        error.response?.data?.message ||
+          "Oppss...! Email ou senha estão incorretos. Tente novamente.",
+        "error"
+      );
     } finally {
       setLoading(false);
     }
@@ -97,6 +116,12 @@ const LoginForm = () => {
           </Link>
         </div>
       </form>
+      <Snackbar
+        open={snackbar.open}
+        message={snackbar.message}
+        severity={snackbar.severity}
+        onClose={handleCloseSnackbar}
+      />
     </div>
   );
 };

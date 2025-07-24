@@ -10,9 +10,13 @@ export const fetchReservas = async () => {
   }
 };
 
-export const fetchSolicitacoesReservas = async () => {
+export const fetchSolicitacoesReservas = async (token) => {
   try {
-    const response = await api.get("/reservas/solicitacoes");
+    const response = await api.get("/reservas/solicitacoes", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar solicitações de reservas:", error);
