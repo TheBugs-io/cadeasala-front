@@ -1,0 +1,137 @@
+.admin-reservas-page {
+  display: flex;
+  flex-direction: column;
+  padding: 1.2rem;
+  gap: 1rem;
+}
+
+.admin-reservas-page h1 {
+  font-size: 1.8em;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.card-pedidos-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.card-reservas-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.reservas-link {
+  text-decoration: underline;
+  color: var(--primary-btn);
+  font-weight: bold;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.reservas-link:hover {
+  color: #8b3a12;
+  cursor: pointer;
+}
+
+.reservas-link:focus {
+  outline: 2px solid var(--primary-btn);
+  background-color: rgba(215, 115, 61, 0.1);
+}
+
+.reservas-link:active {
+  transform: translateY(1px);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.section-header a {
+  text-decoration: underline;
+  color: var(--primary-btn);
+  font-weight: bold;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.section-header a:hover {
+  color: #8b3a12;
+}
+
+.section-header a:focus {
+  outline: 2px solid var(--primary-btn);
+  outline-offset: 2px;
+  background-color: rgba(215, 115, 61, 0.1);
+}
+
+.section-header a:active {
+  transform: translateY(1px);
+}
+
+/* Media queries */
+@media (prefers-reduced-motion: reduce) {
+  .reservas-link,
+  .section-header a {
+    transition: none;
+  }
+  
+  .reservas-link:active,
+  .section-header a:active {
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-reservas-page {
+    padding: 1rem;
+  }
+  
+  .card-pedidos-container,
+  .card-reservas-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .reservas-link,
+  .section-header a {
+    padding: 0.75rem;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .reservas-link,
+  .section-header a {
+    border: 2px solid var(--primary-btn);
+  }
+  
+  .reservas-link:hover,
+  .section-header a:hover {
+    background-color: var(--primary-btn);
+    color: white;
+  }
+}

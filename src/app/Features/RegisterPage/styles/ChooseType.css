@@ -3,15 +3,14 @@
   flex-direction: column;
   align-items: center;
   padding: 40px 20px;
-  font-family: 'Arial', sans-serif;
-  background-color: #f5f7fa;
+  background-color: var(--bg-color);
   min-height: 100vh;
 }
 
 #selector-title {
   font-size: 2rem;
   margin-bottom: 30px;
-  color: #333;
+  color: var(--text-color);
 }
 
 #selector {
@@ -85,12 +84,15 @@
   border: none;
   border-radius: 8px;
   background-color: #E05105;
+  font-weight: bold;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 #btn-selector:hover {
+  transition: transform 0.5 ease;
+  transform: scale(0.95);
   background-color: #373a38;
 }
 

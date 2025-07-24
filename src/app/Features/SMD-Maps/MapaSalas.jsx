@@ -1,33 +1,70 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "./Components/CardSalaMapa";
 import HallwayMap from "./Components/Hallway";
 import "./styles/MapaStyle.css";
 import FloorSelector from "./Components/AndarSelector";
-import { salas } from "../../../models/SalasModel";
 import Modal from "../../Components/Modal";
 import RoomDetails from "../DescSala/DescSala";
+import { fetchSalas } from "../../service/mapa/salasService";
+import { ordenarPorNumeracaoSala } from "./helper/orderNumeracaoSala";
 
 function MapaSalas() {
   const [modalAberto, setModalAberto] = useState(false);
   const [dadosSelecionados, setDadosSelecionados] = useState(null);
+  const [andarSelecionado, setAndarSelecionado] = useState("PRIMEIRO_ANDAR");
+  const [salas, setSalas] = useState([]);
+  const [filtroStatus, setFiltroStatus] = useState("TODOS");
 
-  const handleAbrirModal = (sala, status, dados) => {
-    setDadosSelecionados({ sala, status, dados });
+  const salasFiltradas = salas.filter((sala) => {
+    const correspondeAoAndar = sala.localizacao === andarSelecionado;
+    const correspondeAoStatus =
+      filtroStatus === "TODOS" || sala.status === filtroStatus;
+
+    return correspondeAoAndar && correspondeAoStatus;
+  });
+
+  useEffect(() => {
+    const buscarSalas = async () => {
+      try {
+        const resposta = await fetchSalas();
+        setSalas(Array.isArray(resposta) ? resposta : resposta.salas || []);
+      } catch (erro) {
+        console.error("Erro ao buscar salas:", erro);
+      }
+    };
+
+    buscarSalas();
+  }, []);
+
+  const handleAbrirModal = (sala) => {
+    setDadosSelecionados(sala);
     setModalAberto(true);
   };
 
+  const salasFiltradasOrdenadas = [...salasFiltradas].sort(
+    ordenarPorNumeracaoSala
+  );
+
+  const salasE = salasFiltradasOrdenadas.filter((sala) =>
+    sala.numeracaoSala.endsWith("E")
+  );
+  const salasD = salasFiltradasOrdenadas.filter((sala) =>
+    sala.numeracaoSala.endsWith("D")
+  );
+
   return (
     <div className="mapa-salas-container">
-      <FloorSelector />
+      <FloorSelector value={andarSelecionado} onChange={setAndarSelecionado} />
+
       <div className="map-container">
         <div className="row">
-          {salas.slice(0, 6).map((sala) => (
+          {salasE.map((sala) => (
             <Card
               key={sala.id}
               status={sala.status}
-              sala={sala.sala}
-              dados={sala.dados}
-              aoClicar={handleAbrirModal}
+              sala={sala.nome}
+              dados={sala}
+              aoClicar={() => handleAbrirModal(sala)}
             />
           ))}
         </div>
@@ -35,13 +72,13 @@ function MapaSalas() {
         <HallwayMap />
 
         <div className="row">
-          {salas.slice(6, 12).map((sala) => (
+          {salasD.map((sala) => (
             <Card
               key={sala.id}
               status={sala.status}
-              sala={sala.sala}
-              dados={sala.dados}
-              aoClicar={handleAbrirModal}
+              sala={sala.nome}
+              dados={sala}
+              aoClicar={() => handleAbrirModal(sala)}
             />
           ))}
         </div>
@@ -50,9 +87,7 @@ function MapaSalas() {
       <Modal isOpen={modalAberto} onClose={() => setModalAberto(false)}>
         {dadosSelecionados && (
           <RoomDetails
-            sala={dadosSelecionados.sala}
-            status={dadosSelecionados.status}
-            dados={dadosSelecionados.dados}
+            dados={dadosSelecionados}
             onClose={() => setModalAberto(false)}
           />
         )}

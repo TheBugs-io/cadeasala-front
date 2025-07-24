@@ -1,20 +1,59 @@
 import "../styles/Header.css";
-import logo from "../assets/logo/logoSMD.png";
+import logo from "../assets/logo/logocadesala.png";
 import usuarioIcone from "../assets/usuario/usuario.png";
-import { useContext } from "react";
-import { useLocation } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext";
-import { FaSearch } from "react-icons/fa";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { useState, useRef, useEffect } from "react";
+import { MdLogout } from "react-icons/md";
+import { FiArrowUpRight } from "react-icons/fi";
+import { IoIosPerson } from "react-icons/io";
 
-const Header = ({ onAccountClick, onSearch }) => {
-  const { usuario } = useContext(AuthContext);
+const Header = ({ onSearch }) => {
+  const { user, logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
+  const [menuAberto, setMenuAberto] = useState(false);
+  const menuRef = useRef(null);
 
   const esconderSearch = ["/login", "/"].includes(location.pathname);
 
+  const handleBackHome = () => {
+    navigate("/");
+  };
+
+  const handleRedirect = () => {
+    if (user?.tipo === "SECRETARIO") {
+      navigate("/admin");
+    } else {
+      navigate("/user");
+    }
+    setMenuAberto(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+    setMenuAberto(false);
+  };
+
+  useEffect(() => {
+    const handleClickFora = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setMenuAberto(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickFora);
+    return () => document.removeEventListener("mousedown", handleClickFora);
+  }, []);
+
   return (
     <header className="header-container" aria-label="Cabeçalho do site">
-      <img src={logo} alt="Logo da plataforma" className="header-logo" />
+      <img
+        src={logo}
+        alt="Logo da plataforma"
+        className="header-logo"
+        onClick={handleBackHome}
+      />
 
       {!esconderSearch && (
         <>
@@ -32,19 +71,50 @@ const Header = ({ onAccountClick, onSearch }) => {
         </>
       )}
 
-      <button
-        className="header-account-btn"
-        onClick={onAccountClick}
-        aria-label={`Abrir menu da conta de ${usuario?.nome || "usuário"}`}
-        title={`Abrir conta de ${usuario?.nome || "usuário"}`}
-      >
-        <img
-          src={usuario?.imagem || usuarioIcone}
-          alt={`Ícone da conta de ${usuario?.nome || "usuário"}`}
-          className="header-account-icon"
-        />
-        {usuario && <span className="header-account-nome">{usuario.nome}</span>}
-      </button>
+      {user ? (
+        <div className="header-account-wrapper" ref={menuRef}>
+          <button
+            className="header-account-btn"
+            onClick={() => setMenuAberto(!menuAberto)}
+            aria-label={`Abrir menu da conta de ${user.nome}`}
+          >
+            <img
+              src={user.imagem || usuarioIcone}
+              alt={`Ícone da conta de ${user.nome}`}
+              className="header-account-icon"
+            />
+            <span className="header-account-nome">{user.nome}</span>
+          </button>
+
+          {menuAberto && (
+            <div
+              className="account-dropdown"
+              role="menu"
+              aria-label="Menu da conta"
+            >
+              <button role="menuitem" tabIndex={0} onClick={handleRedirect}>
+                Minha página inicial <FiArrowUpRight size={20} />
+              </button>
+              <button
+                role="menuitem"
+                tabIndex={0}
+                onClick={handleLogout}
+                className="logout-btn"
+              >
+                <b>Sair</b> <MdLogout size={20} />
+              </button>
+            </div>
+          )}
+        </div>
+      ) : (
+        <button
+          className="header-login-btn"
+          onClick={() => navigate("/login")}
+          aria-label="Ir para a página de login"
+        >
+          <IoIosPerson size={20} /> Entrar na conta
+        </button>
+      )}
     </header>
   );
 };
