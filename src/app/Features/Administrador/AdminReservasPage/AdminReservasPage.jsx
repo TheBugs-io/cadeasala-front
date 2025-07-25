@@ -93,7 +93,7 @@ const AdminReservasPage = () => {
         <div className="section-header">
           <h1>Reservas</h1>
           <a
-            onClick={() => handleRedirect("/admin/reservas")}
+            onClick={() => handleRedirect("/reservas")}
             className="reservas-link"
             aria-label="Ir para página de reservas"
             type="button"
