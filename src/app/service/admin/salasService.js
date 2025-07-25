@@ -10,6 +10,16 @@ export const fetchSalas = async () => {
   }
 }
 
+export const createSala = async (salaData) => {
+  try {
+    const response = await api.post(`/salas/criar`, { sala: salaData });
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao criar sala:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
 export const atualizarSala = async (salaId, novosDados) => {
   try {
     const response = await api.put(`/salas/editar`, {
