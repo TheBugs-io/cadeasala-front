@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../../styles/Login.css";
 import { Link, useNavigate } from "react-router-dom";
-import api from '../../service/api.js'
+import api from "../../service/api.js";
 
 const RegisterFormDiscente = () => {
   const navigate = useNavigate();
@@ -39,7 +39,12 @@ const RegisterFormDiscente = () => {
         ...formData,
         tipoUsuario: "DISCENTE",
       });
-      navigate("/login", { state: { registeredEmail: formData.email } });
+      navigate("/login", {
+        state: {
+          registeredEmail: formData.email,
+          showConfirmEmailSnackbar: true,
+        },
+      });
     } catch (error) {
       alert(error.response?.data?.error || "Falha ao cadastrar!");
     } finally {
@@ -49,7 +54,11 @@ const RegisterFormDiscente = () => {
 
   return (
     <div className="login-container">
-      <form onSubmit={handleSubmit} className="form-container" autoComplete="on">
+      <form
+        onSubmit={handleSubmit}
+        className="form-container"
+        autoComplete="on"
+      >
         <div className="form-link-group">
           <Link to="/login" className="form-link">
             Já tenho conta
@@ -131,12 +140,16 @@ const RegisterFormDiscente = () => {
           </select>
         </div>
 
-        <fieldset className="form-group" role="group" aria-labelledby="smdGroup">
+        <fieldset
+          className="form-group"
+          role="group"
+          aria-labelledby="smdGroup"
+        >
           <legend id="smdGroup" className="form-label">
             Você é aluno de Sistemas e Mídias Digitais?
           </legend>
           <div>
-            <label style={{ color: '#000' }}>
+            <label style={{ color: "#000" }}>
               <input
                 type="radio"
                 name="smd"
@@ -148,7 +161,7 @@ const RegisterFormDiscente = () => {
             </label>
           </div>
           <div>
-            <label style={{ color: '#000' }}>
+            <label style={{ color: "#000" }}>
               <input
                 type="radio"
                 name="smd"
@@ -183,6 +196,12 @@ const RegisterFormDiscente = () => {
           {loading ? "Enviando..." : "Solicitar registro"}
         </button>
       </form>
+      <Snackbar
+        open={snackbar.open}
+        message={snackbar.message}
+        severity={snackbar.severity}
+        onClose={closeSnackbar}
+      />
     </div>
   );
 };
