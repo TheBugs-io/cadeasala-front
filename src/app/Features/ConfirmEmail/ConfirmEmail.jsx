@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { confirmEmail } from "../../service/auth/authService";
 import "./ConfirmEmail.css";
 import { RiMailForbidFill } from "react-icons/ri";
+import { LuMailCheck } from "react-icons/lu";
 
 const ConfirmEmail = () => {
   const [searchParams] = useSearchParams();
@@ -39,11 +40,12 @@ const ConfirmEmail = () => {
       case "sucesso":
         return (
           <section className="mensagem-container" role="alert" aria-live="polite">
-            <p className="mensagem sucesso">
-              Seu email foi confirmado com sucesso. Por favor, aguarde um
+            <div className="mensagem sucesso">
+              <LuMailCheck size={45} aria-hidden="true" color="#1cbc71"/>
+              <p><b>Seu email foi confirmado com sucesso.</b> Por favor, aguarde um
               secretário aprovar sua solicitação de registro na plataforma e
-              verifique na caixa de entrada ou spam do email.
-            </p>
+              verifique na caixa de entrada ou spam do email.</p>
+            </div>
             <button
               className="btn-primary"
               onClick={() => navigate("/mapa-salas")}

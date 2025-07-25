@@ -15,7 +15,7 @@
   line-height: 1.5;
 }
 
-.mensagem.sucesso {
+.mensagem.sucesso b {
   color: #1cbc71;
 }
 
@@ -29,10 +29,10 @@
   font-weight: bold;
 }
 
-.mensagem-container{
-    gap: 1rem;
-    display: flex;
-    flex-direction: column;
+.mensagem-container {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .loader-container {
