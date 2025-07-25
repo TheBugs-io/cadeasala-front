@@ -2,7 +2,12 @@ import api from "../api";
 
 export const fetchReservas = async () => {
   try {
-    const response = await api.get("/reservas");
+    const response = await api.get("/reservas", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar reservas:", error);
@@ -14,13 +19,20 @@ export const fetchSolicitacoesReservas = async (token) => {
   try {
     const response = await api.get("/reservas/solicitacoes", {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
-    return response.data;
+
+    return {
+      status: "success",
+      data: response.data.solicitacoes,
+    };
   } catch (error) {
     console.error("Erro ao buscar solicitações de reservas:", error);
-    throw error;
+    return {
+      status: "error",
+      message: error.message,
+    };
   }
 };
 

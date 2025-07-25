@@ -14,6 +14,7 @@ function MapaSalas() {
   const [andarSelecionado, setAndarSelecionado] = useState("PRIMEIRO_ANDAR");
   const [salas, setSalas] = useState([]);
   const [filtroStatus, setFiltroStatus] = useState("TODOS");
+  const [carregando, setCarregando] = useState(true);
 
   const salasFiltradas = salas.filter((sala) => {
     const correspondeAoAndar = sala.localizacao === andarSelecionado;
@@ -26,10 +27,13 @@ function MapaSalas() {
   useEffect(() => {
     const buscarSalas = async () => {
       try {
+        setCarregando(true);
         const resposta = await fetchSalas();
         setSalas(Array.isArray(resposta) ? resposta : resposta.salas || []);
       } catch (erro) {
         console.error("Erro ao buscar salas:", erro);
+      } finally {
+        setCarregando(false);
       }
     };
 
@@ -58,29 +62,53 @@ function MapaSalas() {
 
       <div className="map-container">
         <div className="row">
-          {salasE.map((sala) => (
-            <Card
-              key={sala.id}
-              status={sala.status}
-              sala={sala.nome}
-              dados={sala}
-              aoClicar={() => handleAbrirModal(sala)}
-            />
-          ))}
+          {carregando
+            ? Array(5)
+                .fill(0)
+                .map((_, i) => (
+                  <Card
+                    key={`loadingE-${i}`}
+                    status="CARREGANDO"
+                    sala=""
+                    dados={{}}
+                    aoClicar={null}
+                  />
+                ))
+            : salasE.map((sala) => (
+                <Card
+                  key={sala.id}
+                  status={sala.status}
+                  sala={sala.nome}
+                  dados={sala}
+                  aoClicar={() => handleAbrirModal(sala)}
+                />
+              ))}
         </div>
 
         <HallwayMap />
 
         <div className="row">
-          {salasD.map((sala) => (
-            <Card
-              key={sala.id}
-              status={sala.status}
-              sala={sala.nome}
-              dados={sala}
-              aoClicar={() => handleAbrirModal(sala)}
-            />
-          ))}
+          {carregando
+            ? Array(5)
+                .fill(0)
+                .map((_, i) => (
+                  <Card
+                    key={`loadingD-${i}`}
+                    status="CARREGANDO"
+                    sala=""
+                    dados={{}}
+                    aoClicar={null}
+                  />
+                ))
+            : salasD.map((sala) => (
+                <Card
+                  key={sala.id}
+                  status={sala.status}
+                  sala={sala.nome}
+                  dados={sala}
+                  aoClicar={() => handleAbrirModal(sala)}
+                />
+              ))}
         </div>
       </div>
 

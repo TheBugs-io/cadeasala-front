@@ -3,15 +3,21 @@ import "./styles/AdminReservasPage.css";
 import TrilhaNavegacao from "../../../Components/TrilhaNavegacao";
 import GenericCard from "./components/CardGeneric";
 import { useEffect, useState } from "react";
-import { fetchSolicitacoesReservas } from "../../../service/admin/reservasService";
+import { fetchSolicitacoesReservas, fetchReservas } from "../../../service/admin/reservasService";
+
+const MAX_CARDS = 3;
 
 const AdminReservasPage = () => {
   const [examples, setExamples] = useState([]);
   const [reservas, setReservas] = useState([]);
+  const [loadingSolicitacoes, setLoadingSolicitacoes] = useState(true);
+  const [loadingReservas, setLoadingReservas] = useState(true);
+
   const navigate = useNavigate();
 
   const fetchSolicitacoes = async () => {
     try {
+      setLoadingSolicitacoes(true);
       const response = await fetchSolicitacoesReservas();
       if (response.status === "success") {
         setExamples(response.data);
@@ -22,12 +28,15 @@ const AdminReservasPage = () => {
     } catch (error) {
       console.error("Erro ao buscar solicitações:", error);
       setExamples([]);
+    } finally {
+      setLoadingSolicitacoes(false);
     }
   };
 
   const fetchAllReservas = async () => {
     try {
-      const response = await fetchSolicitacoesReservas();
+      setLoadingReservas(true);
+      const response = await fetchReservas();
       if (response.status === "success") {
         setReservas(response.data);
       } else {
@@ -37,6 +46,8 @@ const AdminReservasPage = () => {
     } catch (error) {
       console.error("Erro ao buscar reservas:", error);
       setReservas([]);
+    } finally {
+      setLoadingReservas(false);
     }
   };
 
@@ -72,12 +83,14 @@ const AdminReservasPage = () => {
         </div>
         <hr />
         <div className="card-pedidos-container">
-          {examples.length === 0 ? (
+          {loadingSolicitacoes ? (
+            <p>Carregando pedidos...</p>
+          ) : examples.length === 0 ? (
             <p>Nenhum pedido disponível no momento.</p>
           ) : (
             [...examples]
               .sort((a, b) => new Date(b.criadoEm) - new Date(a.criadoEm))
-              .slice(0, 3)
+              .slice(0, MAX_CARDS)
               .map((solicitacao, index) => (
                 <GenericCard
                   key={index}
@@ -93,7 +106,7 @@ const AdminReservasPage = () => {
         <div className="section-header">
           <h1>Reservas</h1>
           <a
-            onClick={() => handleRedirect("/admin/reservas")}
+            onClick={() => handleRedirect("reservas")}
             className="reservas-link"
             aria-label="Ir para página de reservas"
             type="button"
@@ -103,12 +116,14 @@ const AdminReservasPage = () => {
         </div>
         <hr />
         <div className="card-reservas-container">
-          {reservas.length === 0 ? (
+          {loadingReservas ? (
+            <p>Carregando reservas...</p>
+          ) : reservas.length === 0 ? (
             <p>Nenhuma reserva vigente no momento.</p>
           ) : (
             [...reservas]
               .sort((a, b) => new Date(b.criadoEm) - new Date(a.criadoEm))
-              .slice(0, 3)
+              .slice(0, MAX_CARDS)
               .map((reserva, index) => (
                 <GenericCard key={index} data={reserva} type="reserva" />
               ))

@@ -67,6 +67,36 @@
   gap: 0.5rem;
 }
 
+.loading-placeholder {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 37%, #f0f0f0 63%);
+  animation: loadingShimmer 1.5s infinite;
+  border-radius: 4px;
+  margin: 6px 0;
+}
+
+.loading-title {
+  width: 80%;
+  height: 1.2em;
+}
+
+.loading-subtitle {
+  width: 60%;
+  height: 1em;
+}
+
+.loading-time {
+  width: 50%;
+  height: 1em;
+}
+
+@keyframes loadingShimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
 
 @media (max-width: 768px) {
   .card {
