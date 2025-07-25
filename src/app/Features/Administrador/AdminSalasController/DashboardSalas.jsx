@@ -43,7 +43,12 @@ useEffect(() => {
       />
 
       <div className="container">
+      <div className="header">
         <h1 tabIndex={0}>Salas do bloco IUVI</h1>
+        <button className="btn-primary" onClick={() => navigate("/admin/dashboard-salas/criar-sala")}>
+          Criar nova sala
+        </button>
+      </div>
         <hr aria-hidden="true" />
 
         <section className="salas-list" aria-labelledby="lista-de-salas">
