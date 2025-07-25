@@ -19,6 +19,24 @@
   margin-top: 1.5rem;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header .btn-primary {
+  background-color: #d63384;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
 .visually-hidden {
   position: absolute !important;
   height: 1px;
