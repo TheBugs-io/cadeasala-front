@@ -3,8 +3,10 @@ import "./styles/CreateRoomStyle.css";
 import TrilhaNavegacao from "../../../Components/TrilhaNavegacao";
 import Snackbar from "../../../Components/Snackbar";
 import { createSala } from "../../../service/admin/salasService";
+import { useNavigate } from "react-router-dom";
 
 const CreateSalas = () => {
+  const navigate = useNavigate();
   const [roomData, setRoomData] = useState({
     roomName: "",
     roomDescription: "",
@@ -65,16 +67,12 @@ const CreateSalas = () => {
         };
 
         await createSala(payload);
+
         showSnackbar("Sala criada com sucesso!");
-        setRoomData({
-          roomName: "",
-          roomDescription: "",
-          roomType: "",
-          roomLocation: "",
-          roomNumber: "",
-          roomCapacity: 1,
-        });
-        setErrors({});
+
+        setTimeout(() => {
+          navigate(-1);
+        }, 3000);
       } catch (error) {
         console.error(error);
         showSnackbar("Erro ao criar sala.");
