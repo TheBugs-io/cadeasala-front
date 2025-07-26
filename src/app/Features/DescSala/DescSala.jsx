@@ -11,6 +11,7 @@ export default function RoomDetails({ dados, onClose }) {
   const navigate = useNavigate();
 
   const {
+    reservas,
     favoritado,
     toggleFavorito,
     snackbarOpen,
@@ -19,6 +20,7 @@ export default function RoomDetails({ dados, onClose }) {
     setSnackbarOpen,
     modalRef,
     user,
+    reservasDaSala,
   } = useRoomDetails(dados, onClose);
 
   const handleReservarSala = (sala) => {
@@ -144,11 +146,11 @@ export default function RoomDetails({ dados, onClose }) {
           </section>
         </main>
 
-        {dados?.reservas?.length > 0 && (
+        {reservas.length > 0 && (
           <section className="room-reservations" aria-label="Próximas reservas">
             <h3>Próximas reservas</h3>
             <ul>
-              {dados.reservas.map((res) => (
+              {reservas.map((res) => (
                 <li
                   key={res.id}
                   className={

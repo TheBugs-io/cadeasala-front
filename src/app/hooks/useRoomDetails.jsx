@@ -1,8 +1,13 @@
 import { useState, useEffect, useRef } from "react";
-import { favoritarSala, deletarFavorito } from "../service/mapa/favoriteService";
+import {
+  favoritarSala,
+  deletarFavorito,
+} from "../service/mapa/favoriteService";
+import { fetchReservasSala } from "../service/mapa/reservasService";
 import { useAuth } from "../contexts/AuthContext";
 
 export function useRoomDetails(dados, onClose) {
+  const [reservas, setReservas] = useState([]);
   const [favoritado, setFavoritado] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -52,7 +57,32 @@ export function useRoomDetails(dados, onClose) {
     return () => document.removeEventListener("keydown", handleEsc);
   }, [onClose]);
 
+  const reservasDaSala = async () => {
+    try {
+      const reservas = await fetchReservasSala(dados.id);
+    } catch (error) {
+      console.error("Erro ao buscar reservas da sala:", error);
+    }
+  };
+
+  useEffect(() => {
+    const carregarReservas = async () => {
+      if (dados?.id) {
+        try {
+          const res = await fetchReservasSala(dados.id);
+          setReservas(res);
+        } catch (error) {
+          console.error("Erro ao buscar reservas da sala:", error);
+          showSnackbar("Erro ao carregar reservas da sala.", "error");
+        }
+      }
+    };
+
+    carregarReservas();
+  }, [dados?.id]);
+
   return {
+    reservas,
     favoritado,
     toggleFavorito,
     snackbarOpen,
@@ -61,5 +91,6 @@ export function useRoomDetails(dados, onClose) {
     setSnackbarOpen,
     modalRef,
     user,
+    reservasDaSala,
   };
 }
