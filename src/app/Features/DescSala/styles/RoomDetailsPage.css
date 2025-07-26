@@ -160,6 +160,11 @@
   background-color: #457b9d;
 }
 
+.room-reservations-lista h3{
+  color: #242424;
+  font-size: 1.5rem;
+}
+
 @media (max-width: 600px) {
   .room-content {
     flex-direction: column;

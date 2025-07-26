@@ -1,0 +1,59 @@
+.lista-reservas-container {
+  background-color: #FAFBFF;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.lista-reservas-container h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: #333;
+  text-align: flex-start;
+}
+
+.todas-reservas {
+  margin-bottom: 1.5rem;
+}
+
+.titulo-semana {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #444;
+  font-size: 1rem;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.25rem;
+}
+
+.lista-reserva {
+  list-style: none;
+  padding-left: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.item-reserva {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+  color: #555;
+  transition: background-color 0.2s;
+}
+
+.item-reserva:hover {
+  background-color: #f1f1f1;
+}
+
+.item-reserva.livre {
+  color: #078b7e;
+  border: 3px solid #078b7e;
+}
+
+.item-reserva.ocupado {
+  color: #c62828;
+  border: 3px solid #c62828;
+}

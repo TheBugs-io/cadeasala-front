@@ -6,7 +6,7 @@ import Snackbar from "../../Components/ui/Snackbar";
 import { IoClose } from "react-icons/io5";
 import { getImagemPorTipo } from "../../helper/salasHelper";
 import { useRoomDetails } from "../../hooks/useRoomDetails";
-
+import ListaReservas from "./components/ReservasSala";
 export default function RoomDetails({ dados, onClose }) {
   const navigate = useNavigate();
 
@@ -165,6 +165,11 @@ export default function RoomDetails({ dados, onClose }) {
             </ul>
           </section>
         )}
+
+        <section className="room-reservations-lista">
+          <h3>Agenda da Semana</h3>
+          <ListaReservas sala_id={dados?.id} />
+        </section>
 
         <footer className="room-footer">
           <button
