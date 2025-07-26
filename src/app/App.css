@@ -67,6 +67,30 @@ span {
   color: red;
 }
 
+/* Button Guide Style: Design System */
+.btn-primary {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  color: white;
+  border-radius: 5px;
+  font-family: 'Albert Sans';
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  background-color: #E5621C;
+}
+
+.btn-primary:hover {
+  cursor: pointer;
+  background-color: #6e3110;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn-primary:focus {
+  outline: 3px solid #005fcc;
+  outline-offset: 2px;
+}
+
 .status-navigate {
   color: var(--status-navigate);
   font-weight: bold;
