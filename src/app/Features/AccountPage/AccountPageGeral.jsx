@@ -3,10 +3,11 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { listarSalasFavoritas } from "../../service/mapa/favoriteService";
 import CardFavoritos from "./components/CardFavoritos";
+import { useNavigate } from "react-router-dom";
 
 const AccountPage = () => {
   const [notificacoesAtivas, setNotificacoesAtivas] = useState(true);
-
+  const navigate = useNavigate();
   const alternarNotificacoes = () => {
     setNotificacoesAtivas((prev) => !prev);
   };
@@ -17,6 +18,9 @@ const AccountPage = () => {
   );
 
   const [salasFavoritas, setSalasFavoritas] = useState([]);
+  const redirectDetalhesSala = (sala) => {
+    navigate(`/mapa-salas`, { state: { sala } });
+  };
 
   useEffect(() => {
     const fetchSalas = async () => {
@@ -75,7 +79,7 @@ const AccountPage = () => {
               <p>Lista de salas favoritas vazia.</p>
             ) : (
               salasFavoritas.map((sala) => (
-                <CardFavoritos key={sala.id} sala={sala} />
+                <CardFavoritos key={sala.id} sala={sala} onClick={() => {redirectDetalhesSala(sala)}} />
               ))
             )}
           </div>
