@@ -71,12 +71,12 @@ span {
 .btn-secondary {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   background-color: transparent;
   color: var(--primary-btn);
   border: 2px solid var(--primary-btn);
   padding: 0.5rem 1rem;
-  font-size: 1rem;;
+  font-size: 1rem;
   font-weight: bold;
   border-radius: 0.5rem;
   cursor: pointer;
@@ -89,15 +89,18 @@ span {
 }
 
 .btn-primary {
-  width: 100%;
-  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--primary-btn);
   color: white;
-  border-radius: 5px;
-  font-family: 'Albert Sans';
-  font-size: 1rem;
-  font-weight: 600;
   border: none;
-  background-color: #E5621C;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
