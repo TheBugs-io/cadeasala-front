@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import '../styles/TrilhaNavegacao.css';
+import '../../styles/TrilhaNavegacao.css';
 
 {/* Tentando ver aquela questão de visualizar em que parte do site eu estou, esse componente serve pra mostrar o caminho, diferente do SIGAA. */}
 const TrilhaNavegacao = ({ paths = [] }) => (

@@ -1,10 +1,10 @@
-import TrilhaNavegacao from "../../../Components/TrilhaNavegacao";
+import TrilhaNavegacao from "../../../Components/ui/TrilhaNavegacao";
 import CardSalaLayout from "./components/CardSalaLayout";
 import "./styles/DashboardSalasStyle.css";
 import { fetchSalas } from "../../../service/admin/salasService";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Snackbar from "../../../Components/Snackbar";
+import Snackbar from "../../../Components/ui/Snackbar";
 import { IoReloadCircle } from "react-icons/io5";
 
 const DashboardSalas = () => {

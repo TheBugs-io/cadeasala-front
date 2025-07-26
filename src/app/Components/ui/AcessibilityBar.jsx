@@ -1,7 +1,7 @@
-import "../styles/AcessibilityBar.css";
+import "../../styles/AcessibilityBar.css";
 import { IoContrastOutline } from "react-icons/io5";
-import brazilIcon from "../assets/icons/brazilVector.svg";
-import { useAcessibilidade } from "../contexts/AcessibilityContext";
+import brazilIcon from "../../assets/icons/brazilVector.svg";
+import { useAcessibilidade } from "../../contexts/AcessibilityContext";
 
 const AccessibilityBar = () => {
   const {
@@ -25,9 +25,9 @@ const AccessibilityBar = () => {
           </a>
         </div>
         <div className="acessibility-options">
-          <button onClick={increaseFont}>A+</button>
-          <button onClick={decreaseFont}>A-</button>
-          <button onClick={toggleContrast}>
+          <button onClick={increaseFont} aria-label="Aumentar fonte">A+</button>
+          <button onClick={decreaseFont} aria-label="Diminuir fonte">A-</button>
+          <button onClick={toggleContrast} aria-label={highContrast ? "Modo Claro" : "Alto Contraste"}>
             <IoContrastOutline />
             {highContrast ? "Modo Claro" : "Alto Contraste"}
           </button>

@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./styles/CreateRoomStyle.css";
-import TrilhaNavegacao from "../../../Components/TrilhaNavegacao";
-import Snackbar from "../../../Components/Snackbar";
+import TrilhaNavegacao from "../../../Components/ui/TrilhaNavegacao";
+import Snackbar from "../../../Components/ui/Snackbar";
 import { createSala } from "../../../service/admin/salasService";
 import { useNavigate } from "react-router-dom";
 
 const CreateSalas = () => {
   const navigate = useNavigate();
+  const mainHeadingRef = useRef(null);
+
   const [roomData, setRoomData] = useState({
     roomName: "",
     roomDescription: "",
@@ -15,8 +17,14 @@ const CreateSalas = () => {
     roomNumber: "",
     roomCapacity: 1,
   });
+
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    mainHeadingRef.current?.focus();
+  }, []);
 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
@@ -26,8 +34,6 @@ const CreateSalas = () => {
     setSnackbarMessage(message);
     setSnackbarOpen(true);
   };
-
-  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -90,7 +96,7 @@ const CreateSalas = () => {
         ]}
         aria-label="Navegação principal"
       />
-      <h1 tabIndex={0}>Criação de sala</h1>
+      <h1 ref={mainHeadingRef} tabIndex={-1}>Criação de sala</h1>
       <p>Preencha os detalhes da nova sala abaixo:</p>
       <hr aria-hidden="true" />
       <div className="header">

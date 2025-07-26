@@ -7,7 +7,7 @@ const Snackbar = ({ open, message, severity = "success", onClose }) => {
 
   useEffect(() => {
     if (open) {
-      const timer = setTimeout(onClose, 4000);
+      const timer = setTimeout(onClose, 7000);
       return () => clearTimeout(timer);
     }
   }, [open, onClose]);

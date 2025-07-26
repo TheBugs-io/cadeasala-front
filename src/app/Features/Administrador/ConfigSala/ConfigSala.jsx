@@ -1,9 +1,9 @@
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import "./styles/ConfigSala.css";
-import TrilhaNavegacao from "../../../Components/TrilhaNavegacao";
+import TrilhaNavegacao from "../../../Components/ui/TrilhaNavegacao";
 import { atualizarSala } from "../../../service/admin/salasService";
-import Snackbar from "../../../Components/Snackbar";
+import Snackbar from "../../../Components/ui/Snackbar";
 
 const ConfigSala = () => {
   const navigate = useNavigate();
