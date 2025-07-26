@@ -32,7 +32,10 @@ export const listarSalasFavoritas = async () => {
 export const deletarFavorito = async (local_id) => {
   try {
     const response = await api.delete("/favoritos", {
-      data: { local_id }
+      data: { local_id },
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+      },
     });
     return response.data;
   } catch (error) {
