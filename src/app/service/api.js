@@ -16,12 +16,14 @@ api.interceptors.response.use(
   response => response,
   error => {
     if (error.response && error.response.status === 401) {
-      const message = error.response.data?.message || error.response.data?.error;
+      const message = error.response.data?.message || error.response.data?.error || '';
 
-      if (message?.toLowerCase().includes("token") || message?.toLowerCase().includes("expired")) {
+      if (message.toLowerCase().includes("token") || message.toLowerCase().includes("expired")) {
         localStorage.removeItem('token');
 
-        window.location.href = "/login";
+        if (window.location.pathname !== "/login") {
+          window.location.href = "/login";
+        }
       }
     }
 
