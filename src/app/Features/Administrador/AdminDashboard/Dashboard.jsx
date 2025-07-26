@@ -113,6 +113,8 @@ const DashboardRegistro = () => {
         ))}
       </nav>
 
+      <hr />
+
       <div className="dashboard-table-register" role="region" aria-label="Tabela de registros">
         {loading ? (
           <div
