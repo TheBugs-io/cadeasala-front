@@ -1,9 +1,9 @@
 import { PiElevatorFill } from "react-icons/pi";
-import '../styles/FloorSelector.css';
+import "../styles/FloorSelector.css";
 
 const andares = [
-  { id: 'PRIMEIRO_ANDAR', label: '1' },
-  { id: 'SEGUNDO_ANDAR', label: '2' },
+  { id: "PRIMEIRO_ANDAR", label: "1" },
+  { id: "SEGUNDO_ANDAR", label: "2" },
 ];
 
 const FloorSelector = ({ value, onChange }) => {
@@ -17,8 +17,9 @@ const FloorSelector = ({ value, onChange }) => {
         {andares.map((andar) => (
           <button
             key={andar.id}
-            className={`option ${value === andar.id ? 'active' : ''}`}
+            className={`option ${value === andar.id ? "active" : ""}`}
             onClick={() => onChange(andar.id)}
+            aria-label={`Selecionar andar ${andar.label}`}
           >
             {andar.label}
           </button>
