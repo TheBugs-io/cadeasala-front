@@ -46,6 +46,22 @@ const DashboardSalas = () => {
     });
   };
 
+  useEffect(() => {
+    if (location.state?.snackbarMessage) {
+      setSnackbarMessage(location.state.snackbarMessage);
+      setSnackbarOpen(true);
+    }
+
+    if (location.state?.playSound) {
+      const successAudio = new Audio("/assets/sounds/success.mp3");
+      successAudio
+        .play()
+        .catch((err) =>
+          console.error("Erro ao tocar som na tela de sucesso:", err)
+        );
+    }
+  }, [location.state]);
+
   return (
     <main className="controle-salas" role="main">
       <TrilhaNavegacao
@@ -63,7 +79,14 @@ const DashboardSalas = () => {
             >
               Criar nova sala
             </button>
-            <button className="btn-secondary" onClick={loadSalas} aria-label="Atualizar lista de salas" role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && loadSalas()}>
+            <button
+              className="btn-secondary"
+              onClick={loadSalas}
+              aria-label="Atualizar lista de salas"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Enter" && loadSalas()}
+            >
               <IoReloadCircle size={18} /> Atualizar lista
             </button>
           </div>

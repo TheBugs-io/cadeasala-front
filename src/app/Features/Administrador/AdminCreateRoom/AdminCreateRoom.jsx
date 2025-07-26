@@ -75,13 +75,23 @@ const CreateSalas = () => {
 
         await createSala(payload);
 
-        showSnackbar("Sala criada com sucesso!");
+        const successAudio = new Audio("/public/sounds/createRoom.mp3");
 
-        setTimeout(() => {
-          navigate(-1);
-        }, 3000);
+        successAudio
+          .play()
+          .then(() => {
+            successAudio.onended = () => {
+              navigate("/admin/dashboard-salas", {
+                state: { snackbarMessage: "Sala criada com sucesso!" },
+              });
+            };
+          })
+          .catch(() => {
+            navigate("/admin/dashboard-salas", {
+              state: { snackbarMessage: "Sala criada com sucesso!" },
+            });
+          });
       } catch (error) {
-        console.error(error);
         showSnackbar("Erro ao criar sala.");
       }
     }
