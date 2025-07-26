@@ -1,0 +1,59 @@
+.confirm-email-container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  color: black;
+}
+
+.mensagem {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.mensagem.sucesso b {
+  color: #1cbc71;
+}
+
+.mensagem.erro {
+  color: #d70f49;
+  font-weight: bold;
+}
+
+.mensagem.invalido {
+  color: #f59e0b;
+  font-weight: bold;
+}
+
+.mensagem-container {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: black;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #facc15;
+  border-top: 4px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
