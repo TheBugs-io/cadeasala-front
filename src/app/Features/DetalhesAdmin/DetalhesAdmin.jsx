@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./DetalhesAdmin.css";
-import TrilhaNavegacao from "../../Components/TrilhaNavegacao";
+import TrilhaNavegacao from "../../Components/ui/TrilhaNavegacao";
 
 const DetalhesAdmin = () => {
   const [espaco, setEspaco] = useState("Ateliê");
