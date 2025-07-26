@@ -5,29 +5,35 @@ import { fetchSalas } from "../../../service/admin/salasService";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Snackbar from "../../../Components/Snackbar";
+import { IoReloadCircle } from "react-icons/io5";
 
 const DashboardSalas = () => {
   const [salas, setSalas] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const navigate = useNavigate();
+
+  const loadSalas = async () => {
+    setLoading(true);
+    try {
+      const data = await fetchSalas();
+      const sorted = [...data.salas].sort((a, b) =>
+        a.nome.localeCompare(b.nome)
+      );
+      setSalas(sorted);
+      setSnackbarMessage("Lista atualizada com sucesso.");
+    } catch (error) {
+      console.error("Erro ao carregar salas:", error);
+      setSalas([]);
+      setSnackbarMessage("Erro ao carregar salas.");
+    } finally {
+      setLoading(false);
+      setSnackbarOpen(true);
+    }
+  };
 
   useEffect(() => {
-    const loadSalas = async () => {
-      try {
-        const data = await fetchSalas();
-        const sorted = [...data.salas].sort((a, b) =>
-          a.nome.localeCompare(b.nome)
-        );
-        setSalas(sorted);
-      } catch (error) {
-        console.error("Erro ao carregar salas:", error);
-        setSalas([]);
-      } finally {
-        setLoading(false);
-      }
-    };
     loadSalas();
   }, []);
 
@@ -50,12 +56,17 @@ const DashboardSalas = () => {
       <div className="container">
         <div className="header">
           <h1 tabIndex={0}>Salas do bloco IUVI</h1>
-          <button
-            className="btn-primary"
-            onClick={() => navigate("/admin/dashboard-salas/criar-sala")}
-          >
-            Criar nova sala
-          </button>
+          <div style={{ display: "flex", gap: "1rem" }}>
+            <button
+              className="btn-primary"
+              onClick={() => navigate("/admin/dashboard-salas/criar-sala")}
+            >
+              Criar nova sala
+            </button>
+            <button className="btn-secondary" onClick={loadSalas} aria-label="Atualizar lista de salas" role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && loadSalas()}>
+              <IoReloadCircle size={18} /> Atualizar lista
+            </button>
+          </div>
         </div>
         <hr aria-hidden="true" />
 
@@ -69,13 +80,11 @@ const DashboardSalas = () => {
           ) : salas.length === 0 ? (
             <p>Nenhuma sala encontrada.</p>
           ) : (
-            <CardSalaLayout
-              salas={salas}
-              onCardClick={handleSettingsClick}
-            />
+            <CardSalaLayout salas={salas} onCardClick={handleSettingsClick} />
           )}
         </section>
       </div>
+
       <Snackbar
         open={snackbarOpen}
         message={snackbarMessage}
