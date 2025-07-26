@@ -50,7 +50,7 @@ export default function RoomDetails({ dados, onClose }) {
       statusFormatado = "Funcional";
       break;
     default:
-      statusFormatado = "Status desconhecido";
+      statusFormatado = "Funcional";
   }
 
   return (
