@@ -8,18 +8,18 @@ const TrilhaNavegacao = ({ paths = [] }) => (
       {paths.map((item, index) => {
         const isLast = index === paths.length - 1;
         return (
-          <li key={item.to || index} className="breadcrumb-item">
+          <li key={item.to || `breadcrumb-item-${index}`} className="breadcrumb-item">
             {!isLast ? (
               <>
                 <Link to={item.to} className="breadcrumb-link">
                   {item.label}
                 </Link>
-                <span className="breadcrumb-separator" aria-hidden="true">
+                <span className="breadcrumb-separator" aria-hidden="true" role="presentation">
                   &gt;
                 </span>
               </>
             ) : (
-              <span className="status-navigate" aria-current="page">
+              <span className="status-navigate" aria-current="page" tabIndex={0}>
                 {item.label}
               </span>
             )}
