@@ -12,4 +12,21 @@ api.interceptors.request.use(config => {
   return config;
 });
 
+api.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && error.response.status === 401) {
+      const message = error.response.data?.message || error.response.data?.error;
+
+      if (message?.toLowerCase().includes("token") || message?.toLowerCase().includes("expired")) {
+        localStorage.removeItem('token');
+
+        window.location.href = "/login";
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 export default api;
