@@ -71,7 +71,7 @@ const DashboardSalas = () => {
           ) : (
             <CardSalaLayout
               salas={salas}
-              onSettingsClick={handleSettingsClick}
+              onCardClick={handleSettingsClick}
             />
           )}
         </section>
