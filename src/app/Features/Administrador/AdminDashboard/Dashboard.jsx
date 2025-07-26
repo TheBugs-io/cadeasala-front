@@ -22,17 +22,13 @@ const DashboardRegistro = () => {
   useEffect(() => {
     const carregarRegistrosPendentes = async () => {
       try {
-        console.log("Iniciando busca de registros...");
         const response = await buscarRegistrosPendentes();
-
         if (Array.isArray(response)) {
           setRegistros(response);
-          setErro(null);
-        } else if (response && response.status !== "success") {
-          throw new Error(response.message || "Erro ao buscar registros.");
+        } else if (response?.data) {
+          setRegistros(response.data);
         } else {
-          setRegistros(response.data || []);
-          setErro(null);
+          throw new Error(response?.message || "Erro ao buscar registros.");
         }
       } catch (err) {
         setErro(`Erro ao carregar registros: ${err.message}`);
@@ -51,13 +47,13 @@ const DashboardRegistro = () => {
         return registros.filter((r) => r.tipoUsuario === "DISCENTE");
       case "DOCENTE":
         return registros.filter((r) => r.tipoUsuario === "DOCENTE");
-      case "TODOS":
       default:
         return registros;
     }
   };
 
   const handleStatusChange = (registro, statusSelecionado) => {
+    if (registro.status === statusSelecionado) return; // evita alterações desnecessárias
     setRegistroSelecionado(registro);
     setNovoStatus(statusSelecionado);
     setModalAberto(true);
@@ -65,21 +61,28 @@ const DashboardRegistro = () => {
 
   const confirmarAlteracaoStatus = async () => {
     if (!registroSelecionado) return;
+
     try {
       const resposta = await atualizarStatusRegistro(
         registroSelecionado.id,
         novoStatus
       );
 
-      if (resposta.status !== "success") {
-        throw new Error(resposta.message || "Erro ao atualizar o status.");
-      } else {
-        setRegistros((prev) =>
-          prev.filter((r) => r.id !== registroSelecionado.id)
-        );
+      // Verifica se a resposta tem a estrutura esperada
+      if (!resposta || resposta.erro || !resposta.id) {
+        throw new Error(resposta?.message || "Erro ao atualizar o status.");
       }
+
+      // Atualiza apenas o item na lista
+      setRegistros((prev) =>
+        prev.map((r) =>
+          r.id === registroSelecionado.id
+            ? { ...r, status: novoStatus }
+            : r
+        )
+      );
     } catch (err) {
-      alert("Erro ao atualizar o status.");
+      alert("Erro ao atualizar o status: " + err.message);
     } finally {
       setModalAberto(false);
       setRegistroSelecionado(null);
@@ -98,6 +101,7 @@ const DashboardRegistro = () => {
         ]}
       />
       <h1>Relatório de cadastros</h1>
+
       <div className="docs-filter-tabs">
         {opcoesFiltro.map((opcao) => (
           <button
@@ -167,7 +171,6 @@ const DashboardRegistro = () => {
             </tbody>
           </table>
         ) : (
-          // Visualização sem registro pendente
           <NoRegisterRequest filtroSelecionado={filtroSelecionado} />
         )}
       </div>

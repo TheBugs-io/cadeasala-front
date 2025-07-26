@@ -9,6 +9,16 @@ function Card({ status, sala, dados = {}, aoClicar }) {
   const reservaDisciplina = dados.reservas?.find((r) => r.tipo === "DISCIPLINA");
 
   const renderContent = () => {
+    if (status === "CARREGANDO") {
+      return (
+        <>
+          <div className="loading-placeholder loading-title"></div>
+          <div className="loading-placeholder loading-subtitle"></div>
+          <div className="loading-placeholder loading-time"></div>
+        </>
+      );
+    }
+
     if (status === "RESERVADA" && reservaDisciplina) {
       return (
         <>
@@ -59,9 +69,9 @@ function Card({ status, sala, dados = {}, aoClicar }) {
     <div
       className={`card status-${status}`}
       onClick={handleClick}
-      style={{ cursor: "pointer" }}
+      style={{ cursor: status === "CARREGANDO" ? "default" : "pointer", opacity: status === "CARREGANDO" ? 0.7 : 1 }}
     >
-      <p className="small">{sala}</p>
+      <p className="small">{status === "CARREGANDO" ? "..." : sala}</p>
       {renderContent()}
     </div>
   );
