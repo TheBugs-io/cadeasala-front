@@ -63,16 +63,6 @@ function MapaSalas() {
     sala.numeracaoSala.toUpperCase().endsWith("D")
   );
 
-  useEffect(() => {
-    const ignoradas = salasFiltradasOrdenadas.filter(
-      (sala) =>
-        !sala.numeracaoSala.endsWith("E") && !sala.numeracaoSala.endsWith("D")
-    );
-    if (ignoradas.length > 0) {
-      console.warn("Salas ignoradas por não ter lado:", ignoradas);
-    }
-  }, [salasFiltradasOrdenadas]);
-
   return (
     <main
       className="mapa-salas-container"
