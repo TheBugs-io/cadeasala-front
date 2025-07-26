@@ -3,6 +3,7 @@ import TrilhaNavegacao from "../../../Components/ui/TrilhaNavegacao";
 import "./styles/ReservasPage.css";
 import SkeletonCard from "../../../Components/ui/SkeletonCard";
 import { fetchSolicitacoesReservas } from "../../../service/admin/reservasService";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const Card = ({ children, className = "" }) => (
   <div className={`card ${className}`}>{children}</div>
@@ -17,45 +18,75 @@ const formatarData = (dataString) => {
 const PagePedidosReserva = () => {
   const [solicitacoes, setSolicitacoes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { token } = useAuth();
 
   useEffect(() => {
+    if (!token) return;
+
+    let isMounted = true;
+
     const getSolicitacoes = async () => {
       try {
         setLoading(true);
-        const data = await fetchSolicitacoesReservas();
-        setSolicitacoes(data.solicitacoes || []);
+        const response = await fetchSolicitacoesReservas(token);
+
+        console.log("Resposta fetchSolicitacoesReservas:", response);
+
+        if (response.status === "success" && isMounted) {
+          setSolicitacoes(response.data || []);
+          console.log("Solicitações setadas:", response.data);
+        } else if (!isMounted) {
+          console.log("Componente desmontado, não setar estado");
+        } else {
+          console.error("Erro na resposta:", response.message);
+          setSolicitacoes([]);
+        }
       } catch (error) {
         console.error("Erro ao buscar solicitações:", error);
+        setSolicitacoes([]);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
 
     getSolicitacoes();
-  }, []);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [token]);
+
+  console.log("Estado solicitacoes:", solicitacoes);
 
   const disciplinas = solicitacoes.filter(
-    (sol) => sol.tipo.toUpperCase() === "DISCIPLINA"
+    (sol) => sol.tipo?.toUpperCase() === "DISCIPLINA"
   );
   const oficinas = solicitacoes.filter(
-    (sol) => sol.tipo.toUpperCase() === "OFICINA"
+    (sol) => sol.tipo?.toUpperCase() === "OFICINA"
   );
   const outras = solicitacoes.filter(
-    (sol) => sol.tipo.toUpperCase() !== "DISCIPLINA" && sol.tipo.toUpperCase() !== "OFICINA"
+    (sol) =>
+      sol.tipo?.toUpperCase() !== "DISCIPLINA" &&
+      sol.tipo?.toUpperCase() !== "OFICINA"
   );
+
+  console.log("Disciplinas:", disciplinas);
+  console.log("Oficinas:", oficinas);
+  console.log("Outras:", outras);
 
   const renderSolicitacaoCard = (sol) => (
     <Card key={sol.id} className="reserva-card">
       <div className="reserva-body">
-        <h3 className="sala-nome">Sala ID: {sol.localId || "-"}</h3>
+        <h3 className="sala-nome">{sol.local?.nome || "-"}</h3>
         <p className="horario-info">
-          {formatarData(sol.dataInicio)} - {sol.horarioInicio}h às {sol.horarioFim}h
+          {formatarData(sol.dataInicio)} - {sol.horarioInicio}h às{" "}
+          {sol.horarioFim}h
         </p>
         <p className="usuario-info">Usuário ID: {sol.usuarioId || "-"}</p>
         <p className="status-info">Status: {sol.status}</p>
       </div>
       <div className="reserva-footer">
-        <button className={`tipo-button ${sol.tipo.toLowerCase()}`}>
+        <button className={`tipo-button ${sol.tipo?.toLowerCase()}`}>
           {sol.tipo}
         </button>
       </div>
@@ -78,12 +109,13 @@ const PagePedidosReserva = () => {
           loading || items.length > 2 ? "horizontal-scroll" : "reservas-grid"
         }
       >
-        {loading
-          ? renderSkeletons()
-          : items.length > 0
-          ? items.map(renderSolicitacaoCard)
-          : <p className="sem-reservas-msg">Sem reservas deste tipo</p>
-        }
+        {loading ? (
+          renderSkeletons()
+        ) : items.length > 0 ? (
+          items.map(renderSolicitacaoCard)
+        ) : (
+          <p className="sem-reservas-msg">Sem reservas deste tipo</p>
+        )}
       </div>
     </section>
   );
