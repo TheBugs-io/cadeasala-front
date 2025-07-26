@@ -5,6 +5,11 @@ export async function login(email, senha) {
   return response.data.usuario;
 }
 
+export async function confirmEmail(token) {
+  const response = await api.get(`/api/auth/register/confirmar/${token}`);
+  return response.data;
+}
+
 export const changePassword = async (senhaAnterior, novaSenha) => {
     const response = await api.put('/api/auth/change-password', { 
         senhaAnterior, 

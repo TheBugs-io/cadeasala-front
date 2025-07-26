@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import Card from "./Components/CardSalaMapa";
 import HallwayMap from "./Components/Hallway";
 import "./styles/MapaStyle.css";
 import FloorSelector from "./Components/AndarSelector";
-import Modal from "../../Components/Modal";
+import Modal from "../../Components/ui/Modal";
 import RoomDetails from "../DescSala/DescSala";
 import { fetchSalas } from "../../service/mapa/salasService";
 import { ordenarPorNumeracaoSala } from "./helper/orderNumeracaoSala";
@@ -15,14 +16,28 @@ function MapaSalas() {
   const [salas, setSalas] = useState([]);
   const [filtroStatus, setFiltroStatus] = useState("TODOS");
   const [carregando, setCarregando] = useState(true);
+  const ultimaFocoRef = useRef(null);
+  const location = useLocation();
 
   const salasFiltradas = salas.filter((sala) => {
     const correspondeAoAndar = sala.localizacao === andarSelecionado;
     const correspondeAoStatus =
       filtroStatus === "TODOS" || sala.status === filtroStatus;
-
     return correspondeAoAndar && correspondeAoStatus;
   });
+
+  useEffect(() => {
+    if (location.state?.sala) {
+      const sala = location.state.sala;
+
+      if (sala.localizacao) setAndarSelecionado(sala.localizacao);
+
+      setTimeout(() => {
+        setDadosSelecionados(sala);
+        setModalAberto(true);
+      }, 0);
+    }
+  }, [location.state]);
 
   useEffect(() => {
     const buscarSalas = async () => {
@@ -36,13 +51,19 @@ function MapaSalas() {
         setCarregando(false);
       }
     };
-
     buscarSalas();
   }, []);
 
-  const handleAbrirModal = (sala) => {
+  const handleAbrirModal = (sala, e) => {
+    ultimaFocoRef.current = e.currentTarget;
     setDadosSelecionados(sala);
     setModalAberto(true);
+  };
+
+  const handleFecharModal = () => {
+    setModalAberto(false);
+    setDadosSelecionados(null);
+    if (ultimaFocoRef.current) ultimaFocoRef.current.focus();
   };
 
   const salasFiltradasOrdenadas = [...salasFiltradas].sort(
@@ -50,18 +71,42 @@ function MapaSalas() {
   );
 
   const salasE = salasFiltradasOrdenadas.filter((sala) =>
-    sala.numeracaoSala.endsWith("E")
+    sala.numeracaoSala.toUpperCase().endsWith("E")
   );
+
   const salasD = salasFiltradasOrdenadas.filter((sala) =>
-    sala.numeracaoSala.endsWith("D")
+    sala.numeracaoSala.toUpperCase().endsWith("D")
   );
 
   return (
-    <div className="mapa-salas-container">
-      <FloorSelector value={andarSelecionado} onChange={setAndarSelecionado} />
+    <main
+      className="mapa-salas-container"
+      aria-label="Mapa de salas do Instituto Universidade Virtual"
+    >
+      <nav aria-label="Seleção do andar">
+        <FloorSelector
+          value={andarSelecionado}
+          onChange={setAndarSelecionado}
+          aria-describedby="infoAndar"
+        />
+        <div id="infoAndar" className="sr-only">
+          Selecione o andar para filtrar as salas exibidas no mapa.
+        </div>
+      </nav>
 
-      <div className="map-container">
-        <div className="row">
+      <div
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        className="sr-only"
+      >
+        {carregando
+          ? "Carregando informações das salas, por favor aguarde."
+          : `${salasFiltradas.length} salas disponíveis para o andar selecionado.`}
+      </div>
+
+      <section className="map-container" aria-label="Salas e mapa do andar">
+        <div className="row" role="list" aria-label="Salas lado esquerdo">
           {carregando
             ? Array(5)
                 .fill(0)
@@ -72,6 +117,9 @@ function MapaSalas() {
                     sala=""
                     dados={{}}
                     aoClicar={null}
+                    role="listitem"
+                    tabIndex={-1}
+                    aria-busy="true"
                   />
                 ))
             : salasE.map((sala) => (
@@ -80,14 +128,23 @@ function MapaSalas() {
                   status={sala.status}
                   sala={sala.nome}
                   dados={sala}
-                  aoClicar={() => handleAbrirModal(sala)}
+                  aoClicar={(e) => handleAbrirModal(sala, e)}
+                  role="listitem"
+                  tabIndex={0}
+                  aria-label={`Sala ${sala.nome}, status ${sala.status}. Pressione enter para ver detalhes.`}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      handleAbrirModal(sala, e);
+                    }
+                  }}
                 />
               ))}
         </div>
 
-        <HallwayMap />
+        <HallwayMap aria-label="Mapa do corredor do andar selecionado" />
 
-        <div className="row">
+        <div className="row" role="list" aria-label="Salas lado direito">
           {carregando
             ? Array(5)
                 .fill(0)
@@ -98,6 +155,9 @@ function MapaSalas() {
                     sala=""
                     dados={{}}
                     aoClicar={null}
+                    role="listitem"
+                    tabIndex={-1}
+                    aria-busy="true"
                   />
                 ))
             : salasD.map((sala) => (
@@ -106,21 +166,33 @@ function MapaSalas() {
                   status={sala.status}
                   sala={sala.nome}
                   dados={sala}
-                  aoClicar={() => handleAbrirModal(sala)}
+                  aoClicar={(e) => handleAbrirModal(sala, e)}
+                  role="listitem"
+                  tabIndex={0}
+                  aria-label={`Sala ${sala.nome}, status ${sala.status}. Pressione enter para ver detalhes.`}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      handleAbrirModal(sala, e);
+                    }
+                  }}
                 />
               ))}
         </div>
-      </div>
+      </section>
 
-      <Modal isOpen={modalAberto} onClose={() => setModalAberto(false)}>
+      <Modal
+        isOpen={modalAberto}
+        onClose={handleFecharModal}
+        ariaLabel="Detalhes da sala selecionada"
+        initialFocusRef={null}
+        returnFocusRef={ultimaFocoRef}
+      >
         {dadosSelecionados && (
-          <RoomDetails
-            dados={dadosSelecionados}
-            onClose={() => setModalAberto(false)}
-          />
+          <RoomDetails dados={dadosSelecionados} onClose={handleFecharModal} />
         )}
       </Modal>
-    </div>
+    </main>
   );
 }
 

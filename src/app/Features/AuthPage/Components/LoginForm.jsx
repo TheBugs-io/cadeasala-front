@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import loginImage from "../../../assets/login/Login-rafiki.svg";
 import "../../../styles/Login.css";
 import { useAuth } from "../../../contexts/AuthContext";
 import { login } from "../../../service/auth/authService.js";
-import Snackbar from "../../../Components/Snackbar.jsx";
+import Snackbar from "../../../Components/ui/Snackbar.jsx";
 
 const LoginForm = () => {
   const location = useLocation();
@@ -16,6 +16,22 @@ const LoginForm = () => {
     message: "",
     severity: "success",
   });
+
+  useEffect(() => {
+    if (location.state?.showConfirmEmailSnackbar) {
+      setSnackbar({
+        open: true,
+        message:
+          "Um email para confirmação foi enviado para sua conta. Por favor, para concluir seu cadastro, confirme seu email.",
+        severity: "success",
+      });
+
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
+
+  const closeSnackbar = () =>
+    setSnackbar((prev) => ({ ...prev, open: false }));
 
   const navigate = useNavigate();
   const { login: authLogin } = useAuth();

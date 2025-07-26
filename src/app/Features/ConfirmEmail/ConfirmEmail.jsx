@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import api from "../../service/api.js";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { confirmEmail } from "../../service/auth/authService";
+import "./ConfirmEmail.css";
+import { RiMailForbidFill } from "react-icons/ri";
+import { LuMailCheck } from "react-icons/lu";
 
 const ConfirmEmail = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const [status, setStatus] = useState("validando");
-
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!token) {
@@ -15,8 +17,7 @@ const ConfirmEmail = () => {
       return;
     }
 
-    api
-      .get(`/api/auth/register/confirmar/${token}`)
+    confirmEmail(token)
       .then(() => setStatus("sucesso"))
       .catch(() => setStatus("erro"));
   }, [token]);
@@ -24,39 +25,72 @@ const ConfirmEmail = () => {
   const renderMensagem = () => {
     switch (status) {
       case "validando":
-        return <p>Validando seu token...</p>;
+        return (
+          <div
+            className="loader-container"
+            role="status"
+            aria-live="polite"
+            aria-busy="true"
+          >
+            <div className="loader" aria-hidden="true"></div>
+            <p>Validando seu token...</p>
+          </div>
+        );
+
       case "sucesso":
         return (
-          <p style={{ color: "green" }}>✅ E-mail confirmado com sucesso!</p>
+          <section className="mensagem-container" role="alert" aria-live="polite">
+            <div className="mensagem sucesso">
+              <LuMailCheck size={45} aria-hidden="true" color="#1cbc71"/>
+              <p><b>Seu email foi confirmado com sucesso.</b> Por favor, aguarde um
+              secretário aprovar sua solicitação de registro na plataforma e
+              verifique na caixa de entrada ou spam do email.</p>
+            </div>
+            <button
+              className="btn-primary"
+              onClick={() => navigate("/mapa-salas")}
+              aria-label="Voltar para o mapa de salas"
+            >
+              Voltar para o mapa
+            </button>
+          </section>
         );
+
       case "erro":
-        return <p style={{ color: "red" }}>❌ Token inválido ou expirado.</p>;
+        return (
+          <section className="mensagem-container" role="alert" aria-live="assertive">
+            <div className="mensagem erro">
+              <RiMailForbidFill size={45} aria-hidden="true" />
+              <p>Token inválido ou expirado.</p>
+            </div>
+            <button
+              className="btn-primary"
+              onClick={() => navigate("/register")}
+              aria-label="Solicitar novo token"
+            >
+              Pedir novo token
+            </button>
+          </section>
+        );
+
       case "invalido":
         return (
-          <p style={{ color: "orange" }}>⚠️ Nenhum token fornecido na URL.</p>
+          <section role="alert" aria-live="assertive">
+            <p className="mensagem invalido">⚠️ Nenhum token fornecido na URL.</p>
+          </section>
         );
+
       default:
         return null;
     }
   };
 
   return (
-    <div style={containerStyle}>
-      <h2>Confirmação de E-mail</h2>
+    <main className="confirm-email-container" aria-labelledby="confirmEmailTitle">
+      <h1 id="confirmEmailTitle">Confirmação de E-mail</h1>
       {renderMensagem()}
-    </div>
+    </main>
   );
-};
-
-const containerStyle = {
-  maxWidth: "500px",
-  margin: "50px auto",
-  padding: "20px",
-  textAlign: "center",
-  fontFamily: "Arial, sans-serif",
-  border: "1px solid #ddd",
-  borderRadius: "8px",
-  backgroundColor: "#f9f9f9",
 };
 
 export default ConfirmEmail;

@@ -1,10 +1,13 @@
 import "./styles/AccountPageStyle.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { listarSalasFavoritas } from "../../service/mapa/favoriteService";
+import CardFavoritos from "./components/CardFavoritos";
+import { useNavigate } from "react-router-dom";
 
 const AccountPage = () => {
   const [notificacoesAtivas, setNotificacoesAtivas] = useState(true);
-
+  const navigate = useNavigate();
   const alternarNotificacoes = () => {
     setNotificacoesAtivas((prev) => !prev);
   };
@@ -13,6 +16,24 @@ const AccountPage = () => {
   const [avatarSrc, setAvatarSrc] = useState(
     "https://raw.githubusercontent.com/TheBugs-io/cadeasala-front/40e7f24aa5d021222994672877393f5a31511581/src/app/assets/placeholder/iconAvatar.svg"
   );
+
+  const [salasFavoritas, setSalasFavoritas] = useState([]);
+  const redirectDetalhesSala = (sala) => {
+    navigate(`/mapa-salas`, { state: { sala } });
+  };
+
+  useEffect(() => {
+    const fetchSalas = async () => {
+      try {
+        const data = await listarSalasFavoritas();
+        setSalasFavoritas(data || []);
+      } catch (error) {
+        console.error("Erro ao buscar salas favoritas:", error);
+        setSalasFavoritas([]);
+      }
+    };
+    fetchSalas();
+  }, []);
 
   return (
     <div className="account-page">
@@ -54,7 +75,13 @@ const AccountPage = () => {
           <h2>Salas favoritas</h2>
           <hr />
           <div className="favorites-list">
-            <p>Lista de salas favoritas vazia.</p>
+            {salasFavoritas.length === 0 ? (
+              <p>Lista de salas favoritas vazia.</p>
+            ) : (
+              salasFavoritas.map((sala) => (
+                <CardFavoritos key={sala.id} sala={sala} onClick={() => {redirectDetalhesSala(sala)}} />
+              ))
+            )}
           </div>
         </section>
         <section className="account-reservations-history">
