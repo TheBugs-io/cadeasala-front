@@ -1,11 +1,17 @@
 export function ordenarPorNumeracaoSala(a, b) {
   const extrairNumeroLetra = (numeracao) => {
-    const regex = /^(\d+)([A-Z])$/i;
+    if (!numeracao || typeof numeracao !== "string") {
+      return [Number.MAX_SAFE_INTEGER, 'Z'];
+    }
+
+    numeracao = numeracao.toUpperCase();
+
+    const regex = /^(\d+)([A-Z])$/;
     const match = numeracao.match(regex);
     if (!match) {
       return [Number.MAX_SAFE_INTEGER, 'Z'];
     }
-    return [parseInt(match[1], 10), match[2].toUpperCase()];
+    return [parseInt(match[1], 10), match[2]];
   };
 
   const [numA, letraA] = extrairNumeroLetra(a.numeracaoSala);

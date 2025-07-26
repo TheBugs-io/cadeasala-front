@@ -1,22 +1,50 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { FiX } from "react-icons/fi";
 
 const Snackbar = ({ open, message, severity = "success", onClose }) => {
+  const snackbarRef = useRef(null);
+  const closeButtonRef = useRef(null);
+
   useEffect(() => {
     if (open) {
-      const timer = setTimeout(() => {
-        onClose();
-      }, 4000);
+      const timer = setTimeout(onClose, 7000);
       return () => clearTimeout(timer);
     }
+  }, [open, onClose]);
+
+  useEffect(() => {
+    if (open && snackbarRef.current) {
+      snackbarRef.current.focus();
+    }
+  }, [open]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && open) {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [open, onClose]);
 
   if (!open) return null;
 
   return (
-    <div className={`snackbar snackbar-${severity}`}>
+    <div
+      ref={snackbarRef}
+      role="alert"
+      aria-live="assertive"
+      tabIndex={-1}
+      className={`snackbar snackbar-${severity}`}
+    >
       <p>{message}</p>
-      <button className="close-btn" onClick={onClose}>
+      <button
+        ref={closeButtonRef}
+        className="close-btn"
+        onClick={onClose}
+        aria-label="Fechar notificação"
+      >
         <FiX size={18} />
       </button>
 
@@ -38,14 +66,13 @@ const Snackbar = ({ open, message, severity = "success", onClose }) => {
           font-weight: 600;
           animation: slideIn 0.3s ease forwards;
           z-index: 9999;
+          outline: none;
         }
         .snackbar-success {
           background-color: #1CBC71;
-          color: #fff;
         }
         .snackbar-error {
           background-color: #D70F49;
-          color: #fff;
         }
         .close-btn {
           background: transparent;

@@ -4,7 +4,7 @@ import loginImage from "../../../assets/login/Login-rafiki.svg";
 import "../../../styles/Login.css";
 import { useAuth } from "../../../contexts/AuthContext";
 import { login } from "../../../service/auth/authService.js";
-import Snackbar from "../../../Components/Snackbar.jsx";
+import Snackbar from "../../../Components/ui/Snackbar.jsx";
 
 const LoginForm = () => {
   const location = useLocation();

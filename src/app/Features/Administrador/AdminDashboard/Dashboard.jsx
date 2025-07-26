@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./DashboardRegister.css";
 import NoRegisterRequest from "./components/NoRegisterRequest";
-import TrilhaNavegacao from "../../../Components/TrilhaNavegacao";
-import ModalConfirmAction from "../../../Components/ModalConfirmAction";
+import TrilhaNavegacao from "../../../Components/ui/TrilhaNavegacao";
+import ModalConfirmAction from "../../../Components/ui/ModalConfirmAction";
 import {
   atualizarStatusRegistro,
   buscarRegistrosPendentes,

@@ -5,7 +5,7 @@ import photoSMD from "../../assets/photos/portalUFC.png";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
-import Snackbar from "../../Components/Snackbar";
+import Snackbar from "../../Components/ui/Snackbar";
 
 export default function RoomDetails({ dados, onClose }) {
   const [snackbarOpen, setSnackbarOpen] = useState(false);

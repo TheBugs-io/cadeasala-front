@@ -29,6 +29,9 @@ const ConfigSala = lazy(() => import("../Features/Administrador/ConfigSala/Confi
 const AdminAllReservas = lazy(() => import ("../Features/Administrador/AdminAllReservas/AdminAllReservas"));
 const CreateSala = lazy(() => import("../Features/Administrador/AdminCreateRoom/AdminCreateRoom"));
 
+//Páginas alternativas
+const NotFoundPage = lazy(() => import("../Features/ErrorPages/404Error"));
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -139,6 +142,10 @@ export const router = createBrowserRouter([
         path: "confirmar",
         element: <ConfirmEmail />,
       },
+      {
+        path: "*",
+        element: <NotFoundPage />,
+      }
     ],
   },
 ]);

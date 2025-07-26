@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
-import AccessibilityBar from "./AcessibilityBar";
-import Header from "./header";
-import TabBar from "./TabBar"; // importe a nova tab bar
+import AccessibilityBar from "./ui/AcessibilityBar";
+import Header from "./ui/header";
+import TabBar from "./ui/TabBar"; // importe a nova tab bar
 
 const Layout = () => {
   const location = useLocation();

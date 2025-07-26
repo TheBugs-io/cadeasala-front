@@ -2,7 +2,7 @@ import { FiSearch } from "react-icons/fi";
 import { HiOutlineMap } from "react-icons/hi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
-import "../styles/TabBar.css";
+import "../../styles/TabBar.css";
 
 const TabBar = () => {
   const location = useLocation();

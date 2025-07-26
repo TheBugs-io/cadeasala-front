@@ -1,4 +1,4 @@
-import '../styles/ModalConfirmActionStyle.css'
+import '../../styles/ModalConfirmActionStyle.css'
 
 const ModalConfirmAction = ({ isOpen, onClose, onConfirm, mensagem }) => {
   if (!isOpen) return null;

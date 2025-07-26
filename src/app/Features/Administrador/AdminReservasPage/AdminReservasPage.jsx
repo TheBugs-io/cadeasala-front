@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./styles/AdminReservasPage.css";
-import TrilhaNavegacao from "../../../Components/TrilhaNavegacao";
+import TrilhaNavegacao from "../../../Components/ui/TrilhaNavegacao";
 import GenericCard from "./components/CardGeneric";
 import { useEffect, useState } from "react";
 import { fetchSolicitacoesReservas, fetchReservas } from "../../../service/admin/reservasService";

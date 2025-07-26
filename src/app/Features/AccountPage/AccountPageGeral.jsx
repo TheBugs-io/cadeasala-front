@@ -1,6 +1,8 @@
 import "./styles/AccountPageStyle.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { listarSalasFavoritas } from "../../service/mapa/favoriteService";
+import CardFavoritos from "./components/CardFavoritos";
 
 const AccountPage = () => {
   const [notificacoesAtivas, setNotificacoesAtivas] = useState(true);
@@ -13,6 +15,21 @@ const AccountPage = () => {
   const [avatarSrc, setAvatarSrc] = useState(
     "https://raw.githubusercontent.com/TheBugs-io/cadeasala-front/40e7f24aa5d021222994672877393f5a31511581/src/app/assets/placeholder/iconAvatar.svg"
   );
+
+  const [salasFavoritas, setSalasFavoritas] = useState([]);
+
+  useEffect(() => {
+    const fetchSalas = async () => {
+      try {
+        const data = await listarSalasFavoritas();
+        setSalasFavoritas(data || []);
+      } catch (error) {
+        console.error("Erro ao buscar salas favoritas:", error);
+        setSalasFavoritas([]);
+      }
+    };
+    fetchSalas();
+  }, []);
 
   return (
     <div className="account-page">
@@ -54,7 +71,20 @@ const AccountPage = () => {
           <h2>Salas favoritas</h2>
           <hr />
           <div className="favorites-list">
-            <p>Lista de salas favoritas vazia.</p>
+            {salasFavoritas.length === 0 ? (
+              <p>Lista de salas favoritas vazia.</p>
+            ) : (
+              salasFavoritas.map((sala) => (
+                <CardFavoritos key={sala.id} sala={sala} />
+              ))
+            )}
+          </div>
+        </section>
+        <section className="account-reservations-history">
+          <h2>Meu histórico de reservas</h2>
+          <hr />
+          <div className="reservations-history-list">
+            <p>Lista de reservas vazia.</p>
           </div>
         </section>
         <section className="account-reservations-history">

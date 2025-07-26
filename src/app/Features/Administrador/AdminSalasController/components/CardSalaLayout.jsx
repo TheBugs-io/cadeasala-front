@@ -1,13 +1,15 @@
 import "../styles/CardSalaStyle.css";
 import { MdOpenInNew } from "react-icons/md";
-import { formatterLocalizacao, formatterTipo, getImagemPorTipo } from "../../../../helper/salasHelper";
+import {
+  formatterLocalizacao,
+  formatterTipo,
+  getImagemPorTipo,
+} from "../../../../helper/salasHelper";
 
 const CardSalaLayout = ({
   salas = [],
-  onSettingsClick = () => {},
   onCardClick = () => {},
 }) => {
-
   return (
     <div className="room-card-grid">
       {salas.map((sala) => (
@@ -20,6 +22,7 @@ const CardSalaLayout = ({
           aria-label={`Detalhes da sala ${sala.nome}`}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
               onCardClick(sala);
             }
           }}
@@ -30,19 +33,8 @@ const CardSalaLayout = ({
             </div>
             <div
               className="settings-icon"
-              onClick={(e) => {
-                e.stopPropagation();
-                onSettingsClick(sala);
-              }}
-              role="button"
-              tabIndex={0}
-              aria-label="Abrir configurações da sala"
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.stopPropagation();
-                  onSettingsClick(sala);
-                }
-              }}
+              aria-hidden="true"
+              tabIndex={-1} // Não focável para teclado, pois não é interativo
             >
               <MdOpenInNew />
             </div>

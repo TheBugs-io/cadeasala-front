@@ -1,8 +1,8 @@
-import "../styles/Header.css";
-import logo from "../assets/logo/logocadesala.png";
-import usuarioIcone from "../assets/usuario/usuario.png";
+import "../../styles/Header.css";
+import logo from "../../assets/logo/logocadesala.png";
+import usuarioIcone from "../../assets/usuario/usuario.png";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { useState, useRef, useEffect } from "react";
 import { MdLogout } from "react-icons/md";
 import { FiArrowUpRight } from "react-icons/fi";
@@ -14,6 +14,7 @@ const Header = ({ onSearch }) => {
   const navigate = useNavigate();
   const [menuAberto, setMenuAberto] = useState(false);
   const menuRef = useRef(null);
+  const btnRef = useRef(null);
 
   const esconderSearch = ["/login", "/"].includes(location.pathname);
 
@@ -36,6 +37,7 @@ const Header = ({ onSearch }) => {
     setMenuAberto(false);
   };
 
+  // Fecha menu ao clicar fora
   useEffect(() => {
     const handleClickFora = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -46,13 +48,29 @@ const Header = ({ onSearch }) => {
     return () => document.removeEventListener("mousedown", handleClickFora);
   }, []);
 
+  // Fecha com ESC
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setMenuAberto(false);
+        btnRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   return (
     <header className="header-container" aria-label="Cabeçalho do site">
       <img
         src={logo}
-        alt="Logo da plataforma"
+        alt="Logo da plataforma Cadê a Sala"
         className="header-logo"
         onClick={handleBackHome}
+        role="link"
+        tabIndex={0}
+        aria-label="Ir para a página inicial do site"
+        onKeyDown={(e) => e.key === "Enter" && handleBackHome()}
       />
 
       {!esconderSearch && (
@@ -75,12 +93,16 @@ const Header = ({ onSearch }) => {
         <div className="header-account-wrapper" ref={menuRef}>
           <button
             className="header-account-btn"
+            ref={btnRef}
             onClick={() => setMenuAberto(!menuAberto)}
+            aria-haspopup="true"
+            aria-expanded={menuAberto}
+            aria-controls="menu-conta"
             aria-label={`Abrir menu da conta de ${user.nome}`}
           >
             <img
               src={user.imagem || usuarioIcone}
-              alt={`Ícone da conta de ${user.nome}`}
+              alt={`Foto de perfil de ${user.nome}`}
               className="header-account-icon"
             />
             <span className="header-account-nome">{user.nome}</span>
@@ -90,9 +112,15 @@ const Header = ({ onSearch }) => {
             <div
               className="account-dropdown"
               role="menu"
+              id="menu-conta"
               aria-label="Menu da conta"
             >
-              <button role="menuitem" tabIndex={0} onClick={handleRedirect}>
+              <button
+                role="menuitem"
+                tabIndex={0}
+                onClick={handleRedirect}
+                aria-label="Ir para minha página inicial contendo informações da conta e funções"
+              >
                 Minha página inicial <FiArrowUpRight size={20} />
               </button>
               <button
@@ -100,6 +128,7 @@ const Header = ({ onSearch }) => {
                 tabIndex={0}
                 onClick={handleLogout}
                 className="logout-btn"
+                aria-label="Encerrar sessão e sair da conta"
               >
                 <b>Sair</b> <MdLogout size={20} />
               </button>

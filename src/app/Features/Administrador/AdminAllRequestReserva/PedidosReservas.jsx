@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import TrilhaNavegacao from "../../../Components/TrilhaNavegacao";
+import TrilhaNavegacao from "../../../Components/ui/TrilhaNavegacao";
 import "./styles/ReservasPage.css";
-import SkeletonCard from "../../../Components/SkeletonCard";
+import SkeletonCard from "../../../Components/ui/SkeletonCard";
 import { fetchSolicitacoesReservas } from "../../../service/admin/reservasService";
 
 const Card = ({ children, className = "" }) => (
