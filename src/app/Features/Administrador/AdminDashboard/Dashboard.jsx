@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./DashboardRegister.css";
 import NoRegisterRequest from "./components/NoRegisterRequest";
-import TrilhaNavegacao from "../../../Components/TrilhaNavegacao";
-import ModalConfirmAction from "../../../Components/ModalConfirmAction";
+import TrilhaNavegacao from "../../../Components/ui/TrilhaNavegacao";
+import ModalConfirmAction from "../../../Components/ui/ModalConfirmAction";
 import {
   atualizarStatusRegistro,
   buscarRegistrosPendentes,
@@ -53,7 +53,7 @@ const DashboardRegistro = () => {
   };
 
   const handleStatusChange = (registro, statusSelecionado) => {
-    if (registro.status === statusSelecionado) return; // evita alterações desnecessárias
+    if (registro.status === statusSelecionado) return;
     setRegistroSelecionado(registro);
     setNovoStatus(statusSelecionado);
     setModalAberto(true);
@@ -68,17 +68,13 @@ const DashboardRegistro = () => {
         novoStatus
       );
 
-      // Verifica se a resposta tem a estrutura esperada
       if (!resposta || resposta.erro || !resposta.id) {
         throw new Error(resposta?.message || "Erro ao atualizar o status.");
       }
 
-      // Atualiza apenas o item na lista
       setRegistros((prev) =>
         prev.map((r) =>
-          r.id === registroSelecionado.id
-            ? { ...r, status: novoStatus }
-            : r
+          r.id === registroSelecionado.id ? { ...r, status: novoStatus } : r
         )
       );
     } catch (err) {
@@ -100,29 +96,36 @@ const DashboardRegistro = () => {
           { label: "Relatório de cadastros" },
         ]}
       />
-      <h1>Relatório de cadastros</h1>
+      <h1 tabIndex={0}>Relatório de cadastros</h1>
 
-      <div className="docs-filter-tabs">
+      <nav aria-label="Filtros de tipo de usuário" className="docs-filter-tabs">
         {opcoesFiltro.map((opcao) => (
           <button
             key={opcao}
             className={`filtro-botao ${
               filtroSelecionado === opcao ? "ativo" : ""
             }`}
+            aria-pressed={filtroSelecionado === opcao}
             onClick={() => setFiltroSelecionado(opcao)}
           >
             {opcao}
           </button>
         ))}
-      </div>
+      </nav>
 
-      <div className="dashboard-table-register">
+      <div className="dashboard-table-register" role="region" aria-label="Tabela de registros">
         {loading ? (
-          <div style={{ textAlign: "center", padding: "40px" }}>
+          <div
+            style={{ textAlign: "center", padding: "40px" }}
+            aria-live="polite"
+          >
             <p>Carregando registros...</p>
           </div>
         ) : erro ? (
-          <div style={{ textAlign: "center", padding: "40px" }}>
+          <div
+            style={{ textAlign: "center", padding: "40px" }}
+            aria-live="assertive"
+          >
             <p style={{ color: "red" }}>{erro}</p>
             <button
               onClick={() => window.location.reload()}
@@ -132,15 +135,15 @@ const DashboardRegistro = () => {
             </button>
           </div>
         ) : registrosFiltrados.length > 0 ? (
-          <table>
+          <table aria-label="Tabela de registros de usuários">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Nome Completo</th>
-                <th>Email</th>
-                <th>Tipo de Usuário</th>
-                <th>Status</th>
-                <th>Pedido em</th>
+                <th scope="col">ID</th>
+                <th scope="col">Nome Completo</th>
+                <th scope="col">Email</th>
+                <th scope="col">Tipo de Usuário</th>
+                <th scope="col">Status</th>
+                <th scope="col">Pedido em</th>
               </tr>
             </thead>
             <tbody>
@@ -148,15 +151,24 @@ const DashboardRegistro = () => {
                 <tr key={registro.id}>
                   <td>{registro.id}</td>
                   <td>{registro.nomeCompleto}</td>
-                  <td>{registro.email}</td>
+                  <td>
+                    <a href={`mailto:${registro.email}`}>
+                      {registro.email}
+                    </a>
+                  </td>
                   <td>{registro.tipoUsuario}</td>
                   <td className={`status ${registro.status.toLowerCase()}`}>
+                    <label htmlFor={`status-${registro.id}`} className="sr-only">
+                      Alterar status para {registro.nomeCompleto}
+                    </label>
                     <select
+                      id={`status-${registro.id}`}
                       value={registro.status}
                       onChange={(e) =>
                         handleStatusChange(registro, e.target.value)
                       }
                       className="status-select"
+                      aria-label={`Status atual: ${registro.status}`}
                     >
                       {opcoesStatus.map((status) => (
                         <option key={status} value={status}>

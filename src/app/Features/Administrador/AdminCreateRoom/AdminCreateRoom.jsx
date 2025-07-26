@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./styles/CreateRoomStyle.css";
-import TrilhaNavegacao from "../../../Components/TrilhaNavegacao";
-import Snackbar from "../../../Components/Snackbar";
+import TrilhaNavegacao from "../../../Components/ui/TrilhaNavegacao";
+import Snackbar from "../../../Components/ui/Snackbar";
 import { createSala } from "../../../service/admin/salasService";
 import { useNavigate } from "react-router-dom";
+import { TipoSala, TipoSalaLabels } from "./helper/tipoSalas";
 
 const CreateSalas = () => {
   const navigate = useNavigate();
+  const mainHeadingRef = useRef(null);
+
   const [roomData, setRoomData] = useState({
     roomName: "",
     roomDescription: "",
@@ -15,8 +18,14 @@ const CreateSalas = () => {
     roomNumber: "",
     roomCapacity: 1,
   });
+
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    mainHeadingRef.current?.focus();
+  }, []);
 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
@@ -26,8 +35,6 @@ const CreateSalas = () => {
     setSnackbarMessage(message);
     setSnackbarOpen(true);
   };
-
-  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -68,13 +75,23 @@ const CreateSalas = () => {
 
         await createSala(payload);
 
-        showSnackbar("Sala criada com sucesso!");
+        const successAudio = new Audio("/public/sounds/createRoom.mp3");
 
-        setTimeout(() => {
-          navigate(-1);
-        }, 3000);
+        successAudio
+          .play()
+          .then(() => {
+            successAudio.onended = () => {
+              navigate("/admin/dashboard-salas", {
+                state: { snackbarMessage: "Sala criada com sucesso!" },
+              });
+            };
+          })
+          .catch(() => {
+            navigate("/admin/dashboard-salas", {
+              state: { snackbarMessage: "Sala criada com sucesso!" },
+            });
+          });
       } catch (error) {
-        console.error(error);
         showSnackbar("Erro ao criar sala.");
       }
     }
@@ -90,7 +107,9 @@ const CreateSalas = () => {
         ]}
         aria-label="Navegação principal"
       />
-      <h1 tabIndex={0}>Criação de sala</h1>
+      <h1 ref={mainHeadingRef} tabIndex={-1}>
+        Criação de sala
+      </h1>
       <p>Preencha os detalhes da nova sala abaixo:</p>
       <hr aria-hidden="true" />
       <div className="header">
@@ -144,9 +163,11 @@ const CreateSalas = () => {
           <option value="" disabled>
             Selecione um tipo
           </option>
-          <option value="LAB_ESPECIAL">Laboratório especial</option>
-          <option value="SALA_AULA">Sala de aula</option>
-          <option value="LABORATORIO">Laboratório</option>
+          {Object.entries(TipoSala).map(([key, value]) => (
+            <option key={value} value={value}>
+              {TipoSalaLabels[value] || value}
+            </option>
+          ))}
         </select>
         {errors.roomType && (
           <span className="error-message" role="alert" id="roomType-error">
@@ -187,7 +208,7 @@ const CreateSalas = () => {
           type="text"
           id="roomNumber"
           name="roomNumber"
-          placeholder="Exemplo: Primeira sala a direita -> 1D"
+          placeholder="Exemplo: Se for a primeira sala a direita, escreva um número e o lado como '1D'"
           value={roomData.roomNumber}
           onChange={handleChange}
           aria-required="true"

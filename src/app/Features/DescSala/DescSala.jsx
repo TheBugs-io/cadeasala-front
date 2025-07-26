@@ -1,26 +1,30 @@
-import { FaRegHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 import TagStatus from "./components/TagStatus";
 import "./styles/RoomDetailsPage.css";
-import photoSMD from "../../assets/photos/portalUFC.png";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
-import { useState } from "react";
-import Snackbar from "../../Components/Snackbar";
+import Snackbar from "../../Components/ui/Snackbar";
+import { IoClose } from "react-icons/io5";
+import { getImagemPorTipo } from "../../helper/salasHelper";
+import { useRoomDetails } from "../../hooks/useRoomDetails";
 
 export default function RoomDetails({ dados, onClose }) {
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-  const { user } = useAuth();
-  const image = dados?.imagem || photoSMD;
   const navigate = useNavigate();
+
+  const {
+    reservas,
+    favoritado,
+    toggleFavorito,
+    snackbarOpen,
+    snackbarMessage,
+    snackbarSeverity,
+    setSnackbarOpen,
+    modalRef,
+    user,
+    reservasDaSala,
+  } = useRoomDetails(dados, onClose);
 
   const handleReservarSala = (sala) => {
     if (!user) {
-      setSnackbarMessage(
-        "Você precisa estar autenticado para solicitar uma reserva."
-      );
-      setSnackbarSeverity("error");
       setSnackbarOpen(true);
       return;
     }
@@ -48,33 +52,70 @@ export default function RoomDetails({ dados, onClose }) {
       statusFormatado = "Funcional";
       break;
     default:
-      statusFormatado = "Status desconhecido";
+      statusFormatado = "Funcional";
   }
 
   return (
-    <div className="room-overlay">
-      <div className="room-modal">
-        <div className="room-header">
-          <button className="room-close-button" onClick={onClose}>
-            ✖
+    <div
+      className="room-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="room-title"
+    >
+      <div
+        className="room-modal"
+        tabIndex="-1"
+        ref={modalRef}
+        aria-describedby="room-description"
+      >
+        <header className="room-header">
+          <button
+            className="room-close-button"
+            onClick={onClose}
+            aria-label="Fechar detalhes da sala"
+          >
+            <IoClose />
           </button>
-        </div>
+        </header>
 
-        <div className="room-content">
-          <div className="room-image-box">
-            <img src={image} alt={dados?.nome || "Sala"} className="room-image" />
-            <button className="room-favorite-button">
-              <FaRegHeart /> <b>Favoritar sala</b>
-            </button>
-          </div>
+        <main className="room-content">
+          <figure className="room-image-box">
+            <div className="room-image-wrapper">
+              <img
+                src={getImagemPorTipo(dados?.tipo)}
+                alt={`Imagem da sala ${dados?.nome || ""}`}
+                className="room-image"
+              />
+              <div className="room-image-overlay" aria-hidden="true" />
+            </div>
 
-          <div className="room-info">
-            <h2>{dados?.nome || "SALA"}</h2>
-            <p>{dados?.descricao || "Sem descrição disponível."}</p>
+            <figcaption>
+              <button
+                className="room-favorite-button"
+                aria-label={
+                  favoritado
+                    ? "Remover dos favoritos"
+                    : "Adicionar aos favoritos"
+                }
+                onClick={toggleFavorito}
+              >
+                {favoritado ? (
+                  <FaHeart size={24} color="red" aria-hidden="true" />
+                ) : (
+                  <FaRegHeart size={24} aria-hidden="true" />
+                )}
+              </button>
+            </figcaption>
+          </figure>
+
+          <section className="room-info">
+            <h2 id="room-title">{dados?.nome || "SALA"}</h2>
+            <p id="room-description">
+              {dados?.descricao || "Sem descrição disponível."}
+            </p>
             <p>
               <strong>Capacidade:</strong> {dados?.capacidade || "Indefinida"}
             </p>
-
             <div className="estado-atual">
               <strong>Estado atual:</strong>
               <TagStatus status={statusFormatado} />
@@ -102,36 +143,40 @@ export default function RoomDetails({ dados, onClose }) {
                 </p>
               </div>
             )}
-          </div>
-        </div>
+          </section>
+        </main>
 
-        {dados?.reservas?.length > 0 && (
-          <div className="room-reservations">
+        {reservas.length > 0 && (
+          <section className="room-reservations" aria-label="Próximas reservas">
             <h3>Próximas reservas</h3>
-            {dados.reservas.map((res) => (
-              <div
-                key={res.id}
-                className={
-                  res.status === "ativo"
-                    ? "room-reservation-active"
-                    : "room-reservation-inactive"
-                }
-              >
-                {res.nome || res.title} - {res.horario || res.time}
-              </div>
-            ))}
-          </div>
+            <ul>
+              {reservas.map((res) => (
+                <li
+                  key={res.id}
+                  className={
+                    res.status === "ativo"
+                      ? "room-reservation-active"
+                      : "room-reservation-inactive"
+                  }
+                >
+                  {res.nome || res.title} - {res.horario || res.time}
+                </li>
+              ))}
+            </ul>
+          </section>
         )}
 
-        <div className="room-footer">
+        <footer className="room-footer">
           <button
-            className="room-schedule-button"
+            className="btn-primary"
             onClick={() => handleReservarSala(dados)}
+            aria-label="Agendar uma reserva para esta sala"
           >
             Agendar reserva
           </button>
-        </div>
+        </footer>
       </div>
+
       <Snackbar
         open={snackbarOpen}
         message={snackbarMessage}

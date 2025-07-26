@@ -1,6 +1,5 @@
 .tag-status {
   display: inline-block;
-  padding: 0.5rem 0.5rem;
   border-radius: 0.5rem;
   font-weight: bold;
   text-transform: capitalize;
@@ -23,4 +22,9 @@
 
 .tag-status.Indisponível {
   background-color: #dbdbdb;
+}
+
+.tag-status.Funcional {
+  color: #078B7E;
+  text-transform: uppercase;
 }
