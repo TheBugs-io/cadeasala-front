@@ -87,13 +87,6 @@ const AccountPage = () => {
             <p>Lista de reservas vazia.</p>
           </div>
         </section>
-        <section className="account-reservations-history">
-          <h2>Meu histórico de reservas</h2>
-          <hr />
-          <div className="reservations-history-list">
-            <p>Lista de reservas vazia.</p>
-          </div>
-        </section>
       </section>
     </div>
   );
