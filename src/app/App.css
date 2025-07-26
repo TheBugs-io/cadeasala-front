@@ -30,7 +30,7 @@
     --bg-card-mapa: #f0f0f0;
     --selected-button-c: #0e7ac9;
     --status-navigate: #0e7ac9;
-    --primary-btn: #e5621c;
+    --primary-btn: #FB7228;
     --border-color: #d1d5db;
     --generic-card-bg: #2d2e30;
     --oficina-sts: #c71e67;
@@ -65,6 +65,26 @@
 
 span {
   color: red;
+}
+
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: var(--primary-btn);
+  border: 2px solid var(--primary-btn);
+  padding: 0.5rem 1rem;
+  font-size: 1rem;;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--primary-btn);
+  color: white;
 }
 
 .status-navigate {
