@@ -16,8 +16,18 @@ function MapaSalas() {
   const [salas, setSalas] = useState([]);
   const [filtroStatus, setFiltroStatus] = useState("TODOS");
   const [carregando, setCarregando] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const ultimaFocoRef = useRef(null);
   const location = useLocation();
+
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < 768);
+    }
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const salasFiltradas = salas.filter((sala) => {
     const correspondeAoAndar = sala.localizacao === andarSelecionado;
@@ -78,6 +88,9 @@ function MapaSalas() {
     sala.numeracaoSala.toUpperCase().endsWith("D")
   );
 
+  const salasEParaRenderizar = isMobile ? [...salasE].reverse() : salasE;
+  const salasDParaRenderizar = isMobile ? [...salasD].reverse() : salasD;
+
   return (
     <main
       className="mapa-salas-container"
@@ -122,7 +135,7 @@ function MapaSalas() {
                     aria-busy="true"
                   />
                 ))
-            : salasE.map((sala) => (
+            : salasEParaRenderizar.map((sala) => (
                 <Card
                   key={sala.id}
                   status={sala.status}
@@ -160,7 +173,7 @@ function MapaSalas() {
                     aria-busy="true"
                   />
                 ))
-            : salasD.map((sala) => (
+            : salasDParaRenderizar.map((sala) => (
                 <Card
                   key={sala.id}
                   status={sala.status}
