@@ -1,5 +1,6 @@
 import { FaTools, FaDoorOpen } from "react-icons/fa";
 import "../styles/CardMapaStyle.css";
+import { MdReportProblem } from "react-icons/md";
 
 function Card({ status, sala, dados = {}, aoClicar }) {
   const handleClick = () => {
@@ -79,6 +80,13 @@ function Card({ status, sala, dados = {}, aoClicar }) {
           <div className="livre" aria-label="Sala livre">
             <h2>LIVRE</h2>
             <FaDoorOpen size={24} aria-hidden="true" />
+          </div>
+        );
+      case "PROBLEMA_TECNICO":
+        return (
+          <div className="manutencao" aria-label="Sala em manutenção">
+            <h2>INDISPONÍVEL</h2>
+            <MdReportProblem size={24} aria-hidden="true" />
           </div>
         );
       default:

@@ -1,11 +1,11 @@
 .mapa-salas-container {
-  padding: 0 3rem;
   width: 100%;
   margin-top: 1rem;
   gap: 1rem;
   display: flex;
   flex-direction: column;
   background-color: var(--bg-color);
+  padding: 1rem 2rem;
 }
 
 .map-container {
@@ -14,6 +14,7 @@
   grid-template-columns: 1fr;
   width: 100%;
   background-color: var(--bg-color);
+  padding: 1.5rem 2rem;
 }
 
 .row {
@@ -24,9 +25,16 @@
   display: flex;
   align-items: center;
   background-color: var(--bg-mapa);
-  border-radius: 10px;
+  border-radius: 0px;
   width: 100%;
-  color: #1B1B1B;
+  color: #1b1b1b;
+}
+
+.hallway-map p {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0.5rem;
 }
 
 .hallway-map img {
@@ -36,6 +44,24 @@
   border-radius: 10px;
   background-color: var(--bg-mapa);
   padding: 1rem 0;
+}
+
+.btn-filtro{
+  padding: 0.5rem 1rem;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: var(--primary-btn);
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.map-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-radius: 10px;
 }
 
 @media (max-width: 768px) {
@@ -48,12 +74,28 @@
   .row,
   .hallway-map {
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 0.5rem 0;
   }
 
   .hallway-map img {
-    width: 60%;
+    margin-top: auto;
+    width: 100%;
     transform: none !important;
   }
+
+  .top-bar {
+  display: flex;
+  align-items: center;      /* centraliza verticalmente */
+  justify-content: space-between; /* joga o primeiro item à esquerda e o último à direita */
+  padding: 10px;
+  gap: 10px; /* espaçamento entre os itens */
+}
+
+.btn-filtro {
+  padding: 6px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 }

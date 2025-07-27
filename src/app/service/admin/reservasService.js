@@ -1,6 +1,6 @@
 import api from "../api";
 
-export const fetchReservas = async () => {
+export const fetchReservas = async (token) => {
   try {
     const response = await api.get("/reservas", {
       headers: {
@@ -8,10 +8,10 @@ export const fetchReservas = async () => {
       },
     });
 
-    return response.data;
+    return response.data.reservas || [];
   } catch (error) {
     console.error("Erro ao buscar reservas:", error);
-    throw error;
+    return [];
   }
 };
 
@@ -36,10 +36,30 @@ export const fetchSolicitacoesReservas = async (token) => {
   }
 };
 
-//TODO: Criar uma reserva definindo um responsável
-export const createReserva = async (reservaData) => {
+export const atualizarStatusSolicitacao = async (solicitacaoId, status, token) => {
   try {
-    const response = await api.post(`/reservas`, reservaData);
+    const response = await api.patch(`/reservas/${solicitacaoId}/status`, { status }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  }
+  catch (error) {
+    console.error("Erro ao atualizar status da solicitação:", error);
+    throw error;
+  }
+};
+
+//TODO: Criar uma reserva definindo um responsável
+export const createReserva = async (reservaData, token) => {
+  try {
+    const response = await api.post(`/reservas/solicitar-reserva`, reservaData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     return response.data;
   } catch (error) {
     console.error("Erro ao criar reserva:", error);
@@ -48,9 +68,13 @@ export const createReserva = async (reservaData) => {
 };
 
 //TODO: Deletar reserva
-export const deleteReserva = async (reservaId) => {
+export const deleteReserva = async (reservaId, token) => {
   try {
-    const response = await api.delete(`/reservas/${reservaId}`);
+    const response = await api.delete(`/reservas/${reservaId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Erro ao deletar reserva:", error);

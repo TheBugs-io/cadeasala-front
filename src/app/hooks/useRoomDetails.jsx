@@ -5,8 +5,10 @@ import {
 } from "../service/mapa/favoriteService";
 import { fetchReservasSala } from "../service/mapa/reservasService";
 import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export function useRoomDetails(dados, onClose) {
+  const navigate = useNavigate();
   const [reservas, setReservas] = useState([]);
   const [favoritado, setFavoritado] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -14,6 +16,17 @@ export function useRoomDetails(dados, onClose) {
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const modalRef = useRef(null);
   const { user } = useAuth();
+
+  const isReservavel =
+    dados?.status !== "INDISPONIVEL" && dados?.status !== "EM_MANUTENCAO";
+
+  const handleReservarSala = (sala) => {
+    if (!user) {
+      setSnackbarOpen(true);
+      return;
+    }
+    navigate(`/user/solicitar-reserva/${sala.id}`);
+  };
 
   useEffect(() => {
     if (dados?.jaFavoritado !== undefined) {
@@ -92,5 +105,7 @@ export function useRoomDetails(dados, onClose) {
     modalRef,
     user,
     reservasDaSala,
+    handleReservarSala,
+    isReservavel,
   };
 }

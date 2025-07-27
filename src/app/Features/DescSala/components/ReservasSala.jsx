@@ -1,84 +1,75 @@
 import { useEffect, useState } from "react";
 import api from "../../../service/api";
 import "../styles/ReservasSala.css";
+import { format, addDays } from "date-fns";
+import { ptBR } from "date-fns/locale";
+
 function ListaReservas({ sala_id }) {
-  function compararStringsPersonalizado(a, b) {
-    // Função auxiliar para normalizar as strings
-    const normalizar = (str) =>
-      str
-        .toLowerCase()
-        .normalize("NFD") // separa acentos
-        .replace(/[\u0300-\u036f]/g, "") // remove acentos
-        .replace(/ç/g, "c") // trata o ç manualmente
-        .replace(/_/g, "") // remove underscores
-        .replace(/\s+/g, ""); // remove espaços (opcional)
-
-    return normalizar(a) === normalizar(b);
-  }
-
-  const dias = [
-    "Segunda-feira",
-    "Terça-feira",
-    "Quarta-feira",
-    "Quinta-feira",
-    "Sexta-feira",
-    "Sábado",
-  ];
   const [reservasAPI, setReservasAPI] = useState([]);
 
   useEffect(() => {
-    async () => {
+    const fetchReservas = async () => {
       try {
-        const resp = await api.get(`/salas/reservas-da-sala?sala_id${sala_id}`);
-        setReservasAPI(await resp.json());
+        const resp = await api.get(
+          `/salas/reservas-da-sala?sala_id=${sala_id}`
+        );
+        setReservasAPI(resp.data);
       } catch (error) {
         console.log("Reservas não carregaram");
       }
     };
-  }, []);
 
-  //mlk isso vai criar um hashmap de dias da semana e horarios ocupados {seg: {8: reserva1, 10: reserva2}, ter:{14:reserva3}}
-  //é bom que não tenha reserva dando conflito senao lascou
-  //preferi isso pq é só acessar reservas["segunda"]["08:00"] pra ver oq ta acontecendo
-  const reservasSorted = {};
-  dias.forEach((d) => (reservasSorted[d] = {}));
-  reservasAPI.forEach((r) => {
-    if (r.repete) {
-      for (let diarepetido of r.repeteEm) {
-        for (let diaexistente of dias) {
-          if (compararStringsPersonalizado(diarepetido, diaexistente)) {
-            reservasSorted[diaexistente][r.horarioInicio] = r;
-          }
-        }
-      }
-    } else {
-      for (let diaexistente of dias) {
-        reservasSorted[diaexistente][r.horarioInicio] = r;
-      }
+    fetchReservas();
+  }, [sala_id]);
+
+  const proximos7Dias = Array.from({ length: 7 }).map((_, i) => {
+    const data = addDays(new Date(), i);
+    return {
+      dataISO: format(data, "yyyy-MM-dd"),
+      rotulo: format(data, "EEEE, dd/MM", { locale: ptBR }),
+    };
+  });
+
+  const reservasPorData = {};
+  proximos7Dias.forEach(({ dataISO }) => {
+    reservasPorData[dataISO] = {};
+  });
+
+  reservasAPI.forEach((reserva) => {
+    const data = reserva.dataInicio?.split("T")[0];
+    if (reservasPorData[data]) {
+      const horaFormatada = `${String(reserva.horarioInicio).padStart(2, "0")}:00`;
+      reservasPorData[data][horaFormatada] = reserva;
     }
   });
 
   return (
     <div className="lista-reservas-container">
-      {Object.keys(reservasSorted).map((dia) => (
-        <div key={dia} className="todas-reservas">
-          <h3 className="titulo-semana">{dia}</h3>
+      {proximos7Dias.map(({ dataISO, rotulo }) => (
+        <div key={dataISO} className="todas-reservas">
+          <h3 className="titulo-semana">{rotulo}</h3>
           <ul className="lista-reserva">
             {[8, 10, 14, 16, 18, 20].map((horario) => {
-              const reserva = reservasSorted[dia][`${horario}:00`];
-              const statusClass = reserva ? "ocupado" : "livre";
+              const horaFormatada = `${horario}:00`;
+              const reserva = reservasPorData[dataISO][horaFormatada];
+              const tipoClasse = reserva?.tipo ? reserva.tipo.toLowerCase() : "";
+              const statusClass = reserva ? `ocupado ${tipoClasse}` : "livre";
+              const horaFim = reserva?.horarioFim ? `- ${reserva.horarioFim}:00` : "";
+
               return (
                 <li
                   className={`item-reserva ${statusClass}`}
-                  key={`${dia}-${horario}`}
+                  key={`${dataISO}-${horario}`}
                 >
-                    <b>
-                  {`${horario}:00 - ${
-                    reserva
-                      ? reserva.titulo || reserva.nome || "Reservado"
-                      : "Livre"
-                  }`}
-                </b>
+                  <b>
+                    {`${horaFormatada} ${horaFim} | ${
+                      reserva
+                        ? reserva.responsavel?.nomeCompleto ||
+                          reserva.nome ||
+                          "Reservado"
+                        : "Livre"
+                    }`}
+                  </b>
                 </li>
               );
             })}

@@ -8,8 +8,6 @@ import { getImagemPorTipo } from "../../helper/salasHelper";
 import { useRoomDetails } from "../../hooks/useRoomDetails";
 import ListaReservas from "./components/ReservasSala";
 export default function RoomDetails({ dados, onClose }) {
-  const navigate = useNavigate();
-
   const {
     reservas,
     favoritado,
@@ -21,15 +19,9 @@ export default function RoomDetails({ dados, onClose }) {
     modalRef,
     user,
     reservasDaSala,
+    handleReservarSala,
+    isReservavel
   } = useRoomDetails(dados, onClose);
-
-  const handleReservarSala = (sala) => {
-    if (!user) {
-      setSnackbarOpen(true);
-      return;
-    }
-    navigate(`/user/solicitar-reserva/${sala.id}`);
-  };
 
   let statusFormatado = "";
   switch (dados?.status) {
@@ -146,26 +138,6 @@ export default function RoomDetails({ dados, onClose }) {
           </section>
         </main>
 
-        {reservas.length > 0 && (
-          <section className="room-reservations" aria-label="Próximas reservas">
-            <h3>Próximas reservas</h3>
-            <ul>
-              {reservas.map((res) => (
-                <li
-                  key={res.id}
-                  className={
-                    res.status === "ativo"
-                      ? "room-reservation-active"
-                      : "room-reservation-inactive"
-                  }
-                >
-                  {res.nome || res.title} - {res.horario || res.time}
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
         <section className="room-reservations-lista">
           <h3>Agenda da Semana</h3>
           <ListaReservas sala_id={dados?.id} />
@@ -173,9 +145,16 @@ export default function RoomDetails({ dados, onClose }) {
 
         <footer className="room-footer">
           <button
-            className="btn-primary"
+            className="btn-agendar"
             onClick={() => handleReservarSala(dados)}
             aria-label="Agendar uma reserva para esta sala"
+            role="button"
+            disabled={!isReservavel}
+            title={
+              !isReservavel
+                ? "Não é possível agendar para esta sala no momento"
+                : undefined
+            }
           >
             Agendar reserva
           </button>

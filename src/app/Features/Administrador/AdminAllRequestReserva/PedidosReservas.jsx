@@ -30,19 +30,12 @@ const PagePedidosReserva = () => {
         setLoading(true);
         const response = await fetchSolicitacoesReservas(token);
 
-        console.log("Resposta fetchSolicitacoesReservas:", response);
-
         if (response.status === "success" && isMounted) {
           setSolicitacoes(response.data || []);
-          console.log("Solicitações setadas:", response.data);
-        } else if (!isMounted) {
-          console.log("Componente desmontado, não setar estado");
         } else {
-          console.error("Erro na resposta:", response.message);
           setSolicitacoes([]);
         }
       } catch (error) {
-        console.error("Erro ao buscar solicitações:", error);
         setSolicitacoes([]);
       } finally {
         if (isMounted) setLoading(false);
@@ -56,8 +49,6 @@ const PagePedidosReserva = () => {
     };
   }, [token]);
 
-  console.log("Estado solicitacoes:", solicitacoes);
-
   const disciplinas = solicitacoes.filter(
     (sol) => sol.tipo?.toUpperCase() === "DISCIPLINA"
   );
@@ -70,10 +61,6 @@ const PagePedidosReserva = () => {
       sol.tipo?.toUpperCase() !== "OFICINA"
   );
 
-  console.log("Disciplinas:", disciplinas);
-  console.log("Oficinas:", oficinas);
-  console.log("Outras:", outras);
-
   const renderSolicitacaoCard = (sol) => (
     <Card key={sol.id} className="reserva-card">
       <div className="reserva-body">
@@ -82,8 +69,30 @@ const PagePedidosReserva = () => {
           {formatarData(sol.dataInicio)} - {sol.horarioInicio}h às{" "}
           {sol.horarioFim}h
         </p>
-        <p className="usuario-info">Usuário ID: {sol.usuarioId || "-"}</p>
-        <p className="status-info">Status: {sol.status}</p>
+        <p className="usuario-info">
+          <b>Solicitante:</b> {sol.usuario?.nomeCompleto || "-"} (
+          {sol.usuario?.email || "-"})
+        </p>
+        <p className={`status-info`}>
+          <b>Status:</b>{" "}
+          <span className={`status-badge ${sol.status?.toLowerCase()}`}>
+            {sol.status === "AGUARDANDO" && (
+              <>
+                <span className="status-icon spinner" aria-hidden="true" />
+                <span className="sr-only">Aguardando</span> Aguardando
+              </>
+            )}
+            {sol.status === "APROVADO" && (
+              <>
+                <span className="status-icon check" aria-hidden="true" />
+                <span className="sr-only">Aprovado</span> Aprovado
+              </>
+            )}
+            {sol.status !== "AGUARDANDO" &&
+              sol.status !== "APROVADO" &&
+              sol.status}
+          </span>
+        </p>
       </div>
       <div className="reserva-footer">
         <button className={`tipo-button ${sol.tipo?.toLowerCase()}`}>

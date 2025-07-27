@@ -8,6 +8,8 @@ import Modal from "../../Components/ui/Modal";
 import RoomDetails from "../DescSala/DescSala";
 import { fetchSalas } from "../../service/mapa/salasService";
 import { ordenarPorNumeracaoSala } from "./helper/orderNumeracaoSala";
+import Filtros from "./FiltroDrawer";
+import { MdFilterList } from "react-icons/md";
 
 function MapaSalas() {
   const [modalAberto, setModalAberto] = useState(false);
@@ -16,8 +18,25 @@ function MapaSalas() {
   const [salas, setSalas] = useState([]);
   const [filtroStatus, setFiltroStatus] = useState("TODOS");
   const [carregando, setCarregando] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const ultimaFocoRef = useRef(null);
   const location = useLocation();
+
+  const [filtrosAbertos, setFiltrosAbertos] = useState(false);
+
+  const aplicarFiltros = ({ status }) => {
+    setFiltroStatus(status);
+    setFiltrosAbertos(false);
+  };
+
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < 768);
+    }
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const salasFiltradas = salas.filter((sala) => {
     const correspondeAoAndar = sala.localizacao === andarSelecionado;
@@ -78,22 +97,36 @@ function MapaSalas() {
     sala.numeracaoSala.toUpperCase().endsWith("D")
   );
 
+  const salasEParaRenderizar = isMobile ? [...salasE].reverse() : salasE;
+  const salasDParaRenderizar = isMobile ? [...salasD].reverse() : salasD;
+
   return (
     <main
       className="mapa-salas-container"
       aria-label="Mapa de salas do Instituto Universidade Virtual"
     >
-      <nav aria-label="Seleção do andar">
-        <FloorSelector
-          value={andarSelecionado}
-          onChange={setAndarSelecionado}
-          aria-describedby="infoAndar"
-        />
-        <div id="infoAndar" className="sr-only">
-          Selecione o andar para filtrar as salas exibidas no mapa.
-        </div>
-      </nav>
+      <div className="map-header" aria-label="Cabeçalho do mapa de salas contendo os filtros por andar e um popup com mais filtros">
+        <nav aria-label="Seleção do andar">
+          <FloorSelector
+            value={andarSelecionado}
+            onChange={setAndarSelecionado}
+            aria-describedby="infoAndar"
+          />
+          <div id="infoAndar" className="sr-only">
+            Selecione o andar para filtrar as salas exibidas no mapa.
+          </div>
+        </nav>
 
+        <button className="btn-filtro" onClick={() => setFiltrosAbertos(true)}>
+          <MdFilterList size={20} />
+        </button>
+
+        <Filtros
+          aberto={filtrosAbertos}
+          onFechar={() => setFiltrosAbertos(false)}
+          onAplicar={aplicarFiltros}
+        />
+      </div>
       <div
         role="status"
         aria-live="polite"
@@ -122,7 +155,7 @@ function MapaSalas() {
                     aria-busy="true"
                   />
                 ))
-            : salasE.map((sala) => (
+            : salasEParaRenderizar.map((sala) => (
                 <Card
                   key={sala.id}
                   status={sala.status}
@@ -160,7 +193,7 @@ function MapaSalas() {
                     aria-busy="true"
                   />
                 ))
-            : salasD.map((sala) => (
+            : salasDParaRenderizar.map((sala) => (
                 <Card
                   key={sala.id}
                   status={sala.status}
