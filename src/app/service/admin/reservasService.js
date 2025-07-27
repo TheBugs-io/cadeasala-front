@@ -37,9 +37,14 @@ export const fetchSolicitacoesReservas = async (token) => {
 };
 
 //TODO: Criar uma reserva definindo um responsável
-export const createReserva = async (reservaData) => {
+export const createReserva = async (reservaData, token) => {
   try {
-    const response = await api.post(`/reservas`, reservaData);
+    const response = await api.post(`/reservas/solicitar-reserva`, reservaData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     return response.data;
   } catch (error) {
     console.error("Erro ao criar reserva:", error);
@@ -48,9 +53,13 @@ export const createReserva = async (reservaData) => {
 };
 
 //TODO: Deletar reserva
-export const deleteReserva = async (reservaId) => {
+export const deleteReserva = async (reservaId, token) => {
   try {
-    const response = await api.delete(`/reservas/${reservaId}`);
+    const response = await api.delete(`/reservas/${reservaId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Erro ao deletar reserva:", error);
