@@ -28,6 +28,11 @@ const DashboardSalas = lazy(() => import("../Features/Administrador/AdminSalasCo
 const ConfigSala = lazy(() => import("../Features/Administrador/ConfigSala/ConfigSala"));
 const AdminAllReservas = lazy(() => import ("../Features/Administrador/AdminAllReservas/AdminAllReservas"));
 const CreateSala = lazy(() => import("../Features/Administrador/AdminCreateRoom/AdminCreateRoom"));
+const DetalhesPedidoReserva = lazy(() => import("../Features/DetalhesPedidoReserva/DetalhesPedidoReserva"));
+const DetalhesReserva = lazy(() => import("../Features/DetalhesReserva/DetalhesReserva"));
+
+//Páginas alternativas
+const NotFoundPage = lazy(() => import("../Features/ErrorPages/404Error"));
 
 export const router = createBrowserRouter([
   {
@@ -106,6 +111,14 @@ export const router = createBrowserRouter([
             element: <PagePedidosReserva />,
           },
           {
+            path: "dashboard-reservas/detalhes-pedido/:id",
+            element: <DetalhesPedidoReserva />,
+          },
+          {
+            path: "dashboard-reservas/detalhes-reserva/:id",
+            element: <DetalhesReserva />,
+          },
+          {
             path: "dashboard-reservas/reservas/:id",
             element: <DetalhesAdmin />,
           },
@@ -139,6 +152,10 @@ export const router = createBrowserRouter([
         path: "confirmar",
         element: <ConfirmEmail />,
       },
+      {
+        path: "*",
+        element: <NotFoundPage />,
+      }
     ],
   },
 ]);

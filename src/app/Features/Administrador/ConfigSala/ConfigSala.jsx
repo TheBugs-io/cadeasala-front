@@ -1,10 +1,9 @@
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import "./styles/ConfigSala.css";
-import TrilhaNavegacao from "../../../Components/TrilhaNavegacao";
+import TrilhaNavegacao from "../../../Components/ui/TrilhaNavegacao";
 import { atualizarSala } from "../../../service/admin/salasService";
-import { useNavigate } from "react-router-dom";
-import Snackbar from "../../../Components/Snackbar";
+import Snackbar from "../../../Components/ui/Snackbar";
 
 const ConfigSala = () => {
   const navigate = useNavigate();
@@ -16,6 +15,7 @@ const ConfigSala = () => {
     message: "",
     severity: "success",
   });
+
   const estadoInicialEdicao = location.state?.isEditable ?? false;
   const salaInicial = location.state?.salaData;
 
@@ -60,9 +60,7 @@ const ConfigSala = () => {
     setAndar(salaInicial.localizacao);
     setDescricao(salaInicial.descricao);
     setCapacidade(salaInicial.capacidade);
-    setStatus(
-      salaInicial.status === "FUNCIONAL" ? "FUNCIONAL" : salaInicial.status
-    );
+    setStatus(salaInicial.status === "FUNCIONAL" ? "FUNCIONAL" : salaInicial.status);
   }, [salaInicial, navigate]);
 
   return (
@@ -78,24 +76,34 @@ const ConfigSala = () => {
       <div className="config-sala-content">
         <img
           src="/placeholder-img.png"
-          alt="Imagem da sala"
+          alt="Imagem ilustrativa da sala"
           className="config-sala-image"
         />
 
         <div className="config-sala-info">
           <div className="config-sala-title">
+            <label htmlFor="nomeSala" className="sr-only">Nome da sala</label>
             <input
+              id="nomeSala"
               type="text"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
               className="title-input"
-              disabled={!isEditable}
+              readOnly={!isEditable}
+              aria-readonly={!isEditable}
+              aria-label="Nome da sala"
             />
+
+            <label htmlFor="andarSala" className="sr-only">Andar</label>
             <select
+              id="andarSala"
               value={andar}
               onChange={(e) => setAndar(e.target.value)}
               className="title-input"
               disabled={!isEditable}
+              tabIndex={0}
+              aria-readonly={!isEditable}
+              aria-label="Andar da sala"
             >
               <option value="">Selecione um andar</option>
               <option value="PRIMEIRO_ANDAR">PRIMEIRO ANDAR</option>
@@ -105,32 +113,45 @@ const ConfigSala = () => {
 
           <p>
             <strong>Descrição:</strong>
+            <label htmlFor="descricaoSala" className="sr-only">Descrição da sala</label>
             <textarea
+              id="descricaoSala"
               value={descricao}
               onChange={(e) => setDescricao(e.target.value)}
               className="text-area"
-              disabled={!isEditable}
+              readOnly={!isEditable}
+              aria-readonly={!isEditable}
+              aria-label="Descrição da sala"
             />
           </p>
 
           <p>
             <strong>Capacidade:</strong>
+            <label htmlFor="capacidadeSala" className="sr-only">Capacidade da sala</label>
             <input
+              id="capacidadeSala"
               type="number"
               value={capacidade}
               onChange={(e) => setCapacidade(Number(e.target.value))}
               className="sub-input"
-              disabled={!isEditable}
+              readOnly={!isEditable}
+              aria-readonly={!isEditable}
+              aria-label="Capacidade da sala"
             />
           </p>
 
           <p>
             <strong>Estado da sala:</strong>
+            <label htmlFor="estadoSala" className="sr-only">Estado da sala</label>
             <select
+              id="estadoSala"
               value={status}
               onChange={(e) => setStatus(e.target.value)}
               disabled={!isEditable}
+              tabIndex={0}
+              aria-readonly={!isEditable}
               className="status-select"
+              aria-label="Estado atual da sala"
             >
               <option value="FUNCIONAL">Funcional</option>
               <option value="PROBLEMA_TECNICO">Problema Técnico</option>
@@ -139,7 +160,11 @@ const ConfigSala = () => {
           </p>
 
           {!isEditable && (
-            <button className="editar-btn" onClick={() => setIsEditable(true)}>
+            <button
+              className="editar-btn"
+              onClick={() => setIsEditable(true)}
+              aria-label="Ativar modo de edição da sala"
+            >
               Editar Sala
             </button>
           )}
@@ -149,12 +174,14 @@ const ConfigSala = () => {
               className="editar-btn"
               onClick={handleSalvar}
               style={{ backgroundColor: "#28a745" }}
+              aria-label="Salvar alterações da sala"
             >
               Salvar Alterações
             </button>
           )}
         </div>
       </div>
+
       <Snackbar
         open={snackbar.open}
         message={snackbar.message}

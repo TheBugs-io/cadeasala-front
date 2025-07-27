@@ -1,6 +1,11 @@
 import '../styles/CardGeneric.css';
 
-const GenericCard = ({ data = {}, type = "reserva", bottomLabelColor = "#8B5CF6" }) => {
+const GenericCard = ({
+  data = {},
+  type = "reserva",
+  bottomLabelColor = "#8B5CF6",
+  onClick,
+}) => {
   const title = data.local?.nome || data.nome || "Sem título";
 
   const formatHora = (h) => (h !== undefined && h !== null ? `${h}h` : "");
@@ -21,12 +26,12 @@ const GenericCard = ({ data = {}, type = "reserva", bottomLabelColor = "#8B5CF6"
     data.usuario?.nomeCompleto || data.responsavel?.nomeCompleto || "Usuário não identificado";
 
   const topRightLabel =
-    data.usuario?.tipo || data.status || "";
+    data.usuario?.tipo || data.responsavel?.tipo || data.statusPedido || data.status || "";
 
-  const bottomLabel = data.status || null;
+  const bottomLabel = data.tipo || null;
 
   return (
-    <div className="generic-card">
+    <div className="generic-card" onClick={onClick}>
       <div className="card-header">
         <span className="top-left-label">{topLeftLabel}</span>
         <span className="top-right-label">{topRightLabel}</span>
