@@ -1,0 +1,61 @@
+.data-navegacao-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: bold;
+  font-size: 18px;
+  position: relative;
+  
+}
+
+.data-label {
+  cursor: pointer;
+  padding: 0.3rem 1rem;
+  border-radius: 6px;
+  background-color: transparent;
+  transition: background-color 0.2s, transform 0.2s, color 0.2s;
+  color: text; /* cor padrão */
+  display: inline-block; /* pra aplicar transform */
+}
+
+.data-label:hover,
+.data-label:focus {
+  background-color: transparent;
+  color: text; /* cor de destaque, pode mudar se quiser */
+  transform: scale(1.05);
+  outline: none; /* se quiser tirar a outline default */
+}
+
+.calendario-dropdown {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.2rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  z-index: 10;
+}
+
+.input-invisivel {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+}
+
+.data-navegacao-container button {
+  font-size: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  color: inherit;
+}
+
+.data-navegacao-container button:focus {
+  outline: 2px solid #e75b1e;
+  outline-offset: 2px;
+  background-color: #fff0e6;
+  border-radius: 6px;
+}
