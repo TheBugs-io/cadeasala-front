@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { listarSalasFavoritas } from "../../service/mapa/favoriteService";
 import CardFavoritos from "./components/CardFavoritos";
+import { listarHistoricoReservas} from "../../service/user/accountService"
 import { useNavigate } from "react-router-dom";
 
 const AccountPage = () => {
@@ -18,12 +19,15 @@ const AccountPage = () => {
   );
 
   const [salasFavoritas, setSalasFavoritas] = useState([]);
+  const [historicoReservas, setHistoricoReservas] = useState([]);
+  const [reservasAgendadas, setReservasAgendadas] = useState([]);
+
   const redirectDetalhesSala = (sala) => {
     navigate(`/mapa-salas`, { state: { sala } });
   };
 
   useEffect(() => {
-    const fetchSalas = async () => {
+    const fetchSalasFavoritas = async () => {
       try {
         const data = await listarSalasFavoritas();
         setSalasFavoritas(data || []);
@@ -32,8 +36,35 @@ const AccountPage = () => {
         setSalasFavoritas([]);
       }
     };
-    fetchSalas();
+    fetchSalasFavoritas();
   }, []);
+
+  useEffect(() => {
+    const fetchHistoricoReservas = async () => {
+      try {
+        const data = await listarHistoricoReservas();
+        setHistoricoReservas(data || []);
+      } catch (error) {
+        console.error("Erro ao buscar histórico de reservas:", error);
+        setHistoricoReservas([]);
+      }
+    };
+    fetchHistoricoReservas();
+  }, []);
+
+/*   useEffect(() => {
+    const fetchReservasAgendadas = async () => {
+      try {
+        const data = await listarReservasAgendadas();
+        setReservasAgendadas(data || []);
+      } catch (error) {
+        console.error("Erro ao buscar reservas agendadas:", error);
+        setReservasAgendadas([]);
+      }
+    };
+    fetchReservasAgendadas();
+  }, []); */
+
 
   return (
     <div className="account-page">
@@ -50,7 +81,7 @@ const AccountPage = () => {
             <h1>Sua conta</h1>
             <h3>{user.nome}</h3>
             <p>{user.tipo}</p>
-            <p>{user.email}</p>{" "}
+            <p>{user.email}</p>
             <button
               className="btn-logout"
               onClick={() => {
@@ -91,19 +122,38 @@ const AccountPage = () => {
                 <CardFavoritos
                   key={sala.id}
                   sala={sala}
-                  onClick={() => {
-                    redirectDetalhesSala(sala);
-                  }}
+                  onClick={() => redirectDetalhesSala(sala)}
                 />
               ))
             )}
           </div>
         </section>
+
         <section className="account-reservations-history">
           <h2>Meu histórico de reservas</h2>
           <hr />
           <div className="reservations-history-list">
-            <p>Lista de reservas vazia.</p>
+            {historicoReservas.length === 0 ? (
+              <p>Parece que você não fez reservas recentemente.</p>
+            ) : (
+              historicoReservas.map((reserva) => (
+                <CardFavoritos key={reserva.id} reserva={reserva} />
+              ))
+            )}
+          </div>
+        </section>
+
+        <section className="account-reservations-scheduled">
+          <h2>Reservas agendadas</h2>
+          <hr />
+          <div className="reservations-scheduled-list">
+            {reservasAgendadas.length === 0 ? (
+              <p>Você não tem reservas agendadas no momento.</p>
+            ) : (
+              reservasAgendadas.map((reserva) => (
+                <CardFavoritos key={reserva.id} reserva={reserva} />
+              ))
+            )}
           </div>
         </section>
       </section>
