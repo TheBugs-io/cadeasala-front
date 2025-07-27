@@ -2,9 +2,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 1rem;
   background: #025259;
   min-height: 4.5rem;
-  padding: 0 1rem;
 }
 
 .header-logo {
@@ -119,6 +119,11 @@
 .account-dropdown .logout-btn:focus-visible {
   outline: 3px solid #ffbf47;
   outline-offset: 2px;
+}
+
+.header-search-input {
+  width: 100%;
+  max-width: 800px;
 }
 
 @media (max-width: 768px) {
