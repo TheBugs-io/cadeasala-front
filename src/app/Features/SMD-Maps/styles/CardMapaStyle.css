@@ -18,7 +18,10 @@
 .card:hover {
   transform: scale(1.03);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  position: relative;
 }
+
 
 .card h2 {
   font-size: clamp(1.35rem, 2.5vw, 1.2rem);
@@ -34,38 +37,26 @@
   font-size: 0.9em;
 }
 
-/* MARK: - Cores dos cards com base nos STATUS */
-.status-EM_MANUTENCAO {
-  border: 2px solid #c81616;
+.card.status-EM_MANUTENCAO {
+  border: 1px solid #FF5E5E;
+  background-color: #FFC7C7;
 }
 
-.manutencao {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #c81616;
+.card.status-FUNCIONAL {
+  border: 1px solid #078B7E;
+  background-color: #6CE0D5;
 }
 
-.status-EM_MANUTENCAO h2 {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: bold;
+.card.status-RESERVADO {
+  border: 1px solid #EA981C;
+  background-color: #F7C77F;
 }
 
-.status-LIVRE {
-  border: 2px solid #0a9a8c;
+.card.status-DISCIPLINA {
+  border: 1px solid #0E7AC9;
+  background-color: #C3E6FF;
 }
 
-.status-LIVRE h2 {
-  color: #0a9a8c;
-}
-
-.livre {
-  display: flex;
-  align-items: center;
-  color: #0a9a8c;
-  gap: 0.5rem;
-}
 
 .loading-placeholder {
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 37%, #f0f0f0 63%);

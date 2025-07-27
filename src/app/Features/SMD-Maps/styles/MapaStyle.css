@@ -24,7 +24,7 @@
   display: flex;
   align-items: center;
   background-color: var(--bg-mapa);
-  border-radius: 10px;
+  border-radius: 0px;
   width: 100%;
   color: #1B1B1B;
 }
