@@ -5,8 +5,7 @@ import {
 } from "../../service/mapa/favoriteService";
 import Snackbar from "../ui/Snackbar";
 import "./styles/SearchCardResult.css";
-import { FaHeart, FaRegHeart  } from "react-icons/fa";
-
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const SearchCardResult = ({ tipo, item, onClick }) => {
   const [favorito, setFavorito] = useState(false);
@@ -66,7 +65,7 @@ const SearchCardResult = ({ tipo, item, onClick }) => {
       return (
         <>
           <div className="searchcard usuario-card" tabIndex={0}>
-            <strong>{item.nomeCompleto}</strong>
+            <h2>{item.nomeCompleto}</h2>
             <p>Email: {item.email || "não informado"}</p>
             <span className="tag status-tag">{item.status || "Ativo"}</span>
           </div>
@@ -82,11 +81,19 @@ const SearchCardResult = ({ tipo, item, onClick }) => {
     case "sala":
       return (
         <>
-          <div className="searchcard sala-card" tabIndex={0} onClick={handleClickCard}>
+          <div
+            className="searchcard sala-card"
+            tabIndex={0}
+            onClick={handleClickCard}
+          >
             <h2>{item.nome}</h2>
             <p>{item.descricao || "Sem descrição"}</p>
-            <p><b>Capacidade:</b> {item.capacidade}</p>
-            <p><b>Estado:</b> {item.status}</p>
+            <p>
+              <b>Capacidade:</b> {item.capacidade}
+            </p>
+            <p>
+              <b>Estado:</b> {item.status}
+            </p>
             <button
               className={`favoritar-btn ${favorito ? "favorito" : ""}`}
               onClick={toggleFavorito}
@@ -107,12 +114,24 @@ const SearchCardResult = ({ tipo, item, onClick }) => {
       );
 
     case "reserva":
+      const reservaTipoClass =
+        item.tipo === "DISCIPLINA"
+          ? "reserva-disciplina"
+          : item.tipo === "OFICINA"
+          ? "reserva-oficina"
+          : "reserva-outro";
+
       return (
         <>
-          <div className="searchcard reserva-card" tabIndex={0}>
-            <strong>{item.nome}</strong>
-            <p><b>Intervalo:</b> {new Date(item.dataInicio).toLocaleDateString()} + "" + {new Date(item.dataFim).toLocaleDateString()}</p>
-            <span className="tag status-tag">{item.status || "Reservada"}</span>
+          <div className={`searchcard reserva-card`} tabIndex={0}>
+            <h2>{item.nome}</h2>
+            <p>
+              <b>Intervalo:</b> {new Date(item.dataInicio).toLocaleDateString()}{" "}
+              a {new Date(item.dataFim).toLocaleDateString()}
+            </p>
+            <p className={`reserva-tipo ${reservaTipoClass}`}>
+              {item.tipo || "Outro"}
+            </p>
           </div>
           <Snackbar
             open={snackbarOpen}

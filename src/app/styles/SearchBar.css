@@ -45,11 +45,21 @@
   color: black;
   font-size: 1.4rem;
   border: 1px solid #ccc;
-  overflow-y: auto;
   z-index: 1000;
   padding: 0.5rem;
   border-radius: 0 0 8px 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.searchbar-dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.searchbar-dropdown::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
 }
 
 .searchbar-dropdown-item {
@@ -65,7 +75,6 @@
   margin-bottom: 0.5rem;
   color: #444;
 }
-
 
 @media (max-width: 768px) {
   .searchbar-container {
