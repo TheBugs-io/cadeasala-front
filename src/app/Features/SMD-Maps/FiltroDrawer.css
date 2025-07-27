@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   right: -100%;
-  width: 500px; 
+  width: 500px;
   max-width: 90vw;
   height: 100vh;
   background-color: #fff;
@@ -11,21 +11,35 @@
   z-index: 1000;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .painel-filtro.ativo {
   right: 0;
 }
 
+.painel-filtro.modal {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  background-color: transparent !important;
+  display: block !important;
+}
+
 .filtro-conteudo {
-  padding: 24px;
   flex: 1;
-  overflow-y: auto; 
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }
-
 
 .btn-fechar {
   align-self: flex-end;
@@ -34,7 +48,7 @@
   border: none;
   color: #444;
   cursor: pointer;
-  margin-bottom: 90px;
+  margin-bottom: 24px;
   padding: 4px 8px;
   transition: color 0.2s;
 }
@@ -43,18 +57,18 @@
   color: #e75b1e;
 }
 
-.filtro-conteudo h3 {
-  color: #222;           
-  opacity: 1;            
-  font-weight: 600;
-  margin-bottom: 8px;
-  font-size:22px
-}
-
 .filtro-conteudo h2 {
   font-size: 1.8rem;
-  margin-top: -128px;
+  margin-top: 0;
   color: #222;
+}
+
+.filtro-conteudo h3 {
+  color: #222;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 22px;
+  opacity: 1;
 }
 
 .botoes {
@@ -71,7 +85,7 @@
   cursor: pointer;
   font-weight: 600;
   transition: background-color 0.25s, border-color 0.25s;
-  font-size:18px
+  font-size: 18px;
 }
 
 .botoes button:hover {
@@ -95,6 +109,11 @@
   font-size: 1.1rem;
   font-weight: 700;
   transition: background-color 0.3s;
+  width: 100%;
+  box-sizing: border-box;
+  position: sticky;
+  bottom: 24px;
+  z-index: 10;
 }
 
 .btn-aplicar:hover {
@@ -102,27 +121,31 @@
 }
 
 @media (max-width: 768px) {
-
-  .btn-aplicar {
-  margin-bottom: env(safe-area-inset-bottom, 16px);
-}
-
-  .painel-filtro {
-    padding-bottom: 80px; 
-  }
-
-   .btn-aplicar {
-    position: relative;
-    z-index: 10;
-  }
-
-  
   .filtro-conteudo {
     padding: 16px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .btn-fechar {
+    font-size: 36px;
+    margin-bottom: 16px;
   }
 
   .botoes button {
     font-size: 14px;
-    padding: 8px;
+    padding: 8px 12px;
+    flex: 1 1 45%;
+    max-width: 45%;
+  }
+
+  .btn-aplicar {
+    position: fixed;
+    bottom: env(safe-area-inset-bottom, 16px);
+    left: 0;
+    width: 100%;
+    border-radius: 0;
+    margin-top: 0;
+    padding: 16px;
   }
 }

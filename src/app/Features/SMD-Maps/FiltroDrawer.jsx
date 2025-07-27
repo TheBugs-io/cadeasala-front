@@ -1,7 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
-import './FiltroDrawer.css';
+import React, { useEffect, useRef, useState } from "react";
+import Modal from "../../Components/ui/Modal";
+import "./FiltroDrawer.css";
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth <= 768);
+    }
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  return isMobile;
+}
 
 export default function Filtros({ aberto, onFechar, onAplicar }) {
+  const isMobile = useIsMobile();
+
   const [statusSelecionado, setStatusSelecionado] = useState("TODOS");
   const [tipoSelecionado, setTipoSelecionado] = useState("TODOS");
 
@@ -9,7 +25,7 @@ export default function Filtros({ aberto, onFechar, onAplicar }) {
 
   useEffect(() => {
     if (aberto && tituloRef.current) {
-      tituloRef.current.focus(); 
+      tituloRef.current.focus();
     }
   }, [aberto]);
 
@@ -18,58 +34,60 @@ export default function Filtros({ aberto, onFechar, onAplicar }) {
     onFechar();
   };
 
-  return (
-    <div 
-      className={`painel-filtro ${aberto ? 'ativo' : ''}`} 
+  const conteudoFiltros = (
+    <div
+      className={`painel-filtro${isMobile ? "" : aberto ? " ativo" : ""}`}
       role="dialog"
       aria-labelledby="titulo-filtro"
       aria-modal="true"
+      style={
+        isMobile
+          ? {
+              position: "static",
+              width: "auto",
+              height: "auto",
+              boxShadow: "none",
+            }
+          : {}
+      }
     >
       <div className="filtro-conteudo">
+        {!isMobile && (
+          <button
+            className="btn-fechar"
+            onClick={onFechar}
+            aria-label="Fechar painel de filtros"
+          >
+            ×
+          </button>
+        )}
 
-        <button 
-          className="btn-fechar" 
-          onClick={onFechar}
-          aria-label="Fechar painel de filtros"
-        >
-          ×
-        </button>
-
-        <h2 
-          id="titulo-filtro" 
-          ref={tituloRef} 
-          tabIndex="-1"
-        
-        >
+        <h2 id="titulo-filtro" ref={tituloRef} tabIndex="-1">
           Filtrar por
         </h2>
 
-        <h3>Status da sala</h3>
-        <div className="botoes">
-          <button
-            className={statusSelecionado === "LIVRE" ? "selecionado" : ""}
-            onClick={() => setStatusSelecionado("LIVRE")}
-            aria-pressed={statusSelecionado === "LIVRE"}
-            aria-label="Filtrar por salas livres"
-          >
-            Livre
-          </button>
-          <button
-            className={statusSelecionado === "RESERVADA" ? "selecionado" : ""}
-            onClick={() => setStatusSelecionado("RESERVADA")}
-            aria-pressed={statusSelecionado === "RESERVADA"}
-            aria-label="Filtrar por salas reservadas"
-          >
-            Reservada
-          </button>
-          <button
-            className={statusSelecionado === "TODOS" ? "selecionado" : ""}
-            onClick={() => setStatusSelecionado("TODOS")}
-            aria-pressed={statusSelecionado === "TODOS"}
-            aria-label="Filtrar todas as salas"
-          >
-            Todos
-          </button>
+        <h3 id="status-label">Status da sala</h3>
+        <div
+          className="botoes"
+          role="radiogroup"
+          aria-labelledby="status-label"
+        >
+          {["LIVRE", "RESERVADA", "TODOS"].map((status) => (
+            <button
+              key={status}
+              role="radio"
+              aria-checked={statusSelecionado === status}
+              tabIndex={statusSelecionado === status ? 0 : -1}
+              className={statusSelecionado === status ? "selecionado" : ""}
+              onClick={() => setStatusSelecionado(status)}
+            >
+              {status === "LIVRE"
+                ? "Livre"
+                : status === "RESERVADA"
+                ? "Reservada"
+                : "Todos"}
+            </button>
+          ))}
         </div>
 
         <h3>Tipo de reserva</h3>
@@ -98,17 +116,34 @@ export default function Filtros({ aberto, onFechar, onAplicar }) {
           >
             Outro
           </button>
+          <button
+            className={tipoSelecionado === "TODOS" ? "selecionado" : ""}
+            onClick={() => setTipoSelecionado("TODOS")}
+            aria-pressed={tipoSelecionado === "TODOS"}
+            aria-label="Filtrar todos os tipos"
+          >
+            Todos
+          </button>
         </div>
 
-        <button 
-          className="btn-aplicar" 
+        <button
+          className="btn-aplicar"
           onClick={aplicarFiltros}
           aria-label="Aplicar filtros selecionados"
         >
           Aplicar
         </button>
-
       </div>
     </div>
   );
+
+  if (isMobile) {
+    return (
+      <Modal isOpen={aberto} onClose={onFechar}>
+        {conteudoFiltros}
+      </Modal>
+    );
+  }
+
+  return conteudoFiltros;
 }
