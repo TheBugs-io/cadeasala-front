@@ -46,6 +46,24 @@
   padding: 1rem 0;
 }
 
+.btn-filtro{
+  padding: 0.5rem 1rem;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: var(--primary-btn);
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.map-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
 @media (max-width: 768px) {
   .map-container {
     grid-template-columns: repeat(3, 1fr);
@@ -65,4 +83,19 @@
     width: 100%;
     transform: none !important;
   }
+
+  .top-bar {
+  display: flex;
+  align-items: center;      /* centraliza verticalmente */
+  justify-content: space-between; /* joga o primeiro item à esquerda e o último à direita */
+  padding: 10px;
+  gap: 10px; /* espaçamento entre os itens */
+}
+
+.btn-filtro {
+  padding: 6px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 }
