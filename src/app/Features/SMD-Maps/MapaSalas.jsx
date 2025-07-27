@@ -7,6 +7,7 @@ import Modal from "../../Components/Modal";
 import RoomDetails from "../DescSala/DescSala";
 import { fetchSalas } from "../../service/mapa/salasService";
 import { ordenarPorNumeracaoSala } from "./helper/orderNumeracaoSala";
+import Filtros from "./FiltroDrawer";
 
 function MapaSalas() {
   const [modalAberto, setModalAberto] = useState(false);
@@ -15,6 +16,15 @@ function MapaSalas() {
   const [salas, setSalas] = useState([]);
   const [filtroStatus, setFiltroStatus] = useState("TODOS");
   const [carregando, setCarregando] = useState(true);
+  
+    // Estado para abrir/fechar o filtro
+  const [filtrosAbertos, setFiltrosAbertos] = useState(false);
+
+  // Função para aplicar os filtros
+  const aplicarFiltros = ({ status }) => {
+    setFiltroStatus(status);
+    setFiltrosAbertos(false);
+  };
 
   const salasFiltradas = salas.filter((sala) => {
     const correspondeAoAndar = sala.localizacao === andarSelecionado;
@@ -58,7 +68,19 @@ function MapaSalas() {
 
   return (
     <div className="mapa-salas-container">
+      <div className="top-bar">
       <FloorSelector value={andarSelecionado} onChange={setAndarSelecionado} />
+
+     <button className="btn-filtro" onClick={() => setFiltrosAbertos(true)}>
+          Filtros
+        </button>
+      </div>
+
+      <Filtros
+        aberto={filtrosAbertos}
+        onFechar={() => setFiltrosAbertos(false)}
+        onAplicar={aplicarFiltros}
+      />
 
       <div className="map-container">
         <div className="row">
@@ -122,6 +144,11 @@ function MapaSalas() {
       </Modal>
     </div>
   );
+
+
+
+
+
 }
 
 export default MapaSalas;

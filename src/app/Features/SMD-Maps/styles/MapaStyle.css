@@ -56,4 +56,19 @@
     width: 60%;
     transform: none !important;
   }
+
+  .top-bar {
+  display: flex;
+  align-items: center;      /* centraliza verticalmente */
+  justify-content: space-between; /* joga o primeiro item à esquerda e o último à direita */
+  padding: 10px;
+  gap: 10px; /* espaçamento entre os itens */
+}
+
+.btn-filtro {
+  padding: 6px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 }
