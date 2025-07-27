@@ -72,7 +72,7 @@ export default function Filtros({ aberto, onFechar, onAplicar }) {
           role="radiogroup"
           aria-labelledby="status-label"
         >
-          {["LIVRE", "RESERVADA", "TODOS"].map((status) => (
+          {["FUNCIONAL", "RESERVADA", "TODOS"].map((status) => (
             <button
               key={status}
               role="radio"
@@ -81,8 +81,8 @@ export default function Filtros({ aberto, onFechar, onAplicar }) {
               className={statusSelecionado === status ? "selecionado" : ""}
               onClick={() => setStatusSelecionado(status)}
             >
-              {status === "LIVRE"
-                ? "Livre"
+              {status === "FUNCIONAL"
+                ? "Funcional"
                 : status === "RESERVADA"
                 ? "Reservada"
                 : "Todos"}
