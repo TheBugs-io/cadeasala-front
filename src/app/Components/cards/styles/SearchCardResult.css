@@ -1,0 +1,20 @@
+.searchcard {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-size: 1rem;;
+  transition: box-shadow 0.3s ease, transform 0.15s ease;
+}
+
+.favoritar-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #d70f49;
+  background-color: transparent;
+  border: none;
+}
