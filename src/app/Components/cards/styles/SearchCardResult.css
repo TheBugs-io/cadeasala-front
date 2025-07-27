@@ -10,6 +10,12 @@
   transition: box-shadow 0.3s ease, transform 0.15s ease;
 }
 
+.searchcard:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px) scale(1.02);
+  transition: box-shadow 0.3s ease, transform 0.15s ease;
+}
+
 .favoritar-btn {
   display: flex;
   align-items: center;
