@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import Card from "./Components/CardSalaMapa";
 import HallwayMap from "./Components/Hallway";
 import "./styles/MapaStyle.css";
@@ -16,6 +17,7 @@ function MapaSalas() {
   const [filtroStatus, setFiltroStatus] = useState("TODOS");
   const [carregando, setCarregando] = useState(true);
   const ultimaFocoRef = useRef(null);
+  const location = useLocation();
 
   const salasFiltradas = salas.filter((sala) => {
     const correspondeAoAndar = sala.localizacao === andarSelecionado;
@@ -23,6 +25,19 @@ function MapaSalas() {
       filtroStatus === "TODOS" || sala.status === filtroStatus;
     return correspondeAoAndar && correspondeAoStatus;
   });
+
+  useEffect(() => {
+    if (location.state?.sala) {
+      const sala = location.state.sala;
+
+      if (sala.localizacao) setAndarSelecionado(sala.localizacao);
+
+      setTimeout(() => {
+        setDadosSelecionados(sala);
+        setModalAberto(true);
+      }, 0);
+    }
+  }, [location.state]);
 
   useEffect(() => {
     const buscarSalas = async () => {

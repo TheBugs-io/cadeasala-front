@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react";
 import "../../styles/Login.css";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../../service/api.js";
+import Snackbar from "../../Components/ui/Snackbar";
+import api from "../../service/api";
 
 const RegisterFormDiscente = () => {
   const navigate = useNavigate();
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -30,6 +36,10 @@ const RegisterFormDiscente = () => {
     }
   };
 
+  const closeSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -39,6 +49,7 @@ const RegisterFormDiscente = () => {
         ...formData,
         tipoUsuario: "DISCENTE",
       });
+
       navigate("/login", {
         state: {
           registeredEmail: formData.email,
@@ -46,7 +57,13 @@ const RegisterFormDiscente = () => {
         },
       });
     } catch (error) {
-      alert(error.response?.data?.error || "Falha ao cadastrar!");
+      const mensagem =
+        error.response?.data?.error || "Falha ao cadastrar! Tente novamente.";
+      setSnackbar({
+        open: true,
+        message: mensagem,
+        severity: "error",
+      });
     } finally {
       setLoading(false);
     }

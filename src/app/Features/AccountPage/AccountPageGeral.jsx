@@ -3,20 +3,24 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { listarSalasFavoritas } from "../../service/mapa/favoriteService";
 import CardFavoritos from "./components/CardFavoritos";
+import { useNavigate } from "react-router-dom";
 
 const AccountPage = () => {
   const [notificacoesAtivas, setNotificacoesAtivas] = useState(true);
-
+  const navigate = useNavigate();
   const alternarNotificacoes = () => {
     setNotificacoesAtivas((prev) => !prev);
   };
 
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [avatarSrc, setAvatarSrc] = useState(
     "https://raw.githubusercontent.com/TheBugs-io/cadeasala-front/40e7f24aa5d021222994672877393f5a31511581/src/app/assets/placeholder/iconAvatar.svg"
   );
 
   const [salasFavoritas, setSalasFavoritas] = useState([]);
+  const redirectDetalhesSala = (sala) => {
+    navigate(`/mapa-salas`, { state: { sala } });
+  };
 
   useEffect(() => {
     const fetchSalas = async () => {
@@ -46,7 +50,16 @@ const AccountPage = () => {
             <h1>Sua conta</h1>
             <h3>{user.nome}</h3>
             <p>{user.tipo}</p>
-            <p>{user.email}</p>
+            <p>{user.email}</p>{" "}
+            <button
+              className="btn-logout"
+              onClick={() => {
+                logout();
+                navigate("/login");
+              }}
+            >
+              Sair
+            </button>
           </div>
         </div>
 
@@ -75,7 +88,13 @@ const AccountPage = () => {
               <p>Lista de salas favoritas vazia.</p>
             ) : (
               salasFavoritas.map((sala) => (
-                <CardFavoritos key={sala.id} sala={sala} />
+                <CardFavoritos
+                  key={sala.id}
+                  sala={sala}
+                  onClick={() => {
+                    redirectDetalhesSala(sala);
+                  }}
+                />
               ))
             )}
           </div>

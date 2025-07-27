@@ -2,7 +2,7 @@
   display: inline-block;
   border-radius: 0.5rem;
   font-weight: bold;
-  text-transform: capitalize;
+  text-transform: uppercase;
 }
 
 .tag-status.Manutenção {
@@ -21,10 +21,9 @@
 }
 
 .tag-status.Indisponível {
-  background-color: #dbdbdb;
+  color: #D70F49;
 }
 
 .tag-status.Funcional {
   color: #078B7E;
-  text-transform: uppercase;
 }
