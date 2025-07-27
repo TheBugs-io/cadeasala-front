@@ -30,6 +30,8 @@
 }
 
 .reservas-link {
+  border: none;
+  background-color: transparent;
   text-decoration: underline;
   color: var(--primary-btn);
   font-weight: bold;
