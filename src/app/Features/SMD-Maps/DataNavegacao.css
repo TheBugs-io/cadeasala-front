@@ -14,16 +14,16 @@
   border-radius: 6px;
   background-color: transparent;
   transition: background-color 0.2s, transform 0.2s, color 0.2s;
-  color: text; /* cor padrão */
-  display: inline-block; /* pra aplicar transform */
+  color: text; 
+  display: inline-block; 
 }
 
 .data-label:hover,
 .data-label:focus {
   background-color: transparent;
-  color: text; /* cor de destaque, pode mudar se quiser */
+  color: text;
   transform: scale(1.05);
-  outline: none; /* se quiser tirar a outline default */
+  outline: none; 
 }
 
 .calendario-dropdown {

@@ -22,12 +22,12 @@ const DataNavegacao = ({ dataSelecionada, onDataChange }) => {
 
   const abrirCalendario = () => {
     if (inputRef.current) {
-      inputRef.current.showPicker?.(); // Navegadores modernos
-      inputRef.current.click(); // Fallback
+      inputRef.current.showPicker?.(); 
+      inputRef.current.click(); 
     }
   };
 
-  // Para abrir o calendário com teclado (Enter, Space)
+  
   const handleKeyDown = (e) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
@@ -35,7 +35,7 @@ const DataNavegacao = ({ dataSelecionada, onDataChange }) => {
     }
   };
 
-  // Formatar valor do input date YYYY-MM-DD
+  
   const valorInput = `${dataSelecionada.getFullYear()}-${String(
     dataSelecionada.getMonth() + 1
   ).padStart(2, "0")}-${String(dataSelecionada.getDate()).padStart(2, "0")}`;
@@ -76,7 +76,7 @@ const DataNavegacao = ({ dataSelecionada, onDataChange }) => {
     if (!isNaN(novaData.getTime())) {
       onDataChange(novaData);
     } else {
-      // Se quiser, defina uma data padrão aqui:
+      
       onDataChange(new Date());
     }
   }
