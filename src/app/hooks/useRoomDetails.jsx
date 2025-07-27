@@ -22,7 +22,10 @@ export function useRoomDetails(dados, onClose) {
 
   const handleReservarSala = (sala) => {
     if (!user) {
-      setSnackbarOpen(true);
+      showSnackbar(
+        "Você precisa estar autenticado para agendar uma reserva.",
+        "error"
+      );
       return;
     }
     navigate(`/user/solicitar-reserva/${sala.id}`);
