@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./styles/FormsRequestStyle.css";
 import { getSalaPorId } from "../../service/mapa/salasService";
+import { createReserva } from "../../service/admin/reservasService";
 import { useAuth } from "../../contexts/AuthContext";
+import Snackbar from "../../Components/ui/Snackbar";
+import { IoMdCalendar } from "react-icons/io";
 
 export default function ReservaForm() {
   const { idSala } = useParams();
   const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    type: "",
+  });
 
   const [formData, setFormData] = useState({
     startTime: "10",
@@ -18,6 +28,15 @@ export default function ReservaForm() {
     reservationType: "",
     reason: "",
   });
+
+  useEffect(() => {
+    if (snackbar.open) {
+      const timer = setTimeout(() => {
+        setSnackbar((prev) => ({ ...prev, open: false }));
+      }, 6000);
+      return () => clearTimeout(timer);
+    }
+  }, [snackbar.open]);
 
   const [salaInfo, setSalaInfo] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -47,24 +66,6 @@ export default function ReservaForm() {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const payload = {
-      reservationType: formData.reservationType,
-      startDate: formData.startDate,
-      endDate: formData.endDate,
-      usuarioId: user?.id,
-    };
-
-    try {
-      await solicitacaoReserva(salaInfo.id, payload);
-      alert("Solicitação enviada!");
-    } catch (error) {
-      alert("Erro ao solicitar reserva.");
-    }
-  };
-
   const weekDays = [
     { key: "DOM", label: "D" },
     { key: "SEG", label: "S" },
@@ -74,6 +75,58 @@ export default function ReservaForm() {
     { key: "SEX", label: "S" },
     { key: "SAB", label: "S" },
   ];
+
+  const solicitacaoReserva = async (reservaData) => {
+    try {
+      const response = await createReserva(reservaData, user?.token);
+      return response;
+    } catch (error) {
+      console.error("Erro ao solicitar reserva:", error);
+      throw error;
+    }
+  };
+
+  const showSnackbar = (message, type = "success") => {
+    setSnackbar({
+      open: true,
+      message,
+      type,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (
+      user?.tipo === "DISCENTE" &&
+      formData.reservationType === "disciplina"
+    ) {
+      alert("Discentes não podem fazer reservas do tipo 'disciplina'.");
+      return;
+    }
+
+    const payload = {
+      tipo: formData.reservationType.toUpperCase(),
+      localId: salaInfo.id,
+      dataInicio: new Date(formData.startDate),
+      dataFim: new Date(formData.endDate),
+      horarioInicio: parseInt(formData.startTime, 10),
+      horarioFim: parseInt(formData.endTime, 10),
+      repeteEm: formData.selectedDays,
+      usuarioId: user?.id,
+    };
+
+    try {
+      await solicitacaoReserva(payload);
+      showSnackbar("Solicitação enviada!", "success");
+
+      setTimeout(() => {
+        navigate("/mapa-salas");
+      }, 6000);
+    } catch (error) {
+      showSnackbar("Erro ao solicitar reserva.", "error");
+    }
+  };
 
   return (
     <form className="reservation-form" onSubmit={handleSubmit}>
@@ -93,7 +146,7 @@ export default function ReservaForm() {
 
         <h2 className="reservation-form__label">Responsável pela reserva</h2>
         <p className="reservation-form__responsible">
-            {user?.nome || "Usuário não autenticado"}
+          {user?.nome || "Usuário não autenticado"}
         </p>
       </header>
 
@@ -142,25 +195,36 @@ export default function ReservaForm() {
             Período da Reserva
           </legend>
           <div className="reservation-form__date-group">
-            <label htmlFor="start-date">Data de início</label>
-            <input
-              id="start-date"
-              type="date"
-              value={formData.startDate}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, startDate: e.target.value }))
-              }
-            />
+            <label htmlFor="start-date" className="clickable-date-label">
+              <IoMdCalendar size={20} />
+              Data de início
+              <input
+                id="start-date"
+                type="date"
+                value={formData.startDate}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    startDate: e.target.value,
+                  }))
+                }
+                className="clickable-date-input"
+              />
+            </label>
 
-            <label htmlFor="end-date">Data de fim</label>
-            <input
-              id="end-date"
-              type="date"
-              value={formData.endDate}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, endDate: e.target.value }))
-              }
-            />
+            <label htmlFor="end-date" className="clickable-date-label">
+              <IoMdCalendar size={20} />
+              Data de fim
+              <input
+                id="end-date"
+                type="date"
+                value={formData.endDate}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, endDate: e.target.value }))
+                }
+                className="clickable-date-input"
+              />
+            </label>
           </div>
         </fieldset>
 
@@ -204,26 +268,43 @@ export default function ReservaForm() {
         <fieldset className="reservation-form__fieldset">
           <legend className="reservation-form__legend">Tipo de reserva</legend>
           <div className="reservation-form__radio-group">
-            {["oficina", "disciplina", "outro"].map((type) => (
-              <div key={type} className="reservation-form__radio-option">
-                <input
-                  id={`reservation-${type}`}
-                  type="radio"
-                  name="reservationType"
-                  value={type}
-                  checked={formData.reservationType === type}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      reservationType: e.target.value,
-                    }))
-                  }
-                />
-                <label htmlFor={`reservation-${type}`}>
-                  {type.charAt(0).toUpperCase() + type.slice(1)}
-                </label>
-              </div>
-            ))}
+            {["oficina", "disciplina", "outro"].map((type) => {
+              const isDiscente = user?.tipo === "DISCENTE";
+              const isDisciplina = type === "disciplina";
+              const disabled = isDiscente && isDisciplina;
+
+              return (
+                <div key={type} className="reservation-form__radio-option">
+                  <input
+                    id={`reservation-${type}`}
+                    type="radio"
+                    name="reservationType"
+                    value={type}
+                    checked={formData.reservationType === type}
+                    disabled={disabled}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        reservationType: e.target.value,
+                      }))
+                    }
+                  />
+                  <label
+                    htmlFor={`reservation-${type}`}
+                    style={
+                      disabled ? { color: "#aaa", cursor: "not-allowed" } : {}
+                    }
+                    title={
+                      disabled
+                        ? "Discentes não podem selecionar Disciplina"
+                        : ""
+                    }
+                  >
+                    {type.charAt(0).toUpperCase() + type.slice(1)}
+                  </label>
+                </div>
+              );
+            })}
           </div>
         </fieldset>
 
@@ -249,6 +330,12 @@ export default function ReservaForm() {
           Solicitar reserva
         </button>
       </footer>
+      <Snackbar
+        open={snackbar.open}
+        message={snackbar.message}
+        severity={snackbar.type}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+      />
     </form>
   );
 }
