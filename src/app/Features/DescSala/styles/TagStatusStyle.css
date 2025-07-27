@@ -1,29 +1,28 @@
 .tag-status {
   display: inline-block;
   border-radius: 0.5rem;
+  font-size: 1.1rem;
   font-weight: bold;
   text-transform: uppercase;
 }
 
 .tag-status.Manutenção {
-  background-color: #D70F49;
-  color: white;
+  color: #d70f49;
 }
 
 .tag-status.Livre {
-  background-color: #0A9A8C;
-  color: white;
+  color: #078b7e;
 }
 
 .tag-status.Reservada {
-  background-color: #0E7AC9;
+  background-color: #0e7ac9;
   color: white;
 }
 
 .tag-status.Indisponível {
-  color: #D70F49;
+  color: #d70f49;
 }
 
 .tag-status.Funcional {
-  color: #078B7E;
+  color: #078b7e;
 }
