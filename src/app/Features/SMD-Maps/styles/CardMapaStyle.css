@@ -4,7 +4,7 @@
   padding: 2rem 2rem;
   width: 100%;
   height: auto;
-  min-height: 160px;
+  min-height: 140px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -22,7 +22,6 @@
   position: relative;
 }
 
-
 .card h2 {
   font-size: clamp(1.35rem, 2.5vw, 1.2rem);
 }
@@ -38,25 +37,29 @@
 }
 
 .card.status-EM_MANUTENCAO {
-  border: 1px solid #FF5E5E;
-  background-color: #FFC7C7;
+  border: 1px solid #ff5e5e;
+  background-color: #ffc7c7;
+}
+
+.card.status-INDISPONIVEL {
+  border: 1px solid #ff5e5e;
+  background-color: #ffc7c7;
 }
 
 .card.status-FUNCIONAL {
-  border: 1px solid #078B7E;
-  background-color: #6CE0D5;
+  border: 1px solid #078b7e;
+  background-color: #6ce0d5;
 }
 
 .card.status-RESERVADO {
-  border: 1px solid #EA981C;
-  background-color: #F7C77F;
+  border: 1px solid #ea981c;
+  background-color: #f7c77f;
 }
 
 .card.status-DISCIPLINA {
-  border: 1px solid #0E7AC9;
-  background-color: #C3E6FF;
+  border: 1px solid #0e7ac9;
+  background-color: #c3e6ff;
 }
-
 
 .loading-placeholder {
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 37%, #f0f0f0 63%);
@@ -96,11 +99,13 @@
   }
 
   .card h2 {
-    font-size: 1rem;
+    font-size: 1.2rem;
+    word-wrap: break-word;
   }
 
   .card .small {
-    font-size: 0.7em;
+    font-size: 0.8em;
+    word-wrap: break-word;
   }
 
   .card .bold {

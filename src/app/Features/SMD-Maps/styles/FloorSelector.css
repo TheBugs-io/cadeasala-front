@@ -1,5 +1,4 @@
 .floor-selector {
-  font-family: sans-serif;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -35,6 +34,6 @@
 }
 
 .option.active {
-  background-color: var(--selected-button-c);
+  background-color: var(--primary-btn);
   color: white;
 }
