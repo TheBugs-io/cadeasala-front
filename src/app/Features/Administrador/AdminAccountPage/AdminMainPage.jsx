@@ -7,7 +7,7 @@ import { BsFillDoorOpenFill } from "react-icons/bs";
 import { useAuth } from "../../../contexts/AuthContext";
 
 export default function AdminMainPage() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleCardClick = (path) => {
@@ -22,10 +22,24 @@ export default function AdminMainPage() {
   };
 
   return (
-    <main className="admin-main-page" aria-label="Página principal do administrador">
+    <main
+      className="admin-main-page"
+      aria-label="Página principal do administrador"
+    >
       <section className="admin-header">
-        <h1 tabIndex={-1} alt="Informações da conta">Sua conta</h1>
+        <h1 tabIndex={-1} alt="Informações da conta">
+          Sua conta
+        </h1>
         <UserAccountHeader user={user} />
+        <button
+          className="btn-logout"
+          onClick={() => {
+            logout();
+            navigate("/login");
+          }}
+        >
+          Sair
+        </button>
       </section>
       <hr />
 
@@ -41,7 +55,9 @@ export default function AdminMainPage() {
           role="button"
           tabIndex={0}
           aria-label="Controle de reservas. Gerencie as reservas e pedidos."
-          onKeyDown={(e) => handleKeyDown(e, () => handleCardClick("/admin/dashboard-reservas"))}
+          onKeyDown={(e) =>
+            handleKeyDown(e, () => handleCardClick("/admin/dashboard-reservas"))
+          }
         />
         <CardFuncionality
           icon={<FaUserPlus size={24} aria-hidden="true" />}
@@ -51,7 +67,11 @@ export default function AdminMainPage() {
           role="button"
           tabIndex={0}
           aria-label="Solicitações de registro. Aprovar ou rejeitar solicitações de registro."
-          onKeyDown={(e) => handleKeyDown(e, () => handleCardClick("/admin/dashboard-solicitacoes"))}
+          onKeyDown={(e) =>
+            handleKeyDown(e, () =>
+              handleCardClick("/admin/dashboard-solicitacoes")
+            )
+          }
         />
         <CardFuncionality
           icon={<BsFillDoorOpenFill size={24} aria-hidden="true" />}
@@ -61,7 +81,9 @@ export default function AdminMainPage() {
           role="button"
           tabIndex={0}
           aria-label="Controle de salas. Gerencie as salas do bloco IUVI."
-          onKeyDown={(e) => handleKeyDown(e, () => handleCardClick("/admin/dashboard-salas"))}
+          onKeyDown={(e) =>
+            handleKeyDown(e, () => handleCardClick("/admin/dashboard-salas"))
+          }
         />
         <CardFuncionality
           icon={<FaUserGear size={24} aria-hidden="true" />}
@@ -71,7 +93,9 @@ export default function AdminMainPage() {
           role="button"
           tabIndex={0}
           aria-label="Usuários na plataforma. Visualize e gerencie usuários dentro da plataforma."
-          onKeyDown={(e) => handleKeyDown(e, () => console.log("Usuários na plataforma"))}
+          onKeyDown={(e) =>
+            handleKeyDown(e, () => console.log("Usuários na plataforma"))
+          }
         />
       </section>
     </main>

@@ -12,7 +12,7 @@ const AccountPage = () => {
     setNotificacoesAtivas((prev) => !prev);
   };
 
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [avatarSrc, setAvatarSrc] = useState(
     "https://raw.githubusercontent.com/TheBugs-io/cadeasala-front/40e7f24aa5d021222994672877393f5a31511581/src/app/assets/placeholder/iconAvatar.svg"
   );
@@ -50,7 +50,16 @@ const AccountPage = () => {
             <h1>Sua conta</h1>
             <h3>{user.nome}</h3>
             <p>{user.tipo}</p>
-            <p>{user.email}</p>
+            <p>{user.email}</p>{" "}
+            <button
+              className="btn-logout"
+              onClick={() => {
+                logout();
+                navigate("/login");
+              }}
+            >
+              Sair
+            </button>
           </div>
         </div>
 
@@ -79,7 +88,13 @@ const AccountPage = () => {
               <p>Lista de salas favoritas vazia.</p>
             ) : (
               salasFavoritas.map((sala) => (
-                <CardFavoritos key={sala.id} sala={sala} onClick={() => {redirectDetalhesSala(sala)}} />
+                <CardFavoritos
+                  key={sala.id}
+                  sala={sala}
+                  onClick={() => {
+                    redirectDetalhesSala(sala);
+                  }}
+                />
               ))
             )}
           </div>
