@@ -1,25 +1,23 @@
 export const getImagemPorTipo = (tipo) => {
   switch (tipo) {
     case "SALA_AULA":
-      return "https://github.com/TheBugs-io/cadeasala-front/blob/feature/controle-salas/src/app/assets/salas/sala.jpg?raw=true";
+      return "/assets/salas/sala.jpg";
     case "LABORATORIO":
-      return "https://github.com/TheBugs-io/cadeasala-front/blob/feature/controle-salas/src/app/assets/salas/lab.jpg?raw=true";
+      return "/assets/salas/lab.jpg";
     case "LAB_ESPECIAL":
-      return "https://github.com/TheBugs-io/cadeasala-front/blob/feature/controle-salas/src/app/assets/salas/lab.jpg?raw=true";
+      return "/assets/salas/lab_especial.jpg";
     case "ATELIE":
-      return "https://github.com/TheBugs-io/cadeasala-front/blob/feature/controle-salas/src/app/assets/salas/atelie.png?raw=true";
+      return "/assets/salas/atelie.png";
     case "GABINETE":
-      return "https://via.placeholder.com/300x200.png?text=Gabinete";
+      return "/assets/salas/gabinete.png";
     case "SECRETARIA":
-      return "https://via.placeholder.com/300x200.png?text=Secretaria";
+      return "/assets/salas/secretaria.jpg";
     case "CENTRO_ACADEMICO":
-      return "https://via.placeholder.com/300x200.png?text=C.A.";
+      return "/assets/salas/ca.jpg";
     case "COORDENACAO":
-      return "https://via.placeholder.com/300x200.png?text=Coordenação";
-    case "REUNIAO":
-      return "https://via.placeholder.com/300x200.png?text=Reunião";
+      return "/assets/salas/coordenacao.png";
     default:
-      return "https://github.com/TheBugs-io/cadeasala-front/blob/feature/controle-salas/src/app/assets/salas/sala.jpg?raw=true";
+      return "/assets/salas/sala.jpg";
   }
 };
 
