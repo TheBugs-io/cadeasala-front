@@ -1,6 +1,6 @@
 import api from "../api";
 
-export const fetchReservas = async () => {
+export const fetchReservas = async (token) => {
   try {
     const response = await api.get("/reservas", {
       headers: {
@@ -8,10 +8,10 @@ export const fetchReservas = async () => {
       },
     });
 
-    return response.data;
+    return response.data.reservas || [];
   } catch (error) {
     console.error("Erro ao buscar reservas:", error);
-    throw error;
+    return [];
   }
 };
 
@@ -33,6 +33,21 @@ export const fetchSolicitacoesReservas = async (token) => {
       status: "error",
       message: error.message,
     };
+  }
+};
+
+export const atualizarStatusSolicitacao = async (solicitacaoId, status, token) => {
+  try {
+    const response = await api.patch(`/reservas/${solicitacaoId}/status`, { status }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  }
+  catch (error) {
+    console.error("Erro ao atualizar status da solicitação:", error);
+    throw error;
   }
 };
 

@@ -70,9 +70,29 @@ const PagePedidosReserva = () => {
           {sol.horarioFim}h
         </p>
         <p className="usuario-info">
-          <b>Solicitante:</b> {sol.usuario?.nomeCompleto || "-"} ({sol.usuario?.email || "-"})
+          <b>Solicitante:</b> {sol.usuario?.nomeCompleto || "-"} (
+          {sol.usuario?.email || "-"})
         </p>
-        <p className="status-info"><b>Status:</b> {sol.status}</p>
+        <p className={`status-info`}>
+          <b>Status:</b>{" "}
+          <span className={`status-badge ${sol.status?.toLowerCase()}`}>
+            {sol.status === "AGUARDANDO" && (
+              <>
+                <span className="status-icon spinner" aria-hidden="true" />
+                <span className="sr-only">Aguardando</span> Aguardando
+              </>
+            )}
+            {sol.status === "APROVADO" && (
+              <>
+                <span className="status-icon check" aria-hidden="true" />
+                <span className="sr-only">Aprovado</span> Aprovado
+              </>
+            )}
+            {sol.status !== "AGUARDANDO" &&
+              sol.status !== "APROVADO" &&
+              sol.status}
+          </span>
+        </p>
       </div>
       <div className="reserva-footer">
         <button className={`tipo-button ${sol.tipo?.toLowerCase()}`}>
