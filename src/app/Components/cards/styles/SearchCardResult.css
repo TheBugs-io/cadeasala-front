@@ -1,0 +1,47 @@
+.searchcard {
+  background-color: #eaecfd;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: box-shadow 0.3s ease, transform 0.15s ease;
+}
+
+.searchcard:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px) scale(1.02);
+  transition: box-shadow 0.3s ease, transform 0.15s ease;
+}
+
+.favoritar-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #d70f49;
+  background-color: transparent;
+  border: none;
+}
+
+.reserva-tipo {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: #fff;
+}
+
+.reserva-outro {
+  background-color: #9d4dcc;
+}
+
+.reserva-disciplina {
+  background-color: #186da9;
+}
+
+.reserva-oficina {
+  background-color: #c71e67;
+}

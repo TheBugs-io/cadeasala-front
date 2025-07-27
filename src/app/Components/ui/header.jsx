@@ -7,8 +7,12 @@ import { useState, useRef, useEffect } from "react";
 import { MdLogout } from "react-icons/md";
 import { FiArrowUpRight } from "react-icons/fi";
 import { IoIosPerson } from "react-icons/io";
+import SearchBar from "./SearchBar";
 
-const Header = ({ onSearch }) => {
+const Header = ({
+  onSearch,
+  resultados = { usuarios: [], salas: [], reservas: [] },
+}) => {
   const { user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -37,7 +41,6 @@ const Header = ({ onSearch }) => {
     setMenuAberto(false);
   };
 
-  // Fecha menu ao clicar fora
   useEffect(() => {
     const handleClickFora = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -48,7 +51,6 @@ const Header = ({ onSearch }) => {
     return () => document.removeEventListener("mousedown", handleClickFora);
   }, []);
 
-  // Fecha com ESC
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
@@ -74,19 +76,11 @@ const Header = ({ onSearch }) => {
       />
 
       {!esconderSearch && (
-        <>
-          <label htmlFor="header-search" className="sr-only">
-            Buscar por professor, reserva ou sala
-          </label>
-          <input
-            id="header-search"
-            type="text"
-            className="header-search"
-            placeholder="Pesquisar por professor, reserva, sala..."
-            aria-label="Pesquisar"
-            onChange={(e) => onSearch && onSearch(e.target.value)}
-          />
-        </>
+        <SearchBar
+          onSearch={onSearch}
+          resultados={resultados}
+          esconder={esconderSearch}
+        />
       )}
 
       {user ? (
