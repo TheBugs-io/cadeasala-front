@@ -15,6 +15,17 @@ export function useRoomDetails(dados, onClose) {
   const modalRef = useRef(null);
   const { user } = useAuth();
 
+  const isReservavel =
+    dados?.status !== "INDISPONIVEL" && dados?.status !== "EM_MANUTENCAO";
+
+  const handleReservarSala = (sala) => {
+    if (!user) {
+      setSnackbarOpen(true);
+      return;
+    }
+    navigate(`/user/solicitar-reserva/${sala.id}`);
+  };
+
   useEffect(() => {
     if (dados?.jaFavoritado !== undefined) {
       setFavoritado(dados.jaFavoritado);
@@ -92,5 +103,7 @@ export function useRoomDetails(dados, onClose) {
     modalRef,
     user,
     reservasDaSala,
+    handleReservarSala,
+    isReservavel,
   };
 }
