@@ -11,6 +11,7 @@ import { ordenarPorNumeracaoSala } from "./helper/orderNumeracaoSala";
 import Filtros from "./FiltroDrawer";
 import { MdFilterList } from "react-icons/md";
 import DataNavegacao from "./DataNavegacao";
+import DataTimeNavegacao from "./Components/DataTimeNavegacao"; // NOVO
 
 function MapaSalas() {
   const [modalAberto, setModalAberto] = useState(false);
@@ -22,8 +23,10 @@ function MapaSalas() {
   const [isMobile, setIsMobile] = useState(false);
   const ultimaFocoRef = useRef(null);
   const location = useLocation();
-
   const [filtrosAbertos, setFiltrosAbertos] = useState(false);
+
+  const [dataAtual, setDataAtual] = useState(new Date());
+  const [horarioSelecionado, setHorarioSelecionado] = useState(""); // NOVO
 
   const aplicarFiltros = ({ status }) => {
     setFiltroStatus(status);
@@ -49,9 +52,7 @@ function MapaSalas() {
   useEffect(() => {
     if (location.state?.sala) {
       const sala = location.state.sala;
-
       if (sala.localizacao) setAndarSelecionado(sala.localizacao);
-
       setTimeout(() => {
         setDadosSelecionados(sala);
         setModalAberto(true);
@@ -86,14 +87,10 @@ function MapaSalas() {
     if (ultimaFocoRef.current) ultimaFocoRef.current.focus();
   };
 
-  const salasFiltradasOrdenadas = [...salasFiltradas].sort(
-    ordenarPorNumeracaoSala
-  );
-
+  const salasFiltradasOrdenadas = [...salasFiltradas].sort(ordenarPorNumeracaoSala);
   const salasE = salasFiltradasOrdenadas.filter((sala) =>
     sala.numeracaoSala.toUpperCase().endsWith("E")
   );
-
   const salasD = salasFiltradasOrdenadas.filter((sala) =>
     sala.numeracaoSala.toUpperCase().endsWith("D")
   );
@@ -101,17 +98,16 @@ function MapaSalas() {
   const salasEParaRenderizar = isMobile ? [...salasE].reverse() : salasE;
   const salasDParaRenderizar = isMobile ? [...salasD].reverse() : salasD;
 
-  const [dataAtual, setDataAtual] = useState(new Date());
-
   return (
-    <main
-      className="mapa-salas-container"
-      aria-label="Mapa de salas do Instituto Universidade Virtual"
-    >
-    <div>
-      <DataNavegacao dataSelecionada={dataAtual} onDataChange={setDataAtual} />
-      {/* O restante da tela usa `dataAtual` para buscar ou renderizar dados */}
-    </div>
+    <main className="mapa-salas-container" aria-label="Mapa de salas do Instituto Universidade Virtual">
+<div className="data-horario-container">
+  <DataNavegacao dataSelecionada={dataAtual} onDataChange={setDataAtual} />
+  <DataTimeNavegacao
+    horario={horarioSelecionado}
+    onChangeHorario={setHorarioSelecionado}
+  />
+</div>
+
 
       <div className="map-header" aria-label="Cabeçalho do mapa de salas contendo os filtros por andar e um popup com mais filtros">
         <nav aria-label="Seleção do andar">
@@ -135,12 +131,8 @@ function MapaSalas() {
           onAplicar={aplicarFiltros}
         />
       </div>
-      <div
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-        className="sr-only"
-      >
+
+      <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
         {carregando
           ? "Carregando informações das salas, por favor aguarde."
           : `${salasFiltradas.length} salas disponíveis para o andar selecionado.`}
