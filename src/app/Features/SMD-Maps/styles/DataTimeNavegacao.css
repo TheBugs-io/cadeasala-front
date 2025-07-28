@@ -1,0 +1,19 @@
+.data-time-navegacao {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+}
+
+.horario-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.horario-select {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
