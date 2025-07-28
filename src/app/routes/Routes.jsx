@@ -30,6 +30,8 @@ const AdminAllReservas = lazy(() => import ("../Features/Administrador/AdminAllR
 const CreateSala = lazy(() => import("../Features/Administrador/AdminCreateRoom/AdminCreateRoom"));
 const DetalhesPedidoReserva = lazy(() => import("../Features/DetalhesPedidoReserva/DetalhesPedidoReserva"));
 const DetalhesReserva = lazy(() => import("../Features/DetalhesReserva/DetalhesReserva"));
+const DashboardHistorico = lazy(() => import("../Features/Administrador/AdminDashboardHistorico/DashboardHistorico"));
+
 
 //Páginas alternativas
 const NotFoundPage = lazy(() => import("../Features/ErrorPages/404Error"));
@@ -97,6 +99,10 @@ export const router = createBrowserRouter([
           {
             index: true,
             element: <AdminMainPage />,
+          },
+          {
+            path: "dashboard-historico",
+            element: <DashboardHistorico />,
           },
           {
             path: "dashboard-solicitacoes",
