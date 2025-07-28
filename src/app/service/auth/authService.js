@@ -10,6 +10,11 @@ export async function confirmEmail(token) {
   return response.data;
 }
 
+export const forgotPassword = async (email) => {
+  const response = await api.post('/api/auth/forgot-password', { email });
+  return response.data;
+};
+
 export const changePassword = async (senhaAnterior, novaSenha) => {
     const response = await api.put('/api/auth/change-password', { 
         senhaAnterior, 

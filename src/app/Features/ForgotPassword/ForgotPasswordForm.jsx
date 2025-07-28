@@ -1,14 +1,35 @@
 import { useState } from "react";
 import "../../styles/Login.css";
 import { Link } from "react-router-dom";
-import forgotPassword from "../../assets/forgot/Forgot password-rafiki.svg";
+import forgotPasswordImage from "../../assets/forgot/Forgot password-rafiki.svg";
+import { forgotPassword } from "../../service/auth/authService";
+import Snackbar from "../../Components/ui/Snackbar";
+import { useNavigate } from "react-router-dom";
 
 const ForgotPasswordForm = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Solicitação de recuperação enviada!");
+    setLoading(true);
+
+    try {
+      await forgotPassword(email);
+      setSnackbarMessage("E-mail de recuperação enviado!");
+      setSnackbarSeverity("success");
+      navigate("/login");
+    } catch (error) {
+      setSnackbarMessage("Erro ao enviar e-mail de recuperação.");
+      setSnackbarSeverity("error");
+    } finally {
+      setSnackbarOpen(true);
+      setLoading(false);
+    }
   };
 
   return (
@@ -18,7 +39,7 @@ const ForgotPasswordForm = () => {
         className="form-container"
         autoComplete="on"
       >
-        <img src={forgotPassword} className="image-forms-container"></img>
+        <img src={forgotPasswordImage} className="image-forms-container" alt="Esqueceu a senha" />
         <div className="form-title">Esqueceu sua senha?</div>
         <p className="form-paragraph">
           <b>Não se preocupe!</b> Enviaremos um e-mail para redefinir sua senha
@@ -48,6 +69,13 @@ const ForgotPasswordForm = () => {
           </Link>
         </div>
       </form>
+
+      <Snackbar
+        open={snackbarOpen}
+        message={snackbarMessage}
+        severity={snackbarSeverity}
+        onClose={() => setSnackbarOpen(false)}
+      />
     </div>
   );
 };
