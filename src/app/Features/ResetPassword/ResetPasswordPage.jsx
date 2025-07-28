@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "../../styles/LoginPage.css";
+import "../../styles/Login.css";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import publicLogotipo from "/visual-identify/logotipo.svg"
 import { resetPassword } from "../../service/auth/authService";
