@@ -20,6 +20,7 @@ const FloorSelector = ({ value, onChange }) => {
             className={`option ${value === andar.id ? "active" : ""}`}
             onClick={() => onChange(andar.id)}
             aria-label={`Selecionar andar ${andar.label}`}
+            aria-pressed={value === andar.id}
           >
             {andar.label}
           </button>
