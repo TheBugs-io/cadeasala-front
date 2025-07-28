@@ -5,6 +5,7 @@ import CardFuncionality from "./components/CardFunction";
 import { FaCalendar, FaUserPlus, FaUserGear } from "react-icons/fa6";
 import { BsFillDoorOpenFill } from "react-icons/bs";
 import { useAuth } from "../../../contexts/AuthContext";
+import { FaHistory } from "react-icons/fa";
 
 export default function AdminMainPage() {
   const { user, logout } = useAuth();
@@ -86,15 +87,15 @@ export default function AdminMainPage() {
           }
         />
         <CardFuncionality
-          icon={<FaUserGear size={24} aria-hidden="true" />}
-          title="Usuários na plataforma"
-          description="Visualize e gerencie usuários dentro da plataforma."
-          onClick={() => console.log("Usuários na plataforma")}
+          icon={<FaHistory size={24} aria-hidden="true" />}
+          title="Histórico de ações"
+          description="Visualize e gerencie ações realizadas dentro da plataforma."
+          onClick={() => handleCardClick("/admin/dashboard-historico")}
           role="button"
           tabIndex={0}
-          aria-label="Usuários na plataforma. Visualize e gerencie usuários dentro da plataforma."
+          aria-label="Histórico de ações. Visualize e gerencie ações realizadas dentro da plataforma."
           onKeyDown={(e) =>
-            handleKeyDown(e, () => console.log("Usuários na plataforma"))
+            handleKeyDown(e, () => handleCardClick("/admin/dashboard-historico"))
           }
         />
       </section>
