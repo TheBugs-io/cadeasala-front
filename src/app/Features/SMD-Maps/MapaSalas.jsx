@@ -10,6 +10,7 @@ import { fetchSalas } from "../../service/mapa/salasService";
 import { ordenarPorNumeracaoSala } from "./helper/orderNumeracaoSala";
 import Filtros from "./FiltroDrawer";
 import { MdFilterList } from "react-icons/md";
+import DataNavegacao from "./DataNavegacao";
 
 function MapaSalas() {
   const [modalAberto, setModalAberto] = useState(false);
@@ -100,11 +101,18 @@ function MapaSalas() {
   const salasEParaRenderizar = isMobile ? [...salasE].reverse() : salasE;
   const salasDParaRenderizar = isMobile ? [...salasD].reverse() : salasD;
 
+  const [dataAtual, setDataAtual] = useState(new Date());
+
   return (
     <main
       className="mapa-salas-container"
       aria-label="Mapa de salas do Instituto Universidade Virtual"
     >
+    <div>
+      <DataNavegacao dataSelecionada={dataAtual} onDataChange={setDataAtual} />
+      {/* O restante da tela usa `dataAtual` para buscar ou renderizar dados */}
+    </div>
+
       <div className="map-header" aria-label="Cabeçalho do mapa de salas contendo os filtros por andar e um popup com mais filtros">
         <nav aria-label="Seleção do andar">
           <FloorSelector
