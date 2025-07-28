@@ -62,7 +62,7 @@ const DashboardHistorico = () => {
                   <td>{item.acao}</td>
                   <td>{item.tipoCRUD}</td>
                   <td>{item.tipoEntidade}</td>
-                  <td>{new Date(item.data).toLocaleString()}</td>
+                  <td>{new Date(item.createdAt).toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>
