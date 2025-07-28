@@ -7,6 +7,7 @@ import PrivateRoute from "../Components/PrivateRoute";
 // Lazy loading dos componentes
 const LandingHome = lazy(() => import("../Features/Landing/Landing"));
 const LoginPage = lazy(() => import("../Features/AuthPage/Login"));
+const ResetPasswordForm = lazy(() => import("../Features/ResetPassword/ResetPasswordPage"));
 const ForgotPasswordForm = lazy(() => import("../Features/ForgotPassword/ForgotPasswordForm"));
 const ConfirmEmail = lazy(() => import("../Features/ConfirmEmail/ConfirmEmail"));
 const ChooseType = lazy(() => import("../Features/RegisterPage/ChooseType"));
@@ -147,6 +148,10 @@ export const router = createBrowserRouter([
       {
         path: "forgot-password",
         element: <ForgotPasswordForm />,
+      },
+      {
+        path: "redefinir-senha",
+        element: <ResetPasswordForm />,
       },
       {
         path: "confirmar",

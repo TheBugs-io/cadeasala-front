@@ -15,10 +15,10 @@ export const forgotPassword = async (email) => {
   return response.data;
 };
 
-export const changePassword = async (senhaAnterior, novaSenha) => {
-    const response = await api.put('/api/auth/change-password', { 
-        senhaAnterior, 
-        novaSenha 
-    });
-    return response.data;
+export const resetPassword = async (token, novaSenha) => {
+  const response = await api.post('/api/auth/reset-password', {
+    token,
+    novaSenha,
+  });
+  return response.data;
 };
