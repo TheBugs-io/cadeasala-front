@@ -5,8 +5,10 @@ import {
 } from "../service/mapa/favoriteService";
 import { fetchReservasSala } from "../service/mapa/reservasService";
 import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export function useRoomDetails(dados, onClose) {
+  const navigate = useNavigate();
   const [reservas, setReservas] = useState([]);
   const [favoritado, setFavoritado] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -20,7 +22,10 @@ export function useRoomDetails(dados, onClose) {
 
   const handleReservarSala = (sala) => {
     if (!user) {
-      setSnackbarOpen(true);
+      showSnackbar(
+        "Você precisa estar autenticado para agendar uma reserva.",
+        "error"
+      );
       return;
     }
     navigate(`/user/solicitar-reserva/${sala.id}`);

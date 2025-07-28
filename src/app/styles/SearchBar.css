@@ -1,0 +1,83 @@
+.searchbar-container {
+  width: 100%;
+  max-width: 40%;
+  position: relative;
+}
+
+.header-search-input {
+  width: 100%;
+  padding: 0.75rem 0.8rem;
+  font-size: 1rem;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.header-search-input::placeholder {
+  color: #888;
+}
+
+.header-search-input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.searchbar-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  color: black;
+  font-size: 1.4rem;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  padding: 0.5rem;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.searchbar-dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.searchbar-dropdown::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.searchbar-dropdown-item {
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.dropdown-group-title {
+  font-weight: bold;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+@media (max-width: 768px) {
+  .searchbar-container {
+    display: none;
+  }
+}
