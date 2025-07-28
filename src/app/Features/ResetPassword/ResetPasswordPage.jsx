@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../../styles/LoginPage.css";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import publicLogotipo from "public/visual-identify/logotipo.svg"
+import publicLogotipo from "/visual-identify/logotipo.svg"
 import { resetPassword } from "../../service/auth/authService";
 import Snackbar from "../../Components/ui/Snackbar";
 
