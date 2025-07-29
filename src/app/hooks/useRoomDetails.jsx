@@ -14,11 +14,16 @@ export function useRoomDetails(dados, onClose) {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const [statusDetalhado, setStatusDetalhado] = useState({
+    status: "Carregando...",
+    tipo: "indisponivel",
+    reservaAtiva: null
+  });
   const modalRef = useRef(null);
   const { user } = useAuth();
 
-  const isReservavel =
-    dados?.status !== "INDISPONIVEL" && dados?.status !== "EM_MANUTENCAO";
+  const isReservavel = dados?.status === "FUNCIONAL" && 
+                      (!dados.reservas || dados.reservas.length === 0);
 
   const handleReservarSala = (sala) => {
     if (!user) {
@@ -28,8 +33,45 @@ export function useRoomDetails(dados, onClose) {
       );
       return;
     }
+    
+    if (!isReservavel) {
+      showSnackbar(
+        "Esta sala não está disponível para reserva no momento.",
+        "error"
+      );
+      return;
+    }
+    
     navigate(`/user/solicitar-reserva/${sala.id}`);
   };
+
+  useEffect(() => {
+    if (dados) {
+      const atualizarStatus = () => {
+        const temReservaAtiva = dados?.reservas?.length > 0;
+        
+        if (temReservaAtiva) {
+          return {
+            status: "Reservada",
+            tipo: "ocupada",
+            reservaAtiva: dados.reservas[0]
+          };
+        }
+        
+        switch (dados?.status) {
+          case "EM_MANUTENCAO":
+            return { status: "Em Manutenção", tipo: "manutencao", reservaAtiva: null };
+          case "PROBLEMA_TECNICO":
+            return { status: "Indisponível", tipo: "indisponivel", reservaAtiva: null };
+          case "FUNCIONAL":
+          default:
+            return { status: "Livre", tipo: "livre", reservaAtiva: null };
+        }
+      };
+      
+      setStatusDetalhado(atualizarStatus());
+    }
+  }, [dados]);
 
   useEffect(() => {
     if (dados?.jaFavoritado !== undefined) {
@@ -73,14 +115,6 @@ export function useRoomDetails(dados, onClose) {
     return () => document.removeEventListener("keydown", handleEsc);
   }, [onClose]);
 
-  const reservasDaSala = async () => {
-    try {
-      const reservas = await fetchReservasSala(dados.id);
-    } catch (error) {
-      console.error("Erro ao buscar reservas da sala:", error);
-    }
-  };
-
   useEffect(() => {
     const carregarReservas = async () => {
       if (dados?.id) {
@@ -107,8 +141,8 @@ export function useRoomDetails(dados, onClose) {
     setSnackbarOpen,
     modalRef,
     user,
-    reservasDaSala,
     handleReservarSala,
     isReservavel,
+    statusDetalhado
   };
 }
