@@ -1,36 +1,46 @@
-import "../styles/DataTimeNavegacao.css";
-import { FaClock } from "react-icons/fa";
+import React, { useEffect } from 'react';
+import '../styles/DataTimeNavegacao.css';
 
-const horarios = [
-  "08:00 - 10:00",
-  "10:00 - 12:00",
-  "14:00 - 16:00",
-  "16:00 - 18:00",
-  "20:00 - 22:00",
+const BLOCOS_HORARIOS = [
+  { label: "08h-10h", inicio: 8, fim: 10 },
+  { label: "10h-12h", inicio: 10, fim: 12 },
+  { label: "14h-16h", inicio: 14, fim: 16 },
+  { label: "16h-18h", inicio: 16, fim: 18 },
+  { label: "18h-20h", inicio: 18, fim: 20 },
+  { label: "20h-22h", inicio: 20, fim: 22 }
 ];
 
-const DataTimeNavegacao = ({ horario, onChangeHorario }) => {
+const DataTimeNavegacao = ({ horarioSelecionado, onSelecionarHorario }) => {
+  useEffect(() => {
+    if (!horarioSelecionado && typeof onSelecionarHorario === 'function') {
+      const horaAtual = new Date().getHours();
+      const blocoAtual = BLOCOS_HORARIOS.find(
+        ({ inicio, fim }) => horaAtual >= inicio && horaAtual < fim
+      );
+      if (blocoAtual) {
+        onSelecionarHorario(blocoAtual.label);
+      }
+    }
+  }, []);
+
   return (
-    <div className="data-time-navegacao" aria-label="Filtragem por horário">
-      <label htmlFor="horario-select" className="horario-label" aria-label="Seleção do horário">
-        <FaClock size={16} style={{ marginRight: "6px" }} />
-        Horário
-      </label>
-      <select
-        id="horario-select"
-        value={horario}
-        onChange={(e) => onChangeHorario(e.target.value)}
-        className="horario-select"
-        aria-label="Seleção do horário para filtrar as salas"
-        role="combobox"
-      >
-        <option value="" aria-label="Filtragem com base no horário atual">Horário atual</option>
-        {horarios.map((h, i) => (
-          <option key={i} value={h} aria-label={`Filtragem com base no horário ${h}`}>
-            {h}
-          </option>
-        ))}
-      </select>
+    <div
+      className="blocos-horarios"
+      role="group"
+      aria-label="Selecionar horário disponível"
+    >
+      {BLOCOS_HORARIOS.map(({ label, inicio }) => (
+        <button
+          key={inicio}
+          type="button"
+          className={`bloco-horario ${horarioSelecionado === label ? 'selecionado' : ''}`}
+          onClick={() => onSelecionarHorario(label)}
+          aria-pressed={horarioSelecionado === label}
+          aria-label={`Horário ${label}`}
+        >
+          {label}
+        </button>
+      ))}
     </div>
   );
 };

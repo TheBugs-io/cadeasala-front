@@ -1,86 +1,86 @@
 import React, { useRef } from "react";
 import "./DataNavegacao.css";
 
-const diasSemana = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+const DIAS_SEMANA = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
-function formatarData(data) {
-  const dia = String(data.getDate()).padStart(2, "0");
-  const mes = String(data.getMonth() + 1).padStart(2, "0");
-  const ano = String(data.getFullYear()).slice(-2);
-  const diaSemana = diasSemana[data.getDay()];
+const formatarData = (data) => {
+  if (!(data instanceof Date) || isNaN(data.getTime())) return "Data inválida";
+  const dia = data.getDate().toString().padStart(2, "0");
+  const mes = (data.getMonth() + 1).toString().padStart(2, "0");
+  const ano = data.getFullYear().toString();
+  const diaSemana = DIAS_SEMANA[data.getDay()];
   return `${dia}/${mes}/${ano}, ${diaSemana}`;
-}
+};
 
-const DataNavegacao = ({ dataSelecionada, onDataChange }) => {
+const DataNavegacao = ({ dataSelecionada = new Date(), onDataChange }) => {
   const inputRef = useRef(null);
 
-  const alterarData = (dias) => {
+  const navegarDias = (dias) => {
     const novaData = new Date(dataSelecionada);
     novaData.setDate(novaData.getDate() + dias);
-    onDataChange(novaData);
+    onDataChange?.(novaData);
   };
 
   const abrirCalendario = () => {
-    if (inputRef.current) {
-      inputRef.current.showPicker?.(); 
-      inputRef.current.click(); 
+    if (typeof inputRef.current?.showPicker === "function") {
+      inputRef.current.showPicker();
+    } else {
+      inputRef.current.click();
     }
   };
 
-  
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      abrirCalendario();
+  const handleDateChange = (e) => {
+    const [ano, mes, dia] = e.target.value.split("-");
+    if (!ano || !mes || !dia) return;
+    const novaData = new Date(ano, mes - 1, dia);
+    if (!isNaN(novaData.getTime())) {
+      onDataChange?.(novaData);
     }
   };
 
-  
-  const valorInput = `${dataSelecionada.getFullYear()}-${String(
-    dataSelecionada.getMonth() + 1
-  ).padStart(2, "0")}-${String(dataSelecionada.getDate()).padStart(2, "0")}`;
+  const valorInput = dataSelecionada.toISOString().split("T")[0];
 
   return (
-    <div className="data-navegacao-container">
+    <div
+      className="data-navegacao-container"
+      role="group"
+      aria-label="Navegação por data"
+    >
       <button
-        onClick={() => alterarData(-1)}
-        aria-label="Selecionar dia anterior"
+        onClick={() => navegarDias(-1)}
+        aria-label="Dia anterior"
+        type="button"
       >
         &lt;
       </button>
 
       <div
-        className="data-label"
+        className="data-display"
         onClick={abrirCalendario}
         role="button"
         tabIndex={0}
-        onKeyDown={handleKeyDown}
-        aria-label={`Selecionar data. Data atual: ${formatarData(dataSelecionada)}`}
+        onKeyDown={(e) =>
+          (e.key === "Enter" || e.key === " ") && abrirCalendario()
+        }
+        aria-label={`Data selecionada: ${formatarData(dataSelecionada)}. Pressione Enter para alterar.`}
       >
         {formatarData(dataSelecionada)}
       </div>
 
-      <button onClick={() => alterarData(1)} aria-label="Selecionar dia seguinte">
+      <button
+        onClick={() => navegarDias(1)}
+        aria-label="Próximo dia"
+        type="button"
+      >
         &gt;
       </button>
 
       <input
         ref={inputRef}
         type="date"
-        className="input-invisivel"
+        className="date-input-hidden"
         value={valorInput}
-        onChange={(e) => {
-  const [ano, mes, dia] = e.target.value.split("-");
-  if (ano && mes && dia) {
-    const novaData = new Date(ano, mes - 1, dia);
-    if (!isNaN(novaData.getTime())) {
-      onDataChange(novaData);
-    } else {
-      
-      onDataChange(new Date());
-    }
-  }
-}}
+        onChange={handleDateChange}
         aria-hidden="true"
         tabIndex={-1}
       />
