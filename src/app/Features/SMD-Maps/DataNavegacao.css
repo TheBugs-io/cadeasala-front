@@ -1,61 +1,33 @@
 .data-navegacao-container {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-weight: bold;
-  font-size: 18px;
-  position: relative;
-  
+  gap: 0.75rem;
 }
 
-.data-label {
+.data-display {
   cursor: pointer;
-  padding: 0.3rem 1rem;
-  border-radius: 6px;
-  background-color: transparent;
-  transition: background-color 0.2s, transform 0.2s, color 0.2s;
-  color: text; 
-  display: inline-block; 
-}
-
-.data-label:hover,
-.data-label:focus {
-  background-color: transparent;
-  color: text;
-  transform: scale(1.05);
-  outline: none; 
-}
-
-.calendario-dropdown {
-  position: absolute;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 0.2rem;
-  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
   border: 1px solid #ccc;
-  z-index: 10;
+  border-radius: 6px;
+  user-select: none;
 }
 
-.input-invisivel {
+.data-display:focus {
+  outline: 2px solid #007bff;
+}
+
+.date-input-hidden {
   position: absolute;
   opacity: 0;
   pointer-events: none;
   height: 0;
+  width: 0;
 }
 
 .data-navegacao-container button {
-  font-size: 24px;
-  background: transparent;
+  background-color: transparent;
   border: none;
   cursor: pointer;
-  padding: 4px 8px;
-  color: inherit;
-}
-
-.data-navegacao-container button:focus {
-  outline: 2px solid #e75b1e;
-  outline-offset: 2px;
-  background-color: #fff0e6;
-  border-radius: 6px;
+  font-size: 1.2rem;
+  color: white;
 }
