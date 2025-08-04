@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
-import "./DataNavegacao.css";
+import "../styles/DataNavegacao.css";
+import { FaCalendarDay } from "react-icons/fa";
 
 const DIAS_SEMANA = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
@@ -46,44 +47,53 @@ const DataNavegacao = ({ dataSelecionada = new Date(), onDataChange }) => {
       role="group"
       aria-label="Navegação por data"
     >
-      <button
-        onClick={() => navegarDias(-1)}
-        aria-label="Dia anterior"
-        type="button"
-      >
-        &lt;
-      </button>
+      <h3 className="titulo-data">
+        <FaCalendarDay aria-hidden="true" focusable="false" />
+        <p className="titulo-data">Data</p>
+      </h3>
 
-      <div
-        className="data-display"
-        onClick={abrirCalendario}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) =>
-          (e.key === "Enter" || e.key === " ") && abrirCalendario()
-        }
-        aria-label={`Data selecionada: ${formatarData(dataSelecionada)}. Pressione Enter para alterar.`}
-      >
-        {formatarData(dataSelecionada)}
+      <div className="data-navegacao-controls">
+        <button
+          onClick={() => navegarDias(-1)}
+          aria-label="Dia anterior"
+          type="button"
+        >
+          &lt;
+        </button>
+
+        <div
+          className="data-display"
+          onClick={abrirCalendario}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) =>
+            (e.key === "Enter" || e.key === " ") && abrirCalendario()
+          }
+          aria-label={`Data selecionada: ${formatarData(
+            dataSelecionada
+          )}. Pressione Enter para alterar.`}
+        >
+          {formatarData(dataSelecionada)}
+        </div>
+
+        <button
+          onClick={() => navegarDias(1)}
+          aria-label="Próximo dia"
+          type="button"
+        >
+          &gt;
+        </button>
+
+        <input
+          ref={inputRef}
+          type="date"
+          className="date-input-hidden"
+          value={valorInput}
+          onChange={handleDateChange}
+          aria-hidden="true"
+          tabIndex={-1}
+        />
       </div>
-
-      <button
-        onClick={() => navegarDias(1)}
-        aria-label="Próximo dia"
-        type="button"
-      >
-        &gt;
-      </button>
-
-      <input
-        ref={inputRef}
-        type="date"
-        className="date-input-hidden"
-        value={valorInput}
-        onChange={handleDateChange}
-        aria-hidden="true"
-        tabIndex={-1}
-      />
     </div>
   );
 };
