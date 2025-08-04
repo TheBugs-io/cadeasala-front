@@ -32,3 +32,15 @@ export const atualizarSala = async (salaId, novosDados) => {
     throw error;
   }
 };
+
+export const deleteSala = async (salaId) => {
+  try {
+    const response = await api.delete(`/salas/deletar`, {
+      data: { sala_id: Number(salaId) },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao deletar sala:", error.response?.data || error.message);
+    throw error;
+  }
+};
