@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./DashboardRegister.css";
 import NoRegisterRequest from "./components/NoRegisterRequest";
 import TrilhaNavegacao from "../../../Components/ui/TrilhaNavegacao";
-import ModalConfirmAction from "../../../Components/ui/ModalConfirmAction";
+import ModalConfirmAction from "../../Components/ui/ModalConfirmAction";
 import {
   atualizarStatusRegistro,
   buscarRegistrosPendentes,
@@ -17,7 +17,7 @@ const DashboardRegistro = () => {
   const [registroSelecionado, setRegistroSelecionado] = useState(null);
   const [novoStatus, setNovoStatus] = useState("");
   const opcoesFiltro = ["DISCENTE", "DOCENTE", "TODOS"];
-  const opcoesStatus = ["PENDENTE", "APROVADO", "REPROVADO"];
+  const opcoesStatus = ["PENDENTE", "APROVADO", "REJEITADO"];
 
   useEffect(() => {
     const carregarRegistrosPendentes = async () => {

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import "./styles/DetalhesReserva.css";
 import skatistaAlt from "../../assets/illustrations/altSkatista.svg";
-import ModalConfirmAction from "../../Components/ui/ModalConfirmAction";
+import ModalConfirmAction from "../../components/ui/ModalConfirmAction";
 import Snackbar from "../../Components/ui/Snackbar";
 import { deleteReserva } from "../../service/admin/reservasService";
 
