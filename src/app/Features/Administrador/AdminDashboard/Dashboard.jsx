@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import "./DashboardRegister.css";
 import NoRegisterRequest from "./components/NoRegisterRequest";
 import TrilhaNavegacao from "../../../Components/ui/TrilhaNavegacao";
-import ModalConfirmAction from "../../Components/ui/ModalConfirmAction";
 import {
   atualizarStatusRegistro,
   buscarRegistrosPendentes,
 } from "../../../service/admin/registerService";
+import ModalConfirmAction from "../../../components/ui/ModalConfirmAction";
 
 const DashboardRegistro = () => {
   const [registros, setRegistros] = useState([]);
