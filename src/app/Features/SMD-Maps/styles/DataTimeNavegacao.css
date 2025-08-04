@@ -1,27 +1,18 @@
-.blocos-horarios {
+.titulo-horario{
   display: flex;
+  align-items: center;
   gap: 0.5rem;
-  flex-wrap: wrap;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
-.bloco-horario {
-  background-color: #f3f3f3;
-  color: #333;
+.select-horario {
+  margin: 1rem 0;
+}
+
+.select-horario select {
+  padding: 0.4rem 0.8rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-.bloco-horario:hover {
-  background-color: #e0e0e0;
-}
-
-.bloco-horario.selecionado,
-.bloco-horario[aria-pressed="true"] {
-  background-color: #0057d9;
-  color: #fff;
-  border-color: #003f9e;
 }
