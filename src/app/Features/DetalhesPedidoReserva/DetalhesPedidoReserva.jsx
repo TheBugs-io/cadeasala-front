@@ -1,6 +1,6 @@
 import "./styles/DetalhesPedidoReserva.css";
 import skatistaAlt from "../../assets/illustrations/altSkatista.svg";
-import ConfirmActionModal from "../../components/ui/ModalConfirmAction";
+import ConfirmActionModal from "../../Components/ui/ModalConfirmAction";
 import { useState } from "react";
 
 export default function DetalhesPedidoReserva({

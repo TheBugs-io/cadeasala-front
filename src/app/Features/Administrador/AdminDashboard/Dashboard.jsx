@@ -6,7 +6,7 @@ import {
   atualizarStatusRegistro,
   buscarRegistrosPendentes,
 } from "../../../service/admin/registerService";
-import ModalConfirmAction from "../../../components/ui/ModalConfirmAction";
+import ModalConfirmAction from "../../../Components/ui/ModalConfirmAction";
 
 const DashboardRegistro = () => {
   const [registros, setRegistros] = useState([]);
