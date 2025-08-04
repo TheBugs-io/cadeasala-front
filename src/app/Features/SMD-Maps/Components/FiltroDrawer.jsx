@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import Modal from "../../Components/ui/Modal";
-import "./FiltroDrawer.css";
+import Modal from "../../../Components/ui/Modal";
+import "../styles/FiltroDrawer.css";
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);

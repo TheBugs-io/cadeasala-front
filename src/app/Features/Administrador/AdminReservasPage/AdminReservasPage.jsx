@@ -183,12 +183,7 @@ const AdminReservasPage = () => {
         {itemTipo === "solicitacao" && itemSelecionado && (
           <DetalhesPedidoReserva
             solicitacao={itemSelecionado}
-            onAprovar={() =>
-              handleAtualizarStatus(itemSelecionado.id, "APROVADO")
-            }
-            onRejeitar={() =>
-              handleAtualizarStatus(itemSelecionado.id, "REJEITADO")
-            }
+            handleStatusChange={handleAtualizarStatus}
             onClose={fecharModal}
           />
         )}

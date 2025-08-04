@@ -1,5 +1,4 @@
 import { Outlet, useLocation } from "react-router-dom";
-import AccessibilityBar from "./ui/AcessibilityBar";
 import Header from "./ui/header";
 import TabBar from "./ui/TabBar";
 import { useState, useCallback } from "react";
@@ -41,7 +40,6 @@ const Layout = () => {
 
   return (
     <>
-      <AccessibilityBar />
       <Header onSearch={handleSearch} resultados={resultados} erro={erro} />
 
       <main style={{ paddingBottom: esconderTabBar ? 0 : "4rem" }}>
