@@ -12,38 +12,40 @@ const LandingHome = () => {
 
   return (
     <main className="banner-landing-container">
-      <img
-        src={imageBanner}
-        alt="Fotografia de fundo retratando o bloco de Sistemas e Mídias Digitais"
-        className="banner-image"
-        aria-hidden="true"
-      />
+      <div class="banner-container">
+        <img
+          src={imageBanner}
+          alt="Fotografia de fundo retratando o bloco de Sistemas e Mídias Digitais"
+          class="banner-image"
+          aria-hidden="true"
+        />
 
-      <section
-        className="banner-content-container"
-        aria-labelledby="titulo-principal"
-      >
-        <div className="banner-text-container">
-          <img
-            src={iconPlaceholder}
-            alt="Ícone do Instituto Universidade Virtual"
-            className="icon-placeholder"
-          />
-          <h1 id="titulo-principal" className="banner-title">
-            CADÊ A SALA?
-          </h1>
-          <h2 className="banner-subtitle">
-            Sistema de localização de salas do Instituto Universidade Virtual.
-          </h2>
-        </div>
-        <button
-          className="btn-redirect-mapa"
-          onClick={navigateToMapaSalas}
-          aria-label="Ir para o mapa de salas do Instituto"
+        <section
+          className="banner-content-container"
+          aria-labelledby="titulo-principal"
         >
-          Ir para o mapa de salas
-        </button>
-      </section>
+          <div className="banner-text-container">
+            <img
+              src={iconPlaceholder}
+              alt="Ícone do Instituto Universidade Virtual"
+              className="icon-placeholder"
+            />
+            <h1 id="titulo-principal" className="banner-title">
+              CADÊ A SALA?
+            </h1>
+            <h2 className="banner-subtitle">
+              Sistema de localização de salas do Instituto Universidade Virtual.
+            </h2>
+          </div>
+          <button
+            className="btn-redirect-mapa"
+            onClick={navigateToMapaSalas}
+            aria-label="Ir para o mapa de salas do Instituto"
+          >
+            Ir para o mapa de salas
+          </button>
+        </section>
+      </div>
     </main>
   );
 };
