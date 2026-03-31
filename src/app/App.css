@@ -135,3 +135,41 @@ span {
   color: var(--status-navigate);
   font-weight: bold;
 }
+
+.edit-btn {
+  background-color: var(--primary-btn);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background-color: #6e3110;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.save-btn{
+  background-color: #15995e;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background-color: var(--red-primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}

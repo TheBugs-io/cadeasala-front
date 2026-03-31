@@ -79,6 +79,10 @@ Utilizando o Notion categorizando entre <b>Design e Code</b> sections:
 
 <img src="https://github.com/user-attachments/assets/d28d5c01-e8ac-454f-92a2-5118e61a9c38">
 
+### Documentação de arquitetura da informação / componentização
+
+<img src="https://github.com/TheBugs-io/cadeasala-front/blob/ui/adjustments-dark/docs/docs.PNG?raw=true">
+
 ## Como rodar este projeto
 
 ### Instruções de instalação

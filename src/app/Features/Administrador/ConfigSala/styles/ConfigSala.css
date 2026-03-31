@@ -9,9 +9,9 @@
   align-items: flex-start;
 }
 
-.config-sala-image {
-  width: 250px;
-  height: 200px;
+.details-sala-image {
+  width: 25rem;
+  height: auto;
   object-fit: cover;
   background-color: #eee;
   border-radius: 4px;
@@ -222,22 +222,7 @@ body.high-contrast .text-area {
 }
 
 .status-select:disabled {
-  display: inline-block;
-  color: black;
-  cursor: default;
-  border: none;
-  padding: 0;
-  margin-top: 0.5rem;
-  appearance: none;
-  position: relative;
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
-  font-weight: 600;
-  text-transform: capitalize;
-  max-width: 5rem;
-  height: 2.5rem;
-  text-align: center;
-  border-radius: 5px;
-  user-select: none;
+  cursor: not-allowed;
 }
 
 .status-select:disabled[value="FUNCIONAL"] {
@@ -253,28 +238,18 @@ body.high-contrast .text-area {
   color: #333;
 }
 
-.editar-btn {
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
-  padding: 0.75rem 2rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  user-select: none;
-  margin-top: 2rem;
-  color: white;
-  background-color: #0066cc;
-  align-self: flex-start;
+.config-sala-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
-.editar-btn:hover:not(:disabled) {
-  background-color: #0052a3;
-}
-
-.editar-btn:disabled {
-  background-color: #aaa;
-  cursor: not-allowed;
+.config-sala-options {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 768px) {

@@ -1,15 +1,17 @@
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./styles/ConfigSala.css";
 import TrilhaNavegacao from "../../../Components/ui/TrilhaNavegacao";
-import { atualizarSala } from "../../../service/admin/salasService";
+import { atualizarSala, deleteSala } from "../../../service/admin/salasService";
 import Snackbar from "../../../Components/ui/Snackbar";
+import { getImagemPorTipo } from "../../../helper/salasHelper";
 
 const ConfigSala = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
 
+  const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
@@ -20,6 +22,7 @@ const ConfigSala = () => {
   const salaInicial = location.state?.salaData;
 
   const [nome, setNome] = useState("");
+  const [image, setImage] = useState(getImagemPorTipo(salaInicial?.tipo || ""));
   const [andar, setAndar] = useState("");
   const [descricao, setDescricao] = useState("");
   const [capacidade, setCapacidade] = useState(0);
@@ -57,11 +60,33 @@ const ConfigSala = () => {
     }
 
     setNome(salaInicial.nome);
+    setImage(getImagemPorTipo(salaInicial.tipo));
     setAndar(salaInicial.localizacao);
     setDescricao(salaInicial.descricao);
     setCapacidade(salaInicial.capacidade);
-    setStatus(salaInicial.status === "FUNCIONAL" ? "FUNCIONAL" : salaInicial.status);
+    setStatus(
+      salaInicial.status === "FUNCIONAL" ? "FUNCIONAL" : salaInicial.status
+    );
   }, [salaInicial, navigate]);
+
+  const handleDeleteSala = async () => {
+    try {
+      await deleteSala(id);
+      setShowSnackbar(true);
+      setSnackbar({
+        open: true,
+        message: "Sala deletada com sucesso.",
+        severity: "success",
+      });
+      navigate("/admin/dashboard-salas");
+    } catch (error) {
+      setSnackbar({
+        open: true,
+        message: "Erro ao deletar sala. Tente novamente.",
+        severity: "error",
+      });
+    }
+  };
 
   return (
     <main className="config-sala-container">
@@ -73,16 +98,47 @@ const ConfigSala = () => {
         ]}
       />
 
+      <div className="config-sala-header">
+        <h1>Configuração da Sala</h1>
+        <div className="config-sala-options">
+          {!isEditable && (
+            <button
+              className="edit-btn"
+              onClick={() => setIsEditable(true)}
+              aria-label="Ativar modo de edição da sala"
+            >
+              Editar Sala
+            </button>
+          )}
+
+          {isEditable && (
+            <button
+              className="save-btn"
+              onClick={handleSalvar}
+              aria-label="Salvar alterações da sala"
+            >
+              Salvar Alterações
+            </button>
+          )}
+
+          <button className="delete-btn" onClick={() => handleDeleteSala()}>
+            Deletar sala
+          </button>
+        </div>
+      </div>
+
       <div className="config-sala-content">
         <img
-          src="/placeholder-img.png"
-          alt="Imagem ilustrativa da sala"
-          className="config-sala-image"
+          src={image}
+          alt={`Imagem ilustrativa da sala ${nome}`}
+          className="details-sala-image"
         />
 
         <div className="config-sala-info">
           <div className="config-sala-title">
-            <label htmlFor="nomeSala" className="sr-only">Nome da sala</label>
+            <label htmlFor="nomeSala" className="sr-only">
+              Nome da sala
+            </label>
             <input
               id="nomeSala"
               type="text"
@@ -94,7 +150,9 @@ const ConfigSala = () => {
               aria-label="Nome da sala"
             />
 
-            <label htmlFor="andarSala" className="sr-only">Andar</label>
+            <label htmlFor="andarSala" className="sr-only">
+              Andar
+            </label>
             <select
               id="andarSala"
               value={andar}
@@ -113,7 +171,9 @@ const ConfigSala = () => {
 
           <p>
             <strong>Descrição:</strong>
-            <label htmlFor="descricaoSala" className="sr-only">Descrição da sala</label>
+            <label htmlFor="descricaoSala" className="sr-only">
+              Descrição da sala
+            </label>
             <textarea
               id="descricaoSala"
               value={descricao}
@@ -125,9 +185,11 @@ const ConfigSala = () => {
             />
           </p>
 
-          <p>
-            <strong>Capacidade:</strong>
-            <label htmlFor="capacidadeSala" className="sr-only">Capacidade da sala</label>
+          <div>
+            <h4>Capacidade:</h4>
+            <label htmlFor="capacidadeSala" className="sr-only">
+              Capacidade da sala
+            </label>
             <input
               id="capacidadeSala"
               type="number"
@@ -138,11 +200,13 @@ const ConfigSala = () => {
               aria-readonly={!isEditable}
               aria-label="Capacidade da sala"
             />
-          </p>
+          </div>
 
-          <p>
-            <strong>Estado da sala:</strong>
-            <label htmlFor="estadoSala" className="sr-only">Estado da sala</label>
+          <div>
+            <h4>Estado da sala:</h4>
+            <label htmlFor="estadoSala" className="sr-only">
+              Estado da sala
+            </label>
             <select
               id="estadoSala"
               value={status}
@@ -157,28 +221,7 @@ const ConfigSala = () => {
               <option value="PROBLEMA_TECNICO">Problema Técnico</option>
               <option value="EM_MANUTENCAO">Em Manutenção</option>
             </select>
-          </p>
-
-          {!isEditable && (
-            <button
-              className="editar-btn"
-              onClick={() => setIsEditable(true)}
-              aria-label="Ativar modo de edição da sala"
-            >
-              Editar Sala
-            </button>
-          )}
-
-          {isEditable && (
-            <button
-              className="editar-btn"
-              onClick={handleSalvar}
-              style={{ backgroundColor: "#28a745" }}
-              aria-label="Salvar alterações da sala"
-            >
-              Salvar Alterações
-            </button>
-          )}
+          </div>
         </div>
       </div>
 
