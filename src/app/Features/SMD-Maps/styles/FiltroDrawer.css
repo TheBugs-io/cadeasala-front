@@ -5,14 +5,13 @@
   width: 480px;
   max-width: 90vw;
   height: 100vh;
-  background-color: #ffffff;
-  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.15);
+
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.3);
   transition: right 0.3s ease-in-out;
   z-index: 1000;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border-left: 3px solid #e75b1e;
 }
 
 .painel-filtro.ativo {
@@ -25,9 +24,9 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  background-color: #fff;
+  background-color: var(--iuvi-cinza-claro-sec);
   padding: 24px;
-  border-radius: 0 8px 8px 0;
+  border-radius: 8px 0 0 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
@@ -36,7 +35,7 @@
   font-size: 36px;
   background: none;
   border: none;
-  color: #555;
+  color: #be2d2d;
   cursor: pointer;
   padding: 4px 12px;
   transition: color 0.2s ease;
@@ -86,14 +85,14 @@
 }
 
 .botoes button.selecionado {
-  background-color: #e75b1e;
+  background-color: var(--primary-btn);
   color: #fff;
-  border-color: #d94e10;
+  border-color: var(--primary-btn);
 }
 
 .btn-aplicar {
   margin-top: auto;
-  background-color: #e75b1e;
+  background-color: var(--primary-btn);
   color: #fff;
   padding: 14px;
   border: none;

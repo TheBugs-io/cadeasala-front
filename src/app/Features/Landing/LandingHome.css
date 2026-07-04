@@ -82,14 +82,16 @@
   font-family: "Albert Sans";
   font-size: 1.125rem;
   font-weight: bold;
-  border: none;
-  background-color: #e5621c;
+  background-color: transparent;
+  border: 2px solid white;
   margin-top: 1rem;
 }
 
 .btn-redirect-mapa:hover {
   cursor: pointer;
-  background-color: #180a03;
+  background-color: var(--iuvi-bege-suave-primary);
+  color: black;
+  border: 2px solid var(--iuvi-bege-suave-primary);
   transition: background-color 0.2s ease-in-out;
 }
 

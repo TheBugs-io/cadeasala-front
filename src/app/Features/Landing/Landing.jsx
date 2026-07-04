@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import iconPlaceholder from "../../assets/placeholder/idv.png";
-import imageBanner from "../../assets/placeholder/image 7.png";
+import imageBanner from "../../assets/placeholder/videoufc.png";
 import "./LandingHome.css";
 
 const LandingHome = () => {

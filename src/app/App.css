@@ -23,14 +23,18 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-color: #1f2029;
+    --bg-color: #202020;
     --text-color: #ffffff;
+    --iuvi-mg-primary: #991F50;
+    --iuvi-bege-suave-primary: #FEE6B5;
+    --iuvi-azul-suave-sec: #2B55D8;
+    --iuvi-cinza-claro-sec: #E6DFD7;
     --container-card: #edfaff;
     --bg-mapa: #d8dbe2;
     --bg-card-mapa: #f0f0f0;
     --selected-button-c: #0e7ac9;
     --status-navigate: #0e7ac9;
-    --primary-btn: #fb7228;
+    --primary-btn: #FF8832;
     --border-color: #d1d5db;
     --generic-card-bg: #2d2e30;
     --oficina-sts: #c71e67;

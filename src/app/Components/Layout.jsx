@@ -5,6 +5,10 @@ import { useState, useCallback } from "react";
 import debounce from "lodash.debounce";
 import { searchRequisition } from "../service/search/searchBar";
 
+/* 
+* Layout genérico para as páginas
+! Não inclui a tabbar de acessibilidade
+*/
 const Layout = () => {
   const location = useLocation();
   const esconderTabBar = ["/login", "/"].includes(location.pathname);
@@ -22,13 +26,11 @@ const Layout = () => {
     }
     try {
       const data = await searchRequisition(texto);
-      console.log("Resultado da API:", data);
       setResultados({
         usuarios: data.usuarios || [],
         salas: data.salas || [],
         reservas: data.reservas || [],
       });
-      console.log("Novo estado resultados:", resultados);
       setErro(null);
     } catch (error) {
       setErro("Erro na requisição");

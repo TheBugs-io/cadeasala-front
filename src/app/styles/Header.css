@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
-  background: #025259;
+  background: var(--iuvi-mg-primary);
   min-height: 4.5rem;
 }
 
