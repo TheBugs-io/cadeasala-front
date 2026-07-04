@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import iconPlaceholder from "../../assets/placeholder/idv.png";
-import imageBanner from "../../assets/placeholder/image 7.png";
+import imageBanner from "../../assets/placeholder/photo_smd.png";
 import "./LandingHome.css";
 
 const LandingHome = () => {
@@ -12,7 +12,7 @@ const LandingHome = () => {
 
   return (
     <main className="banner-landing-container">
-      <div class="banner-container">
+      <div className="banner-container">
         <img
           src={imageBanner}
           alt="Fotografia de fundo retratando o bloco de Sistemas e Mídias Digitais"
